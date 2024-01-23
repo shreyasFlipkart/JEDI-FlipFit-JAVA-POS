@@ -1,6 +1,5 @@
 public class AdminService implements AdminServiceInterface{
 
-    AdminInterfaceDAO adminDAO  = new AdminDAO();
 
     private List<GymOwner> pendingGymOwnerList = new ArrayList<>();
     private List<GymCentre> pendingGymCentreList = new ArrayList<>();

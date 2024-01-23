@@ -1,11 +1,6 @@
 public class CustomerService implements CustomerServiceInterface {
 
-    private CustomerInterfaceDAO customerDAO = new CustomerDAO();
-    private GymCentreServiceInterface gymCentreService = new GymCentreService();
-    private BookingServiceInterface bookingService = new BookingService();
-    private ScheduleServiceInterface scheduleService = new ScheduleService();
 
-    private SlotServiceInterface slotService = new SlotService();
 
     public List<GymCentre> getAllGymCenterDetailsByCity(String city){
     }
