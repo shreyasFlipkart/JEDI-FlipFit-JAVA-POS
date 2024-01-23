@@ -1,4 +1,4 @@
-public class adminClient {
+public class AdminClient {
     //attributes
     //properties
 }

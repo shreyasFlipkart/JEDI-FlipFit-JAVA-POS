@@ -1,3 +1,3 @@
-public class customerClient {
+public class CustomerClient {
 
 }

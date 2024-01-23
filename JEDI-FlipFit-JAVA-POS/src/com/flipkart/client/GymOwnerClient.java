@@ -1,2 +1,2 @@
-public class gymOwnerClient {
+public class GymOwnerClient {
 }
