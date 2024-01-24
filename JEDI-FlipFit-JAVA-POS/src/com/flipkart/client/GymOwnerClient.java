@@ -153,10 +153,13 @@ public class GymOwnerClient {
                     break;
 
                 case 5:
-                    System.out.println("Enter Slot ID: ");
+                    System.out.println("Enter Centre ID: ");
+                    String centreID = scanner.next();
+
+                    System.out.println("Enter  Slot ID: ");
                     String slotId = scanner.next();
 
-                    System.out.println("Slot with ID: " + slotId + " has been successfully deleted");
+                    System.out.println("Slot with ID: " + slotId + " in Gym centre " + centreID + " has been successfully deleted");
 
                     default:
                     System.out.println("\nPlease enter valid choice\n");
