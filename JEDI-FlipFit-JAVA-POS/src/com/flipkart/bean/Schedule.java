@@ -11,7 +11,6 @@ public class Schedule {
     private int availability;
 
     public Schedule(Date date, String slotID, int availability) {
-        this.scheduleID = String.valueOf(UUID.randomUUID());
         this.date = date;
         this.slotID = slotID;
         this.availability = availability;

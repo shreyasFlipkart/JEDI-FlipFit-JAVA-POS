@@ -1,8 +1,16 @@
+package com.flipkart.business;
+
 /**
  * This interface defines the service operations related to administrative functionality.
  * It includes methods for approving gym centers and owners, as well as viewing pending
  * gym centers and owners.
  */
+
+
+import com.flipkart.bean.GymCentre;
+import com.flipkart.bean.GymOwner;
+
+import java.util.List;
 public interface AdminServiceInterface {
 
     /**

@@ -1,6 +1,6 @@
 package com.flipkart.bean;
 
-public class GymCenter {
+public class GymCentre {
     // properties
     private String gymCentreID;
     private String ownerID;
@@ -11,11 +11,11 @@ public class GymCenter {
     private int price;
     private int isApproved;
 
-    public GymCenter() {
+    public GymCentre() {
 
     }
 
-    public GymCenter(String gymCentreID, String ownerID, String gymCenterName, String gstin, String city, int capacity, int price, int isApproved) {
+    public GymCentre(String gymCentreID, String ownerID, String gymCenterName, String gstin, String city, int capacity, int price, int isApproved) {
         this.gymCentreID = gymCentreID;
         this.ownerID = ownerID;
         this.gymCenterName = gymCenterName;
@@ -26,7 +26,7 @@ public class GymCenter {
         this.isApproved = isApproved;
     }
 
-    public GymCenter(String gymCentreID, String ownerID, String gymCenterName, String city, int isApproved) {
+    public GymCentre(String gymCentreID, String ownerID, String gymCenterName, String city, int isApproved) {
         this.gymCentreID = gymCentreID;
         this.ownerID = ownerID;
         this.gymCenterName = gymCenterName;
@@ -34,7 +34,7 @@ public class GymCenter {
         this.isApproved = isApproved;
     }
 
-    public GymCenter(String gymCentreID, String ownerID, String gymCenterName, String gstin, String city, int capacity, int price) {
+    public GymCentre(String gymCentreID, String ownerID, String gymCenterName, String gstin, String city, int capacity, int price) {
         this.gymCentreID = gymCentreID;
         this.ownerID = ownerID;
         this.gymCenterName = gymCenterName;

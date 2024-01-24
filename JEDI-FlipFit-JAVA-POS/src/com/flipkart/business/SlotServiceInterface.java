@@ -1,8 +1,11 @@
-/**
+package com.flipkart.business; /**
  * This interface defines the service operations related to Slot functionality.
  * It includes methods for retrieving slots by gym center, getting a slot by ID,
  * getting a list of all slots, adding slots for a gym center, and validating slots.
  */
+import com.flipkart.bean.Slot;
+
+import java.util.List;
 public interface SlotServiceInterface {
 
     /**

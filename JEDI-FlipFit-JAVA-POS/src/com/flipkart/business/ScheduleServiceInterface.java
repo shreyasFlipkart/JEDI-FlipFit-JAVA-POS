@@ -1,3 +1,11 @@
+package com.flipkart.business;
+
+import com.flipkart.bean.Schedule;
+import com.flipkart.bean.Slot;
+
+import java.util.Date;
+import java.util.List;
+
 /**
  * This interface defines the service operations related to Schedule functionality.
  * It includes methods for creating schedules, retrieving schedules by date and slot ID,

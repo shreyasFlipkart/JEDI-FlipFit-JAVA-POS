@@ -1,3 +1,15 @@
+package com.flipkart.business;
+
+import com.flipkart.bean.GymCentre;
+
+import com.flipkart.bean.Booking;
+import com.flipkart.bean.Customer;
+import com.flipkart.bean.Slot;
+
+
+import java.sql.Date;
+import java.util.List;
+
 /**
  * This interface defines the service operations related to customer functionality.
  * It includes methods for retrieving gym center details by city, available slots,
@@ -83,5 +95,4 @@ public interface CustomerServiceInterface {
      * @param userName The username of the customer
      * @return List of user plans for the customer
      */
-    List<UserPlan> getCustomerPlan(String userName);
 }
