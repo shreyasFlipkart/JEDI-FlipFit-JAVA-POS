@@ -13,7 +13,7 @@ public class MainApplicationClient {
     {
         System.out.println("<------------ Welcome to the FlipFit Application ------------>");
         System.out.println("Enter the Choice");
-        System.out.println("1. Login\n2. Registration\n3. Update Password\n4. Exit");
+        System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password\n5. Exit");
         Scanner scanner=new Scanner(System.in);
         int choice = scanner.nextInt();
         switch (choice) {
@@ -21,12 +21,14 @@ public class MainApplicationClient {
                 login();
                 break;
             case 2:
-                registration();
+                registration(2);
                 break;
             case 3:
+                registration(3);
+            case 4:
                 updatePassword();
                 break;
-            case 4:
+            case 5:
                 System.out.println("EXIT");
                 return;
             default:
@@ -68,19 +70,12 @@ public class MainApplicationClient {
             System.out.println("INVALID CHOICE");
         }
     }
-    private static void registration(){
-        Scanner scanner=new Scanner(System.in);
+    private static void registration(int role){
         GymOwnerClient gymOwnerClient = new GymOwnerClient();
         CustomerClient customerClient = new CustomerClient();
         try {
-            System.out.println("Enter your role (1. ADMIN/2. GYMOWNER/3. CUSTOMER) : ");
-            int role = scanner.nextInt();
 
             switch (role){
-                case 1:
-                    System.out.println("Admin is already registered");
-                    mainPage();
-                    break;
                 case 2:
                     customerClient.register();
                     break;
