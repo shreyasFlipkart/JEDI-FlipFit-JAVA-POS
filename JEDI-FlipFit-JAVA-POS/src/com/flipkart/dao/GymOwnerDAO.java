@@ -40,7 +40,7 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
 
         // Add the GymOwner object to the list
         gymOwnerList.add(gymOwner);
-        System.out.println("Registration Success\n");
+//        System.out.println("Registration Success\n");
     }
 
     public List<GymOwner> getPendingGymOwnerList() {
