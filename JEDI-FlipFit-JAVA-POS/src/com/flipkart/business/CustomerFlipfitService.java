@@ -56,8 +56,8 @@ public class CustomerFlipfitService implements CustomerFlipfitServiceInterface {
             System.out.println(INVALID_SLOT);
             return false;
         }
-//        String scheduleId = scheduleService.getOrCreateSchedule(slotId,date).getScheduleID();
-        String scheduleId = String.valueOf(UUID.randomUUID());
+        String scheduleId = scheduleService.getOrCreateSchedule(slotId,date).getScheduleID();
+//        String scheduleId = String.valueOf(UUID.randomUUID());
         //create booking
         boolean isOverlap = bookingService.checkBookingOverlap(userName,date,slotId);
         if(isOverlap) {
