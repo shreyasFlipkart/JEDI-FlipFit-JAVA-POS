@@ -12,25 +12,24 @@ import com.flipkart.utils.UserPlan;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.UUID;
 
 
 import static com.flipkart.constants.Constants.*;
 
-public class CustomerFlipfitService implements CustomerFlipfitServiceInterface {
-    private static CustomerFlipfitService instance = null;
-    public static CustomerFlipfitService getInstance() {
+public class CustomerFlipfitImplService implements CustomerFlipfitServiceInterface {
+    private static CustomerFlipfitImplService instance = null;
+    public static CustomerFlipfitImplService getInstance() {
         if (instance == null) {
-            instance = new CustomerFlipfitService();
+            instance = new CustomerFlipfitImplService();
         }
         return instance;
     }
     private CustomerInterfaceDAO customerDAO = CustomerDAO.getInstance();
-    private GymCentreFlipfitServiceInterface gymCentreService = new GymCentreFlipfitService();
-    private BookingFlipfitServiceInterface bookingService = new BookingFlipfitService();
-    private ScheduleFlipfitServiceInterface scheduleService = new ScheduleFlipfitService();
-    private PaymentFlipfitServiceInterface paymentService = new PaymentFlipfitFlipfitService();
-    private SlotFlipfitServiceInterface slotService = new SlotFlipfitService();
+    private GymCentreFlipfitServiceInterface gymCentreService = new GymCentreFlipfitImplService();
+    private BookingFlipfitServiceInterface bookingService = new BookingFlipfitImplService();
+    private ScheduleFlipfitServiceInterface scheduleService = new ScheduleFlipfitImplService();
+    private PaymentFlipfitServiceInterface paymentService = new PaymentFlipfitImplService();
+    private SlotFlipfitServiceInterface slotService = new SlotFlipfitImplService();
 
     public List<GymCentre> getAllGymCenterDetailsByCity(String city){
         //takes City (Location) as input and returns List<GymCenter>

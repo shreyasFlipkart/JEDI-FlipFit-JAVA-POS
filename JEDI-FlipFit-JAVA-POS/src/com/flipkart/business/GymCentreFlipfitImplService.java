@@ -8,10 +8,10 @@ import com.flipkart.bean.Slot;
 import java.sql.Date;
 import java.util.List;
 
-public class GymCentreFlipfitService implements GymCentreFlipfitServiceInterface {
+public class GymCentreFlipfitImplService implements GymCentreFlipfitServiceInterface {
 
     private static GymCentreInterfaceDAO gymCentreDAO = new GymCentreDAO();
-    private static ScheduleFlipfitServiceInterface scheduleService = new ScheduleFlipfitService();
+    private static ScheduleFlipfitServiceInterface scheduleService = new ScheduleFlipfitImplService();
 
     public List<GymCentre> viewAllGymCentres(){
         return gymCentreDAO.getGymCentreList();

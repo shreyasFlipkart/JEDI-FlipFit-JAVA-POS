@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import static com.flipkart.constants.Constants.*;
 
-public class FlipfitClient {
+public class FlipfitApplication {
 
     public static int userId = 0;
     public static Scanner scanner = new Scanner(System.in);

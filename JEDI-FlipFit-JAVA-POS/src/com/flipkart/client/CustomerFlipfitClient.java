@@ -4,7 +4,7 @@ import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.Slot;
-import com.flipkart.business.CustomerFlipfitService;
+import com.flipkart.business.CustomerFlipfitImplService;
 import com.flipkart.business.CustomerFlipfitServiceInterface;
 import com.flipkart.exceptions.DataEntryException;
 import com.flipkart.utils.UserPlan;
@@ -16,15 +16,14 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Scanner;
 
-import static com.flipkart.client.FlipfitClient.scanner;
+import static com.flipkart.client.FlipfitApplication.scanner;
 import static com.flipkart.constants.Constants.*;
 import static com.flipkart.constants.Constants.RESET_COLOR;
 
 
 public class CustomerFlipfitClient {
-    private CustomerFlipfitServiceInterface customerService  =  CustomerFlipfitService.getInstance();
+    private CustomerFlipfitServiceInterface customerService  =  CustomerFlipfitImplService.getInstance();
 
     public boolean customerLogin(String userName, String password) {
 //        Check if credentials are right

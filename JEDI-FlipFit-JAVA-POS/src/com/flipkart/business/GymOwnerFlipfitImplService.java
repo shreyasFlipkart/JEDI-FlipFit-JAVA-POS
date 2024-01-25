@@ -5,7 +5,7 @@ import com.flipkart.bean.GymOwner;
 
 import java.util.List;
 
-public class GymOwnerFlipfitService implements GymOwnerFlipfitServiceInterface {
+public class GymOwnerFlipfitImplService implements GymOwnerFlipfitServiceInterface {
     private static GymOwnerDAO gymOwnerDAO = new GymOwnerDAO();
     public void requestGymOwnerApproval(String gymOwnerId) {
         gymOwnerDAO.sendOwnerApprovalRequest(gymOwnerId);

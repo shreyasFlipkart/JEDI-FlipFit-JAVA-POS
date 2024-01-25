@@ -3,27 +3,27 @@ package com.flipkart.client;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.GymOwner;
-import com.flipkart.business.AdminFlipfitService;
+import com.flipkart.business.AdminFlipfitImplService;
 import com.flipkart.business.AdminFlipfitServiceInterface;
-import com.flipkart.business.GymOwnerFlipfitService;
+import com.flipkart.business.GymOwnerFlipfitImplService;
 import com.flipkart.business.GymOwnerFlipfitServiceInterface;
 import com.flipkart.business.GymCentreFlipfitServiceInterface;
-import com.flipkart.business.GymCentreFlipfitService;
+import com.flipkart.business.GymCentreFlipfitImplService;
 import com.flipkart.utils.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.flipkart.client.FlipfitClient.scanner;
+import static com.flipkart.client.FlipfitApplication.scanner;
 import static com.flipkart.constants.Constants.*;
 
 public class AdminFlipfitClient {
 
     private static Admin admin = new Admin();
-    private static AdminFlipfitServiceInterface adminService = new AdminFlipfitService();
-    private static GymOwnerFlipfitServiceInterface gymOwnerService = new GymOwnerFlipfitService();
-    private static GymCentreFlipfitServiceInterface gymCenterService = new GymCentreFlipfitService();
+    private static AdminFlipfitServiceInterface adminService = new AdminFlipfitImplService();
+    private static GymOwnerFlipfitServiceInterface gymOwnerService = new GymOwnerFlipfitImplService();
+    private static GymCentreFlipfitServiceInterface gymCenterService = new GymCentreFlipfitImplService();
 
     public boolean isUserValid(String userName, String password) {
         if (userName.equals(admin.getUserName()) && password.equals(admin.getPassword())) {

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class PaymentFlipfitFlipfitService implements PaymentFlipfitServiceInterface {
+public class PaymentFlipfitImplService implements PaymentFlipfitServiceInterface {
     public static List<Payment> payments = new ArrayList<>();
     public static List<String> refunds = new ArrayList<>();
     public void makePayment(String userName, String gymCentreId, String bookingId){

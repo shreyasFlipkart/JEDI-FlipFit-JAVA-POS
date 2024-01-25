@@ -8,7 +8,7 @@ import com.flipkart.bean.GymOwner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminFlipfitService implements AdminFlipfitServiceInterface {
+public class AdminFlipfitImplService implements AdminFlipfitServiceInterface {
 
     AdminInterfaceDAO adminDAO  = new AdminDAO();
     private List<GymOwner> pendinGymOwnerList = new ArrayList<>();

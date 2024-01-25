@@ -10,12 +10,12 @@ import java.util.Date;
 import java.util.List;
 
 
-public class BookingFlipfitService implements BookingFlipfitServiceInterface {
+public class BookingFlipfitImplService implements BookingFlipfitServiceInterface {
 
     private final BookingDAO bookingDAO = new BookingDAO();
-    private final ScheduleFlipfitService scheduleService  = new ScheduleFlipfitService();
+    private final ScheduleFlipfitImplService scheduleService  = new ScheduleFlipfitImplService();
 
-    private final SlotFlipfitService slotService = new SlotFlipfitService();
+    private final SlotFlipfitImplService slotService = new SlotFlipfitImplService();
 
     public boolean checkBookingOverlap(String customerId, Date date, String slotId){
         //return whether the customer has already booked a slot at same timing
