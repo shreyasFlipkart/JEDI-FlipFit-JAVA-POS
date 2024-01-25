@@ -40,6 +40,8 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
 
         // Add the GymCentre object to the list
         allGymCentres.add(centre);
+        System.out.println("Your Gym Center has been added, Send an admin approval request by pressing 5 to get you gym registered");
+
     }
 
     public List<GymCentre> getPendingGymCentreList() {
