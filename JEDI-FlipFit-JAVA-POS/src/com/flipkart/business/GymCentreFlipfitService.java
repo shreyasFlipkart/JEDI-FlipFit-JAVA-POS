@@ -39,4 +39,8 @@ public class GymCentreFlipfitService implements GymCentreFlipfitServiceInterface
         GymCentre gymCentre = gymCentreDAO.getGymCentreByCentreId(centreID);
         return gymCentre;
     }
+
+    public List<GymCentre> getCentersSortedByCity(){
+        return gymCentreDAO.getCentersSortedByCities();
+    }
 }

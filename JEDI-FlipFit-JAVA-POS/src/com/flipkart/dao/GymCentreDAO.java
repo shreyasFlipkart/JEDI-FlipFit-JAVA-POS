@@ -2,8 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.GymCentre;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GymCentreDAO implements GymCentreInterfaceDAO {
 
@@ -86,5 +85,13 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
     private String generateUniqueGymCentreId(String centreName) {
         // Implement logic to generate a unique gym centre ID based on your requirements
         return centreName + System.currentTimeMillis();
+    }
+
+    public List<GymCentre> getCentersSortedByCities(){
+        Comparator<GymCentre> compareByCity = (GymCentre g1, GymCentre g2) -> g1.getCity().compareTo(g2.getCity());
+
+        allGymCentres.sort(compareByCity);
+
+        return allGymCentres;
     }
 }

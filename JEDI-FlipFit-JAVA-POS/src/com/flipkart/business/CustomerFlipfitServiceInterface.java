@@ -23,4 +23,5 @@ public interface CustomerFlipfitServiceInterface {
 
     List<UserPlan> getCustomerPlan(String userName);
     boolean updatePassword(String customerId, String newPassword);
+    List<GymCentre> getCentersSortedByCities();
 }

@@ -243,7 +243,7 @@ public class CustomerFlipfitClient {
         String formattedDate = currentTime.format(myFormat);
         System.out.println(YELLOW_COLOR+"WELCOME "+userName+" !!\nWhat do you want to do\nLogin TIME: "+currentTime+RESET_COLOR);
         while(true){
-            System.out.println("1. View My Profile \n2. Edit My Profile \n3. Book a slot in a Gym \n4. View Bookings\n5. Cancel Bookings\n6. Go Back to previous menu");
+            System.out.println("1. View My Profile \n2. Edit My Profile \n3. View gyms by cities \n4. Book a slot in a Gym \n5. View Bookings\n6. Cancel Bookings\n7. Go Back to previous menu");
             int choice = scanner.nextInt();
             switch(choice){
                 case 1:
@@ -255,16 +255,19 @@ public class CustomerFlipfitClient {
                     editCustomerProfile(cust);
                     return;
                 case 3:
-                    bookSlotSubMenu(userName);
+                    displayCentersSortedByCities();
                     break;
                 case 4:
+                    bookSlotSubMenu(userName);
+                    break;
+                case 5:
                     printbookingsSubMenu(userName);
                     //printUserPlan(userName);
                     break;
-                case 5:
+                case 6:
                     cancelBookingSubMenu(userName);
                     break;
-                case 6:
+                case 7:
                     System.out.println(PREVIOUS_MENU_MESSAGE);
                     return;
                 default:
@@ -277,6 +280,11 @@ public class CustomerFlipfitClient {
     public boolean validateCredentials(String userName,String password){
         if (customerService.isUserValid(userName, password)) return true;
         else return false;
+    }
+
+    public void displayCentersSortedByCities(){
+        List<GymCentre> sortedByCities = customerService.getCentersSortedByCities();
+        util.printGymCentres(sortedByCities);
     }
 
 }

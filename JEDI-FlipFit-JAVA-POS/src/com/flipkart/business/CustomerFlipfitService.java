@@ -103,4 +103,8 @@ public class CustomerFlipfitService implements CustomerFlipfitServiceInterface {
         return false;
     }
 
+    public List<GymCentre> getCentersSortedByCities(){
+        return gymCentreService.getCentersSortedByCity();
+    }
+
 }
