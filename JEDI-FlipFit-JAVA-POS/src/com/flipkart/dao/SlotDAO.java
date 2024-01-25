@@ -11,6 +11,7 @@ public class SlotDAO implements SlotInterfaceDAO {
     private static List<Slot> slotList = new ArrayList<>();
 
     public SlotDAO() {
+
     }
 
     public List<Slot> getSlotList() {

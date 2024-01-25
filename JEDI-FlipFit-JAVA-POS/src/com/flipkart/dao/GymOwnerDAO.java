@@ -10,7 +10,9 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
     private static List<GymOwner> gymOwnerList = new ArrayList<>();
 
     public List<GymOwner> getGymOwnerList() {
-        return new ArrayList<>(gymOwnerList);
+
+        gymOwnerList.add(new GymOwner("123","name","name@email.com","1234123",1));
+        return gymOwnerList;
     }
 
     public void setGymOwnerList(List<GymOwner> gymOwnerList) {

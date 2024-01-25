@@ -18,6 +18,11 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
     private static List<Customer> allCustomers = new ArrayList<>();
 
+    public static void setAllCustomers(){
+        allCustomers.add(new Customer("12341","krish","krish@gmail.com","12345","1234567890","123412341234"));
+
+    }
+
     public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) throws RegistrationFailedException {
         try {
             // Assuming you have a method to generate a unique customer ID

@@ -7,7 +7,11 @@ import java.util.List;
 
 public class GymCentreDAO implements GymCentreInterfaceDAO {
 
-    private static List<GymCentre> allGymCentres = new ArrayList<>(2);
+    private static List<GymCentre> allGymCentres = new ArrayList<>();
+
+    public static void setAllGymCentres(){
+        allGymCentres.add(new GymCentre("456","123","flipfit","123res","Bangalore",12,12,1));
+    }
 
 
     public List<GymCentre> getAllCentresByOwmerId(String ownerId) {

@@ -1,8 +1,11 @@
 package com.flipkart.client;
 import com.flipkart.bean.Role;
 
-import java.util.*;
 
+import java.sql.SQLOutput;
+import java.util.Scanner;
+
+import static com.flipkart.constants.Constants.*;
 
 public class MainApplicationClient {
 
@@ -12,15 +15,10 @@ public class MainApplicationClient {
     private static CustomerClient customerClient = new CustomerClient();
     private static GymOwnerClient gymOwnerClient = new GymOwnerClient();
 
-    public static void main(String args[]){
-        mainPage();
-    }
-    private static void mainPage()
-    {
-        System.out.println("<------------ Welcome to the FlipFit Application ------------>");
-        System.out.println("Enter the Choice");
-        System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password\n5. Exit");
-        Scanner scanner=new Scanner(System.in);
+
+    private static void mainPage(){
+        System.out.println("Enter the Choice\n");
+        System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
         int choice = scanner.nextInt();
         switch (choice) {
             case 1:
@@ -31,24 +29,33 @@ public class MainApplicationClient {
                 break;
             case 3:
                 registration(3);
-                break;
             case 4:
-                updatePassword();
+                updatePassword(2);
                 break;
             case 5:
-                System.out.println("EXIT");
+                updatePassword(3);
+                break;
+            case 6:
+                System.out.println(EXIT_MESSAGE);
                 return;
+
+
             default:
-                System.out.println("INVALID CHOICE");
+                System.out.println(INVALID_CHOICE_ERROR);
                 break;
         }
-
+        mainPage();
     }
-    private static void login(){
 
+    private static void login(){
+        Scanner scanner = new Scanner(System.in);
         try {
-            System.out.println("Enter your Role (1. ADMIN/2. GYMOWNER/3. CUSTOMER) : ");
-            int role = scanner.nextInt();
+            System.out.println("Enter your Role (ADMIN/GYMOWNER/CUSTOMER) : ");
+            String curRole = scanner.next();
+            Role roleEnum = Role.valueOf(curRole.toUpperCase());
+
+            int role = roleEnum.ordinal()+1;
+
 
             System.out.println("Enter your UserName : ");
             String userName = scanner.next();
@@ -67,17 +74,17 @@ public class MainApplicationClient {
                     customerClient.customerLogin(userName,password);
                     break;
                 default:
-                    System.out.println("INVALID CHOICE");
+                    System.out.println(INVALID_CHOICE_ERROR);
                     break;
             }
         }catch (IllegalArgumentException e){
-            System.out.println("INVALID CHOICE");
+            System.out.println(INVALID_CHOICE_ERROR);
         }
     }
+
     private static void registration(int role){
 
         try {
-
             switch (role){
                 case 2:
                     customerClient.register();
@@ -92,12 +99,49 @@ public class MainApplicationClient {
         }catch (IllegalArgumentException e){
             System.out.println("INVALID CHOICE");
         }
+
     }
-    private static void updatePassword(){
-        System.out.println("Enter your updated Password :");
-        String updatedPassword = scanner.next();
+    private static void updatePassword(int role){
+
+        Scanner scanner=new Scanner(System.in);
+        switch (role){
+            case 2://customerClient
+                System.out.println("Enter the UserName of the Customer\n");
+                String customerUserId = scanner.next();
+                System.out.println("Enter the Password of the Customer\n");
+                String customerPassword = scanner.next();
+                if (customerClient.validateCredentials(customerUserId,customerPassword)) {
+                    System.out.println("Enter the new Password\n");
+                    String newPassword = scanner.next();
+                    customerClient.updatePassword(customerUserId,newPassword);
+
+
+                } else {
+                    System.out.println(RED_COLOR+"UserName or password doesn't match"+RESET_COLOR+'\n');
+                    System.out.println(EXIT_MESSAGE);
+                    return;
+                }
+                break;
+            case 3:
+                System.out.println("Enter the User Id of the Gym Owner\n");
+                String gymOwnerUserId = scanner.next();
+                System.out.println("Enter the Password of the Gym Owner\n");
+                String gymOwnerPassword = scanner.next();
+                break;
+            default:
+                System.out.println("INVALID CHOICE");
+                break;
+        }
+
+
+
 
         System.out.println("Password updated!");
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(WELCOME_MESSAGE);
+        mainPage();
     }
 }
