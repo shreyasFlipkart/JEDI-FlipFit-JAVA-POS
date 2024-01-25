@@ -3,12 +3,20 @@ package com.flipkart.dao;
 import com.flipkart.bean.Customer;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.UserInvalidException;
+import com.flipkart.utils.DBConnection;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.flipkart.constant.SQLConstants.*;
+
 public class CustomerDAO implements CustomerInterfaceDAO {
     private static CustomerDAO instance;
+
     public static CustomerDAO getInstance() {
         if (instance == null) {
             instance = new CustomerDAO();
@@ -16,66 +24,114 @@ public class CustomerDAO implements CustomerInterfaceDAO {
         return instance;
     }
 
-    private static List<Customer> allCustomers = new ArrayList<>();
-
-    public static void setAllCustomers(){
-        allCustomers.add(new Customer("12341","krish","krish@gmail.com","12345","1234567890","123412341234"));
-
-    }
-
     public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) throws RegistrationFailedException {
         try {
-            // Assuming you have a method to generate a unique customer ID
-            String customerId = generateUniqueCustomerId(userName);
+            Connection conn = DBConnection.connect();
+            PreparedStatement stmt = conn.prepareStatement(ADD_NEW_CUSTOMER);
+            stmt.setString(1, "46");
+            stmt.setString(2, userName);
+            stmt.setString(3, password);
+            stmt.setString(4, email);
+            stmt.setString(5, phoneNumber);
+            stmt.setString(6, cardNumber);
 
-            // Create a Customer object
-            Customer customer = new Customer(customerId, userName, email,password, phoneNumber, cardNumber);
+            stmt.executeUpdate();
+            stmt.close();
 
-            // Add the Customer object to the list
-            allCustomers.add(customer);
-        } catch (Exception e) {
+        } catch (SQLException exp) {
+            exp.printStackTrace();
             throw new RegistrationFailedException("Failed to register the user. Try again.");
+        } catch (Exception e) {
+            System.out.println("Oops! An error occurred. Try again later.");
         }
     }
 
     public boolean isUserValid(String userName, String password) throws UserInvalidException {
-        for (Customer customer : allCustomers) {
-            if (customer.getUserName().equals(userName) && customer.getPassword().equals(password)) {
+        try {
+            Connection conn = DBConnection.connect();
+            PreparedStatement stmt = conn.prepareStatement(CUSTOMER_LOGIN_QUERY);
+            stmt.setString(1, userName);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                stmt.close();
                 return true;
             }
-        }
-        throw new UserInvalidException("User is Invalid. Try again.");
-    }
-
-    public Customer getCustomerById(String userName) {
-        for (Customer customer : allCustomers) {
-            if (customer.getUserName().equals(userName)) {
-                return customer;
-            }
-        }
-        return null; // or throw an exception if not found
-    }
-
-    public boolean editCustomer(String customerId, String username, String email, String phoneNumber, String cardNumber){
-        for(Customer customer : allCustomers) {
-            if(customer.getUserID().equals(customerId) ) {
-                if(username!=null)customer.setUserName(username);
-                if(email!=null)customer.setEmail(email);
-                if(phoneNumber!=null)customer.setCustomerPhone(phoneNumber);
-                if(cardNumber!=null)customer.setCardDetails(cardNumber);
-                return true;
-            }
+            stmt.close();
+        } catch (SQLException exp) {
+            throw new UserInvalidException("User is Invalid. Try again.");
+        } catch (Exception exp) {
+            System.out.println("Oops! An error occurred. Try again later.");
         }
         return false;
     }
-    public boolean updatePassword(String customerName,String newPassword){
-        for(Customer customer: allCustomers){
-            if(customer.getUserName().equals(customerName)){
-                customer.setPassword(newPassword);
-                break;
-            }
+
+    public Customer getCustomerById(String userName) {
+        Customer customer = new Customer();
+        try {
+            Connection conn = DBConnection.connect();
+            PreparedStatement stmt = conn.prepareStatement(GET_CUSTOMER_BY_ID);
+            stmt.setString(1, userName);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            customer.setEmail(rs.getString("email"));
+            customer.setUserID(rs.getString("Id"));
+            customer.setPassword(rs.getString("password"));
+            customer.setUserName(rs.getString("name"));
+            customer.setCustomerPhone(rs.getString("phone"));
+            customer.setCardDetails(rs.getString("cardDetails"));
+
+            stmt.close();
+        } catch (SQLException exp) {
+            exp.printStackTrace();
+        } catch (Exception exp) {
+            exp.printStackTrace();
         }
-        return true;
+
+        return customer;
+    }
+
+    public boolean editCustomer(String customerId, String username, String email, String phoneNumber, String cardNumber) {
+        try {
+            Connection conn = DBConnection.connect();
+            PreparedStatement stmt = conn.prepareStatement(EDIT_CUSTOMER_QUERY);
+            stmt.setString(1, username);
+            stmt.setString(2, email);
+            stmt.setString(3, phoneNumber);
+            stmt.setString(4, cardNumber);
+            stmt.setString(5, customerId);
+
+            int rowsAffected = stmt.executeUpdate();
+            stmt.close();
+
+            return rowsAffected > 0;
+        } catch (SQLException exp) {
+            exp.printStackTrace();
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean updatePassword(String customerName, String newPassword) {
+        try {
+            Connection conn = DBConnection.connect();
+            PreparedStatement stmt = conn.prepareStatement(UPDATE_CUSTOMER_PASSWORD_QUERY);
+            stmt.setString(1, newPassword);
+            stmt.setString(2, customerName);
+
+            int rowsAffected = stmt.executeUpdate();
+            stmt.close();
+
+            return rowsAffected > 0;
+        } catch (SQLException exp) {
+            exp.printStackTrace();
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+
+        return false;
     }
 
     private String generateUniqueCustomerId(String userName) {
