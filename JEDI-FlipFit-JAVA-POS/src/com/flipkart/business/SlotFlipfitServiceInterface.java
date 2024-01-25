@@ -15,6 +15,7 @@ public interface SlotFlipfitServiceInterface {
      * @return List of slots associated with the specified gym center
      */
     List<Slot> getAllSlotsByCentre(String centreID);
+    boolean deleteSlotById(String slotId);
 
     /**
      * Retrieves details of a specific slot based on the provided slot ID.

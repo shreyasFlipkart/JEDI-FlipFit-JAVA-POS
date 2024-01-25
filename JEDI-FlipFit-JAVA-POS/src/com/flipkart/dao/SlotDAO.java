@@ -61,4 +61,18 @@ public class SlotDAO implements SlotInterfaceDAO {
     private String generateUniqueSlotId(String centreID, LocalTime time) {
         return centreID + "-" + time.toString();
     }
+
+    public boolean deleteSlotById(String slotId) {
+        boolean flag = false;
+        for(Slot slot : slotList){
+            if(slot.getSlotId().equals(slotId)) {
+                slotList.remove(slot);
+                flag = true;
+                break;
+            }
+        }
+
+        return flag;
+    }
+
 }

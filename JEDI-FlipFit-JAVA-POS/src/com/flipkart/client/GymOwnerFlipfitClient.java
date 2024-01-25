@@ -1,6 +1,7 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.GymCentre;
+import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Slot;
 import com.flipkart.dao.GymOwnerDAO;
 import com.flipkart.business.*;
@@ -25,28 +26,16 @@ public class GymOwnerFlipfitClient {
     private SlotFlipfitServiceInterface slotService = new SlotFlipfitService();
     private GymCentreFlipfitServiceInterface gymCentreService = new GymCentreFlipfitService();
 
-
-
-
     public boolean gymOwnerLogin(String userName, String password) {
         if (gymOwnerService.loginGymOwner(userName,password)) {
             System.out.println("Successfully logged in");
             gymOwnerClientMainPage(userName);
         } else {
-            new LoginFailedException("Gymowner Login Failed");
+            new LoginFailedException("Gym Owner Login Failed");
             return false;
         }
         return true;
     }
-    public boolean validateCredentials(String userName,String password){
-        if (gymOwnerService.loginGymOwner(userName, password)) return true;
-        else return false;
-    }
-
-    public void registerGymOwnerManually(String userid, String userName, String password, String email, String panNumber, String cardNumber){
-        gymOwnerService.registerGymOwner(userid,userName,password,email,panNumber,cardNumber);
-    }
-
 
     public void register() {
         System.out.println("Enter your UserName");
@@ -75,29 +64,46 @@ public class GymOwnerFlipfitClient {
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = currentTime.format(myFormat);
         System.out.println(YELLOW_COLOR+"WELCOME "+gymOwnerId+" !!\nWhat you what to do\nLogin TIME: "+currentTime+RESET_COLOR);
-        while(true){
-            System.out.println("" +
-                    "0. View all my Gym Centres\n" +
-                    "1. Sending Gym Owner Approval Request\n" +
-                    "2. Add a new Gym Center\n" +
-                    "3. Send a Gym Centre Approval Request to Admin\n" +
-                    "4. Add Slots to a Gym Centre\n" +
-                    "5. Go Back to Previous Menu"
-            );
-            int choice = scanner.nextInt();
-            switch (choice){
-                /* Take input from user for all service parameters ( Make the menu ) */
 
+        boolean isContinue = true;
+
+        while(isContinue){
+            System.out.println("" +
+                    "0: View Profile\n" +
+                    "1: Edit Profile\n" +
+                    "2. View all Gym Centres\n" +
+                    "3. Sending Gym Owner Approval Request\n" +
+                    "4. Add a new Gym Center\n" +
+                    "5. Send a Gym Centre Approval Request to Admin\n" +
+                    "6. Add Slots to a Gym Centre\n" +
+                    "7: View All Slots by Centre\n" +
+                    "8: Delete Slot\n" +
+                    "9: Exit"
+            );
+
+            int choice = scanner.nextInt();
+
+
+            switch (choice) {
+                /* Take input from user for all service parameters ( Make the menu ) */
                 case 0:
-                    List<GymCentre> allGymCentres = gymCentreService.getAllCentresByOwnerId(gymOwnerId);
+                    GymOwner owner = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
+                    if (owner.getUserID().equals("none")) System.out.println("User not found");
+                    System.out.println("Profile: \nUsername: " + owner.getUserName() + "\nPAN Card: " + owner.getPanNumber() + "\nCard Number: " + owner.getCardDetails());
+                    break;
+                case 1:
+                    //edit profile
+                    editGymOwnerProfile(gymOwnerId);
+                    break;
+                case 2:
+                    List<GymCentre> allGymCentres = gymCentreService.getAllCentresByOwmerId(gymOwnerId);
                     util.printGymCentres(allGymCentres);
                     break;
-
-                case 1:
+                case 3:
                     gymOwnerService.requestGymOwnerApproval(gymOwnerId);
                     break;
 
-                case 2:
+                case 4:
 
                     System.out.println("Enter gym centre id: ");
                     String gymId = scanner.next();
@@ -108,8 +114,23 @@ public class GymOwnerFlipfitClient {
                     System.out.println("Enter Gym Centre GSTIN: ");
                     String gstin = scanner.next();
 
-                    System.out.println("Enter Gym Centre city: ");
-                    String city = scanner.next();
+                    System.out.println("Enter Gym Centre Location:\n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. South Bangalore \n");
+                    int gymLocationChoice = scanner.nextInt();
+                    String city = "Bangalore";
+                    switch (gymLocationChoice) {
+                        case 1:
+                            city = "North Bangalore";
+                            break;
+                        case 2:
+                            city = "South Bangalore";
+                            break;
+                        case 3:
+                            city = "West Bangalore";
+                            break;
+                        case 4:
+                            city = "East Bangalore";
+                            break;
+                    }
 
                     System.out.println("Enter Gym Centre capacity: ");
                     int capacity = scanner.nextInt();
@@ -130,7 +151,7 @@ public class GymOwnerFlipfitClient {
                     );
                     break;
 
-                case 3:
+                case 5:
 
                     System.out.println("Enter Gym Centre Id: ");
                     String gymCentreId = scanner.next();
@@ -138,17 +159,17 @@ public class GymOwnerFlipfitClient {
                     gymCentreService.requestGymCentreApproval(gymCentreId);
                     break;
 
-                case 4:
+                case 6:
 
                     boolean isAdding = true;
                     String centreId = null;
 
                     List<Slot> newSlotList = new ArrayList<>();
                     while (isAdding) {
-                        System.out.println("Enter new slot id: ");
+                        System.out.println("Enter new slot ID: ");
                         String slotId = scanner.next();
 
-                        System.out.println("Enter Gym Centre Id: ");
+                        System.out.println("Enter Gym Centre ID: ");
                         centreId = scanner.next();
 
                         System.out.println("Enter time in 24h format (hh:mm:ss) : ");
@@ -167,23 +188,91 @@ public class GymOwnerFlipfitClient {
                         String addChoice = scanner.next();
                         addChoice = addChoice.toLowerCase();
 
-                        if(addChoice.equals("n") || addChoice.equals("no")) {
+                        if (addChoice.equals("n") || addChoice.equals("no")) {
                             isAdding = false;
                         }
                     }
 
                     slotService.addSlotsForGym(centreId, newSlotList);
                     break;
-                case 5:
-                    System.out.println(PREVIOUS_MENU_MESSAGE);
-                    return;
+                case 7:
+                    System.out.println("Enter Gym Centre ID: ");
+                    String id = scanner.next();
+                    List<Slot> slotList = slotService.getAllSlotsByCentre(id);
+                    for (Slot slot : slotList) {
+                        System.out.println("Slot ID: " + slot.getSlotId() + ", Centre ID: " + slot.getCentreID() + ", Time: " + slot.getTime());
+                    }
+                    break;
+
+                case 8:
+                    System.out.println("Enter Slot ID: ");
+                    String slotIdToDelete = scanner.next();
+                    boolean flag = slotService.deleteSlotById(slotIdToDelete);
+                    if (flag) System.out.println("Successfully Deleted");
+                    else System.out.println("Slot not found");
+
+                    break;
+
+                case 9:
+                    System.out.println("Do you wish to continue? (y/n)");
+                    String ans = scanner.next();
+                    if(ans.equals("n") || ans.equals("no")) isContinue = false;
+                    break;
+
                 default:
                     System.out.println(INVALID_CHOICE_ERROR);
                     break;
             }
+
         }
     }
 
+    public void editGymOwnerProfile(String gymOwnerId){
+
+        System.out.println(YELLOW_COLOR+"WELCOME TO EDIT PROFILE");
+        System.out.println(YELLOW_COLOR+"Select what you want to edit");
+        System.out.println("1. Edit user name\n2. Edit email\n3. Edit card details\n4. Go Back");
+        int choice = scanner.nextInt();
+
+        GymOwner gymOwner = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
+        boolean status = false;
+        switch(choice){
+            case 1:
+                System.out.println("Enter new user name: ");
+                String name = scanner.next();
+                status = gymOwnerService.editProfile(gymOwner.getUserID(), name, null, null);
+                break;
+            case 2:
+                System.out.println("Enter new email: ");
+                String email = scanner.next();
+                status = gymOwnerService.editProfile(gymOwner.getUserID(), null, email, null);
+                break;
+            case 3:
+                System.out.println("Enter new card number: ");
+                String cardNumber = scanner.next();
+                status = gymOwnerService.editProfile(gymOwner.getUserID(), null, null, cardNumber);
+                break;
+            case 4:
+                gymOwnerClientMainPage(gymOwner.getUserID());
+                return;
+            default:
+                System.out.println(INVALID_CHOICE_ERROR);
+                break;
+        }
+
+        if(status){
+            System.out.println(GREEN_COLOR+"Successfully edited gym owner details");
+        }else{
+            System.out.println(RED_COLOR+"Couldn't edit customer details");
+        }
+
+        editGymOwnerProfile(gymOwner.getUserID());
+    }
+
+    public boolean validateCredentials(String userName,String password){
+        if (gymOwnerService.loginGymOwner(userName, password)) return true;
+        else return false;
+    }
 
 
 }

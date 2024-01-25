@@ -45,4 +45,7 @@ public interface GymOwnerFlipfitServiceInterface {
      * @param cardNumber The card number associated with the gym owner
      */
     void registerGymOwner(String userId, String userName, String password, String email, String panNumber, String cardNumber);
+    GymOwner viewGymOwnerProfile(String gymOwnerId);
+
+    boolean editProfile(String gymOwnerId, String username, String email, String cardNumber);
 }

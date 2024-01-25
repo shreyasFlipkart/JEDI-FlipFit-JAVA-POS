@@ -55,4 +55,6 @@ public interface GymCentreFlipfitServiceInterface {
      */
     GymCentre getGymCentreById(String centreID);
     List<GymCentre> getCentersSortedByCity();
+
+    List<GymCentre> getAllCentresByOwmerId(String gymOwnerId);
 }
