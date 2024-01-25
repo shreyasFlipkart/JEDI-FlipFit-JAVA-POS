@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Scanner;
 
 import static com.flipkart.client.FlipfitClient.scanner;
 import static com.flipkart.constants.Constants.*;
@@ -80,7 +81,26 @@ public class CustomerFlipfitClient {
     private void bookSlotSubMenu(String userName){
         //Get Location for filter
         System.out.println("Provide Location to search :");
-        String location = scanner.next();
+        System.out.println("Choose the location: \n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. East Bangalore \n");
+        int choice = scanner.nextInt();
+        String location = null;
+        switch (choice){
+            case 1:
+                location = "North Bangalore";
+                break;
+            case 2:
+                location = "South Bangalore";
+                break;
+            case 3:
+                location = "West Bangalore";
+                break;
+            case 4:
+                location = "East Bangalore";
+                break;
+            default:
+                break;
+
+        }
         List<GymCentre> centreListByLocation = customerService.getAllGymCenterDetailsByCity(location);
         // Print All Centres
         util.printGymCentres(centreListByLocation);
@@ -107,14 +127,6 @@ public class CustomerFlipfitClient {
         Date sqlDate = null;
         try {
             String dat = scanner.next();
-//            if(Validators.isDateValid(dat)){
-//                date = sdf.parse(dat);
-//                sqlDate = new Date(date.getTime());
-//            }
-//            else{
-//                new DataEntryException();
-//                sqlDate = selectDate();
-//            }
             date = sdf.parse(dat);
             sqlDate = new Date(date.getTime());
         } catch (ParseException e) {

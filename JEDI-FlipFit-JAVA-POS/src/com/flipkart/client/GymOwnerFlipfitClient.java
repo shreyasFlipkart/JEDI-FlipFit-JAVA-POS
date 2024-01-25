@@ -114,7 +114,7 @@ public class GymOwnerFlipfitClient {
                     System.out.println("Enter Gym Centre GSTIN: ");
                     String gstin = scanner.next();
 
-                    System.out.println("Enter Gym Centre Location:\n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. South Bangalore \n");
+                    System.out.println("Enter Gym Centre Location:\n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. East Bangalore \n");
                     int gymLocationChoice = scanner.nextInt();
                     String city = "Bangalore";
                     switch (gymLocationChoice) {

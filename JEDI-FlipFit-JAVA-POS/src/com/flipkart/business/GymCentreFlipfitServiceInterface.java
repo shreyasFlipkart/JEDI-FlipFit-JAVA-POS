@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface GymCentreFlipfitServiceInterface {
 
+    public List<GymCentre> viewAllGymCentres();
     /**
      * Retrieves all gym centers associated with a specific owner ID.
      *

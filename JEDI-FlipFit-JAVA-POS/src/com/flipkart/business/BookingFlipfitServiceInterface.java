@@ -24,7 +24,7 @@ public interface BookingFlipfitServiceInterface {
      * @param userId     The ID of the user making the booking
      * @param scheduleID The ID of the schedule for which the booking is made
      */
-    void addBooking(String userId, String scheduleID);
+    String addBooking(String userId, String scheduleID);
 
     /**
      * Retrieves a list of bookings associated with a specific customer ID.

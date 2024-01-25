@@ -14,7 +14,7 @@ public class BookingDAO implements BookingInterfaceDAO {
 
     ScheduleDAO scheduleDAO = new ScheduleDAO();
 
-    public void addBooking(String userName, String scheduleID) throws BookingFailedException {
+    public String addBooking(String userName, String scheduleID) throws BookingFailedException {
         try {
             // Assuming you have a method to generate a unique booking ID
             String bookingId = generateUniqueBookingId(userName, scheduleID);
@@ -26,6 +26,7 @@ public class BookingDAO implements BookingInterfaceDAO {
 
             // Add booking details to the map
             bookingDetails.computeIfAbsent(userName, k -> new ArrayList<>()).add(scheduleID);
+            return bookingId;
         } catch (Exception exp) {
             throw new BookingFailedException("Booking failed for current slot. Try again later.");
         }

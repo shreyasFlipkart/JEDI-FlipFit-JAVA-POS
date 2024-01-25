@@ -22,18 +22,18 @@ public class BookingFlipfitService implements BookingFlipfitServiceInterface {
         Slot slot = slotService.getSlotByID(slotId);
         return bookingDAO.checkBookingOverlap(customerId,date,slot.getTime());
     }
-    public void addBooking(String userName, String scheduleID) {
+    public String addBooking(String userName, String scheduleID) {
         try {
             boolean isAvailable = scheduleService.modifySchedule(scheduleID,-1);
             if(!isAvailable){
                 System.out.println("No seats available for the booking");
-                return;
+                return "";
             }
-            bookingDAO.addBooking(userName, scheduleID);
+            return bookingDAO.addBooking(userName, scheduleID);
         } catch (BookingFailedException e) {
             System.out.println(e.getMessage());
         }
-
+        return "";
     }
 
     public List<Booking> getBookingByCustomerId(String customerId){

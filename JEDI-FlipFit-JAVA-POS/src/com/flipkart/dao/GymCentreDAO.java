@@ -9,6 +9,9 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
     private static List<GymCentre> allGymCentres = new ArrayList<>();
 
 
+    public List<GymCentre> getGymCentreList(){
+        return allGymCentres;
+    }
     public List<GymCentre> getAllCentresByOwmerId(String ownerId) {
         List<GymCentre> ownerGymCentres = new ArrayList<>();
         for (GymCentre gymCentre : allGymCentres) {

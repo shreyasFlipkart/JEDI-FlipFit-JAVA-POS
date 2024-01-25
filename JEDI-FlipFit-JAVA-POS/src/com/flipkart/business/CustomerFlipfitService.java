@@ -12,12 +12,13 @@ import com.flipkart.utils.UserPlan;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 import static com.flipkart.constants.Constants.*;
 
 public class CustomerFlipfitService implements CustomerFlipfitServiceInterface {
-    private static CustomerFlipfitService instance;
+    private static CustomerFlipfitService instance = null;
     public static CustomerFlipfitService getInstance() {
         if (instance == null) {
             instance = new CustomerFlipfitService();
@@ -28,7 +29,7 @@ public class CustomerFlipfitService implements CustomerFlipfitServiceInterface {
     private GymCentreFlipfitServiceInterface gymCentreService = new GymCentreFlipfitService();
     private BookingFlipfitServiceInterface bookingService = new BookingFlipfitService();
     private ScheduleFlipfitServiceInterface scheduleService = new ScheduleFlipfitService();
-
+    private PaymentFlipfitServiceInterface paymentService = new PaymentFlipfitFlipfitService();
     private SlotFlipfitServiceInterface slotService = new SlotFlipfitService();
 
     public List<GymCentre> getAllGymCenterDetailsByCity(String city){
@@ -55,14 +56,16 @@ public class CustomerFlipfitService implements CustomerFlipfitServiceInterface {
             System.out.println(INVALID_SLOT);
             return false;
         }
-        String scheduleId = scheduleService.getOrCreateSchedule(slotId,date).getScheduleID();
+//        String scheduleId = scheduleService.getOrCreateSchedule(slotId,date).getScheduleID();
+        String scheduleId = String.valueOf(UUID.randomUUID());
         //create booking
         boolean isOverlap = bookingService.checkBookingOverlap(userName,date,slotId);
         if(isOverlap) {
             System.out.println(RED_COLOR + "There exists a conflicting booking, First cancel it!!!!" + RESET_COLOR);
             return false;
         }
-        bookingService.addBooking(userName, scheduleId);
+        String bookingId = bookingService.addBooking(userName, scheduleId);
+        paymentService.makePayment(userName, centreId, bookingId);
         return true;
     }
 
@@ -71,6 +74,7 @@ public class CustomerFlipfitService implements CustomerFlipfitServiceInterface {
     public void cancelBookingbyID(String bookingID){
         //cancel a booking
         bookingService.cancelBooking(bookingID);
+        paymentService.initiateRefund(bookingID);
     }
 
     public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) {

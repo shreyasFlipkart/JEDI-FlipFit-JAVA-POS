@@ -13,6 +13,10 @@ public class GymCentreFlipfitService implements GymCentreFlipfitServiceInterface
     private static GymCentreInterfaceDAO gymCentreDAO = new GymCentreDAO();
     private static ScheduleFlipfitServiceInterface scheduleService = new ScheduleFlipfitService();
 
+    public List<GymCentre> viewAllGymCentres(){
+        return gymCentreDAO.getGymCentreList();
+    }
+
     public List<GymCentre> getAllCentresByOwnerId(String gymOwnerId) {
         return gymCentreDAO.getAllCentresByOwmerId(gymOwnerId);
     }
