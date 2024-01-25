@@ -43,6 +43,11 @@ public class GymOwnerFlipfitClient {
         else return false;
     }
 
+    public void registerGymOwnerManually(String userid, String userName, String password, String email, String panNumber, String cardNumber){
+        gymOwnerService.registerGymOwner(userid,userName,password,email,panNumber,cardNumber);
+    }
+
+
     public void register() {
         System.out.println("Enter your UserName");
         String userName = scanner.next();
