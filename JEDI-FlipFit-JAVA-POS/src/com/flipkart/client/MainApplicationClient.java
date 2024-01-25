@@ -2,7 +2,7 @@ package com.flipkart.client;
 import com.flipkart.bean.Role;
 
 
-import java.sql.SQLOutput;
+
 import java.util.Scanner;
 
 import static com.flipkart.constants.Constants.*;
@@ -16,10 +16,13 @@ public class MainApplicationClient {
     private static GymOwnerClient gymOwnerClient = new GymOwnerClient();
 
 
+
+
     private static void mainPage(){
         System.out.println("Enter the Choice\n");
         System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
         int choice = scanner.nextInt();
+        customerClient.registerCustomerManually("Shreyas","Ketkar","1","2","3");
         switch (choice) {
             case 1:
                 login();
@@ -115,7 +118,6 @@ public class MainApplicationClient {
                     String newPassword = scanner.next();
                     customerClient.updatePassword(customerUserId,newPassword);
 
-
                 } else {
                     System.out.println(RED_COLOR+"UserName or password doesn't match"+RESET_COLOR+'\n');
                     System.out.println(EXIT_MESSAGE);
@@ -132,8 +134,6 @@ public class MainApplicationClient {
                 System.out.println("INVALID CHOICE");
                 break;
         }
-
-
 
 
         System.out.println("Password updated!");

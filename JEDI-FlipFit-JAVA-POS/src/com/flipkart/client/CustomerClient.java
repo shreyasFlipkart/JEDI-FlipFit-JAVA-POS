@@ -62,6 +62,10 @@ public class CustomerClient {
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
         customerClientMainPage(userName);
     }
+    public void registerCustomerManually(String userName,String password, String email, String phoneNumber,String cardNumber ){
+        customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
+
+    }
 
     private void printSlots(List<Slot> slots){
         System.out.println(DASHED_LINE);
