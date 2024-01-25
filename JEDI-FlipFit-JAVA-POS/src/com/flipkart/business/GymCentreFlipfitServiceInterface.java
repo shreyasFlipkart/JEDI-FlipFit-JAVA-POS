@@ -1,4 +1,12 @@
-public interface GymCentreServiceInterface {
+package com.flipkart.business;
+import com.flipkart.bean.GymCentre;
+import com.flipkart.bean.Slot;
+
+import java.sql.Date;
+import java.util.List;
+
+
+public interface GymCentreFlipfitServiceInterface {
 
     /**
      * Retrieves all gym centers associated with a specific owner ID.

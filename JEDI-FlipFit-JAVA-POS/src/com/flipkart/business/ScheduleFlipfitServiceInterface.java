@@ -1,10 +1,18 @@
+package com.flipkart.business;
+
+import com.flipkart.bean.Schedule;
+import com.flipkart.bean.Slot;
+
+import java.sql.Date;
+import java.util.List;
+
 /**
  * This interface defines the service operations related to Schedule functionality.
  * It includes methods for creating schedules, retrieving schedules by date and slot ID,
  * modifying schedules, checking availability, getting all available slots by date,
  * and getting or creating a schedule for a specific slot and date.
  */
-public interface ScheduleServiceInterface {
+public interface ScheduleFlipfitServiceInterface {
 
     /**
      * Creates a new schedule for a specific date and slot.
@@ -22,7 +30,7 @@ public interface ScheduleServiceInterface {
      * @param date   The date for which the schedule is retrieved
      * @return Schedule object representing the details of the schedule
      */
-    Schedule getScheduleByDateAndSlotId(String slotId, Date date);
+    Schedule getScheduleByDateAndSlotId(String SlotId, java.sql.Date date);
 
     /**
      * Modifies a schedule based on the provided schedule ID and action.

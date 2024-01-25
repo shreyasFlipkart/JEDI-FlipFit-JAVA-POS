@@ -1,9 +1,15 @@
+package com.flipkart.business;
+
+import com.flipkart.bean.GymOwner;
+
+import java.util.List;
+
 /**
  * This interface defines the service operations related to Gym Owner functionality.
  * It includes methods for requesting gym owner approval, viewing all gym owners,
  * logging in gym owners, and registering new gym owners.
  */
-public interface GymOwnerServiceInterface {
+public interface GymOwnerFlipfitServiceInterface {
 
     /**
      * Sends a request for approval for a specific gym owner.

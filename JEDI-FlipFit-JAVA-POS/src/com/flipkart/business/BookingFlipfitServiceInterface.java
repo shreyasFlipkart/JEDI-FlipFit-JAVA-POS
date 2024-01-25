@@ -1,4 +1,12 @@
-public interface BookingServiceInterface {
+package com.flipkart.business;
+
+import com.flipkart.bean.Booking;
+import com.flipkart.utils.UserPlan;
+
+import java.util.Date;
+import java.util.List;
+
+public interface BookingFlipfitServiceInterface {
 
     /**
      * Checks if a booking overlap exists for a customer on a specific date and slot.
