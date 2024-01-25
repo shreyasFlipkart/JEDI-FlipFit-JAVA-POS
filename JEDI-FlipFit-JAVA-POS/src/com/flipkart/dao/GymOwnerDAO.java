@@ -11,7 +11,7 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
 
     public List<GymOwner> getGymOwnerList() {
 
-        gymOwnerList.add(new GymOwner("123","name","name@email.com","1234123",1));
+//        gymOwnerList.add(new GymOwner("123","name","name@email.com","1234123",1));
         return gymOwnerList;
     }
 
