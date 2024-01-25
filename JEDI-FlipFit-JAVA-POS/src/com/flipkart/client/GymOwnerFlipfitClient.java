@@ -83,6 +83,15 @@ public class GymOwnerFlipfitClient {
                     "9: Exit"
             );
 
+            GymOwner g = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
+            if(g.getIsApproved()==0){
+                System.out.println("You are currently not approved. Please press 3 to send a approval request.");
+            }
+
+            if(g.getIsApproved()==2){
+                System.out.println("Your approval request is under process.");
+            }
+
             int choice = scanner.nextInt();
 
 
