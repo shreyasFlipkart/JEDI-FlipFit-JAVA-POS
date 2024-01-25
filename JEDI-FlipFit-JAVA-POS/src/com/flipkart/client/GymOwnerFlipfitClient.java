@@ -57,7 +57,9 @@ public class GymOwnerFlipfitClient {
         gymOwnerClientMainPage(userName);
     }
 
-
+    public void registerGymOwnerManually(String userid, String userName, String password, String email, String panNumber, String cardNumber){
+        gymOwnerService.registerGymOwner(userid,userName,password,email,panNumber,cardNumber);
+    }
 
     public void gymOwnerClientMainPage(String gymOwnerId) {
         LocalDateTime currentTime = LocalDateTime.now();
