@@ -11,7 +11,7 @@ import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.GymOwner;
 
 import java.util.List;
-public interface AdminServiceInterface {
+public interface AdminFlipfitServiceInterface {
 
     /**
      * Approves or disapproves a gym center based on the provided gym center ID and approval status.

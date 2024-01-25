@@ -1,11 +1,12 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.Booking;
+import com.flipkart.utils.UserPlan;
 
 import java.util.Date;
 import java.util.List;
 
-public interface BookingServiceInterface {
+public interface BookingFlipfitServiceInterface {
 
     /**
      * Checks if a booking overlap exists for a customer on a specific date and slot.
@@ -46,5 +47,5 @@ public interface BookingServiceInterface {
      * @param customerId The ID of the customer for whom plans are retrieved
      * @return List of user plans for the customer
      */
-    //List<UserPlan> getCustomerPlan(String customerId);
+    List<UserPlan> getCustomerPlan(String customerId);
 }

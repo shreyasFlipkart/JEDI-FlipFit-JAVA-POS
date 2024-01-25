@@ -6,7 +6,7 @@ package com.flipkart.business; /**
 import com.flipkart.bean.Slot;
 
 import java.util.List;
-public interface SlotServiceInterface {
+public interface SlotFlipfitServiceInterface {
 
     /**
      * Retrieves all slots associated with a specific gym center.
