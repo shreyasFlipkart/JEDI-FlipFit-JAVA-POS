@@ -75,6 +75,26 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
             }
         }
     }
+    public boolean editGymOwner(String gymOwnerId, String username, String email, String cardNumber){
+        for(GymOwner gymOwner : gymOwnerList) {
+            if(gymOwner.getUserID().equals(gymOwnerId)) {
+                if(username!=null)gymOwner.setUserName(username);
+                if(email!=null)gymOwner.setEmail(email);
+                if(cardNumber!=null)gymOwner.setCardDetails(cardNumber);
+                return true;
+            }
+        }
+        return false;
+    }
+    public GymOwner sendProfileInfo(String gymOwnerId){
+        for (GymOwner owner : gymOwnerList) {
+            if (owner.getUserID().equals(gymOwnerId)) {
+                return owner;
+            }
+        }
+
+        return new GymOwner("-1", "None", "none", "none", "none", "none");
+    }
 
     private String generateUniqueGymOwnerId(String userName) {
         // Implement logic to generate a unique GymOwner ID based on your requirements

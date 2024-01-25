@@ -43,4 +43,9 @@ public class GymCentreFlipfitService implements GymCentreFlipfitServiceInterface
     public List<GymCentre> getCentersSortedByCity(){
         return gymCentreDAO.getCentersSortedByCities();
     }
+
+    @Override
+    public List<GymCentre> getAllCentresByOwmerId(String gymOwnerId) {
+        return gymCentreDAO.getAllCentresByOwmerId(gymOwnerId);
+    }
 }

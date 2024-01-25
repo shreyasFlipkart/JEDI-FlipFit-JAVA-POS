@@ -29,4 +29,13 @@ public class GymOwnerFlipfitService implements GymOwnerFlipfitServiceInterface {
     public void registerGymOwner(String userId,String userName, String password, String email, String panNumber,String cardNumber) {
         gymOwnerDAO.registerGymOwner(new GymOwner(userId,userName,email,password,panNumber,cardNumber));
     }
+    public boolean editProfile(String gymOwnerId, String username, String email, String cardNumber){
+        return gymOwnerDAO.editGymOwner(gymOwnerId, username, email, cardNumber);
+    }
+    public GymOwner viewGymOwnerProfile(String gymOwnerId){
+        return gymOwnerDAO.sendProfileInfo(gymOwnerId);
+    }
+
+
 }
+
