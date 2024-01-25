@@ -71,7 +71,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
     public List<GymCentre> getGymCentreListByCity(String city) {
         List<GymCentre> allCentreByCity = new ArrayList<>();
         for (GymCentre gymCentre : allGymCentres) {
-            if (gymCentre.getCity().equals(city)) {
+            if (gymCentre.getCity().equals(city) && gymCentre.getIsApproved()==1) {
                 allCentreByCity.add(gymCentre);
             }
         }
@@ -86,8 +86,16 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
     public List<GymCentre> getCentersSortedByCities(){
         Comparator<GymCentre> compareByCity = (GymCentre g1, GymCentre g2) -> g1.getCity().compareTo(g2.getCity());
 
-        allGymCentres.sort(compareByCity);
+        List<GymCentre> allCentreByCity = new ArrayList<>();
 
-        return allGymCentres;
+        for (GymCentre gymCentre : allGymCentres) {
+            if (gymCentre.getIsApproved()==1) {
+                allCentreByCity.add(gymCentre);
+            }
+        }
+
+        allCentreByCity.sort(compareByCity);
+
+        return allCentreByCity;
     }
 }
