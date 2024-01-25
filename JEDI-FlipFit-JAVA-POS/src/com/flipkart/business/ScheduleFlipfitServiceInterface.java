@@ -12,7 +12,7 @@ import java.util.List;
  * modifying schedules, checking availability, getting all available slots by date,
  * and getting or creating a schedule for a specific slot and date.
  */
-public interface ScheduleServiceInterface {
+public interface ScheduleFlipfitServiceInterface {
 
     /**
      * Creates a new schedule for a specific date and slot.

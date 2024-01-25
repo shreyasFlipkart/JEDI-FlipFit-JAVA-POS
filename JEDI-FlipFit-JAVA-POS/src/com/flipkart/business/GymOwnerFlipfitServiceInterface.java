@@ -4,7 +4,7 @@ import com.flipkart.bean.GymOwner;
 
 import java.util.List;
 
-public interface GymOwnerServiceInterface {
+public interface GymOwnerFlipfitServiceInterface {
 
     void requestGymOwnerApproval(String gymOwnerId);
     List<GymOwner> viewAllGymOwners();

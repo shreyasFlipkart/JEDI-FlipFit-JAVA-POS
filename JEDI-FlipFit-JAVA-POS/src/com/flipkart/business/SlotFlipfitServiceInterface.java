@@ -4,7 +4,7 @@ import com.flipkart.bean.Slot;
 
 import java.util.List;
 
-public interface SlotServiceInterface {
+public interface SlotFlipfitServiceInterface {
     List<Slot> getAllSlotsByCentre(String centreID);
     Slot getSlotByID(String slotID);
     List<Slot> getSlotList();

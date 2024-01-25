@@ -9,7 +9,7 @@ import com.flipkart.utils.UserPlan;
 import java.sql.Date;
 import java.util.List;
 
-public interface CustomerServiceInterface {
+public interface CustomerFlipfitServiceInterface {
     List<GymCentre> getAllGymCenterDetailsByCity(String city);
     List<Slot> getAvailableSlots(String centreID, Date date);
     List<Booking> getCustomerBookings(String customerId);

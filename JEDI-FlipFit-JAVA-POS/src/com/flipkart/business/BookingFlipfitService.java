@@ -6,26 +6,25 @@ import com.flipkart.bean.Slot;
 import com.flipkart.exceptions.BookingFailedException;
 import com.flipkart.utils.UserPlan;
 
-import java.awt.print.Book;
 import java.util.Date;
 import java.util.List;
 
 
-public class BookingService implements BookingServiceInterface {
+public class BookingFlipfitService implements BookingFlipfitServiceInterface {
 
     private final BookingDAO bookingDAO = new BookingDAO();
-    private final ScheduleService scheduleService  = new ScheduleService();
+    private final ScheduleFlipfitService scheduleFlipfitService = new ScheduleFlipfitService();
 
-    private final SlotService slotService = new SlotService();
+    private final SlotFlipfitService slotFlipfitService = new SlotFlipfitService();
 
     public boolean checkBookingOverlap(String customerId, Date date, String slotId){
         //return whether the customer has already booked a slot at same timing
-        Slot slot = slotService.getSlotByID(slotId);
+        Slot slot = slotFlipfitService.getSlotByID(slotId);
         return bookingDAO.checkBookingOverlap(customerId,date,slot.getTime());
     }
     public void addBooking(String userName, String scheduleID) {
         try {
-            boolean isAvailable = scheduleService.modifySchedule(scheduleID,-1);
+            boolean isAvailable = scheduleFlipfitService.modifySchedule(scheduleID,-1);
             if(!isAvailable){
                 System.out.println("No seats available for the booking");
                 return;
@@ -55,7 +54,7 @@ public class BookingService implements BookingServiceInterface {
         try {
             Booking booking  = bookingDAO.getBookingByBookingId(bookingID);
             bookingDAO.cancelBookingById(bookingID);
-            scheduleService.modifySchedule(booking.getScheduleID(),1);
+            scheduleFlipfitService.modifySchedule(booking.getScheduleID(),1);
         } catch (BookingFailedException e) {
             System.out.println(e.getMessage());
         }

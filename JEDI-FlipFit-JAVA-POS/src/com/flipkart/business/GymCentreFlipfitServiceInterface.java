@@ -6,7 +6,7 @@ import com.flipkart.bean.Slot;
 import java.sql.Date;
 import java.util.List;
 
-public interface GymCentreServiceInterface {
+public interface GymCentreFlipfitServiceInterface {
 
     List<GymCentre> getAllCentresByOwmerId(String gymOwnerId);
     List<GymCentre> getCentresByCity(String city);
