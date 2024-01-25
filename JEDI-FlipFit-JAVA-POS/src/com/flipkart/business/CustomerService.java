@@ -1,63 +1,106 @@
 package com.flipkart.business;
 
+import com.flipkart.dao.CustomerDAO;
+import com.flipkart.dao.CustomerInterfaceDAO;
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.Slot;
+import com.flipkart.exceptions.BookingFailedException;
+import com.flipkart.exceptions.RegistrationFailedException;
+import com.flipkart.exceptions.UserInvalidException;
+import com.flipkart.utils.UserPlan;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
+
+import static com.flipkart.constants.Constants.*;
+
 public class CustomerService implements CustomerServiceInterface {
+    private static CustomerService instance;
+    public static CustomerService getInstance() {
+        if (instance == null) {
+            instance = new CustomerService();
+        }
+        return instance;
+    }
+    private CustomerInterfaceDAO customerDAO = CustomerDAO.getInstance();
+    private GymCentreServiceInterface gymCentreService = new GymCentreService();
+    private BookingServiceInterface bookingService = new BookingService();
+    private ScheduleServiceInterface scheduleService = new ScheduleService();
 
-
+    private SlotServiceInterface slotService = new SlotService();
 
     public List<GymCentre> getAllGymCenterDetailsByCity(String city){
-        return null;
-    }
-
-    @Override
-    public List<Slot> getAvailableSlots(String centreID, java.sql.Date date) {
-        return null;
+        //takes City (Location) as input and returns List<GymCenter>
+        return gymCentreService.getCentresByCity(city);
     }
 
     public List<Slot> getAvailableSlots(String centreID, Date date){
-    return null;
+        //takes centerID and date for input and returns List<Slot>
+        return gymCentreService.getAvailableSlotsByCentreAndDate(centreID,date);
     }
 
     public List<Booking> getCustomerBookings(String customerId){
-        return null;
+        //takes userId and returns List<Bookings>
+        return bookingService.getBookingByCustomerId(customerId);
     }
 
-    @Override
-    public boolean bookSlot(String userID, java.sql.Date date, String slotId, String centreId) {
-        return false;
+    public List<UserPlan> getCustomerPlan(String customerId){
+        return bookingService.getCustomerPlan(customerId);
     }
 
-//    public List<UserPlan> getCustomerPlan(String customerId){
-//    }
-
-    public boolean bookSlot(String userName, Date date, String slotId, String centreId){
+    public boolean bookSlot(String userName,Date date, String slotId,String centreId){
+        if(!slotService.isSlotValid(slotId,centreId)){
+            System.out.println(INVALID_SLOT);
+            return false;
+        }
+        String scheduleId = scheduleService.getOrCreateSchedule(slotId,date).getScheduleID();
+        //create booking
+        boolean isOverlap = bookingService.checkBookingOverlap(userName,date,slotId);
+        if(isOverlap) {
+            System.out.println(RED_COLOR + "There exists a conflicting booking, First cancel it!!!!" + RESET_COLOR);
+            return false;
+        }
+        bookingService.addBooking(userName, scheduleId);
         return true;
     }
 
 
-    public void cancelBookingbyID(String bookingID){
 
+    public void cancelBookingbyID(String bookingID){
+        //cancel a booking
+        bookingService.cancelBooking(bookingID);
     }
 
     public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) {
-
+        try {
+            customerDAO.registerCustomer(userName,password,email,phoneNumber,cardNumber);
+        } catch (RegistrationFailedException e) {
+            e.getMessage();
+        }
 
     }
 
     public Customer viewMyProfile(String userName) {
-        return null;
+        return customerDAO.getCustomerById(userName);
+    }
+
+    public boolean editProfile(String customerId, String username, String email, String phoneNumber, String cardNumber){
+        return customerDAO.editCustomer(customerId, username, email, phoneNumber, cardNumber);
+    }
+    public boolean updatePassword(String customerId, String newPassword){
+
+        return customerDAO.updatePassword(customerId,newPassword);
     }
 
     public boolean isUserValid(String userName, String password) {
-        return true;
+        try {
+            return customerDAO.isUserValid(userName,password);
+        } catch (UserInvalidException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
-
-
 }

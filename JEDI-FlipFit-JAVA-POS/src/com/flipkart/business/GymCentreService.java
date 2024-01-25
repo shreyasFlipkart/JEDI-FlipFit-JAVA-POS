@@ -1,41 +1,42 @@
 package com.flipkart.business;
 
+import com.flipkart.dao.GymCentreDAO;
+import com.flipkart.dao.GymCentreInterfaceDAO;
+import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.Slot;
-import com.flipkart.bean.*;
-import com.flipkart.business.*;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class GymCentreService implements GymCentreServiceInterface{
 
-
+    private static GymCentreInterfaceDAO gymCentreDAO = new GymCentreDAO();
+    private static ScheduleServiceInterface scheduleService = new ScheduleService();
 
     public List<GymCentre> getAllCentresByOwnerId(String gymOwnerId) {
-        return null;
+        return gymCentreDAO.getAllCentresByOwmerId(gymOwnerId);
     }
 
     public List<GymCentre> getCentresByCity(String city){
-        return null;
-    }
-
-    @Override
-    public List<Slot> getAvailableSlotsByCentreAndDate(String centreID, java.sql.Date date) {
-        return null;
+        return gymCentreDAO.getGymCentreListByCity(city);
     }
 
     public List<Slot> getAvailableSlotsByCentreAndDate(String centreID, Date date){
-        return null;
+        return scheduleService.getAllAvailableSlotsByDate(centreID, date);
     }
 
     public void addCenter(GymCentre gymCentre) {
+        //takes gymCenter details
+        gymCentreDAO.addGymCentre(gymCentre);
 
     }
 
     public void requestGymCentreApproval(String gymCentreId){
+        gymCentreDAO.sendCentreApprovalRequest(gymCentreId);
     }
 
     public GymCentre getGymCentreById(String centreID) {
-        return null;
+        GymCentre gymCentre = gymCentreDAO.getGymCentreByCentreId(centreID);
+        return gymCentre;
     }
 }

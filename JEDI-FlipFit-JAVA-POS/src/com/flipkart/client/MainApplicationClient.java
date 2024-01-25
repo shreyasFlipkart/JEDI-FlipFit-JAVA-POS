@@ -6,6 +6,12 @@ import java.util.*;
 
 public class MainApplicationClient {
 
+    public static int userId = 0;
+    public static Scanner scanner = new Scanner(System.in);
+    private static AdminClient adminClient = new AdminClient();
+    private static CustomerClient customerClient = new CustomerClient();
+    private static GymOwnerClient gymOwnerClient = new GymOwnerClient();
+
     public static void main(String args[]){
         mainPage();
     }
@@ -25,6 +31,7 @@ public class MainApplicationClient {
                 break;
             case 3:
                 registration(3);
+                break;
             case 4:
                 updatePassword();
                 break;
@@ -38,10 +45,7 @@ public class MainApplicationClient {
 
     }
     private static void login(){
-        Scanner scanner=new Scanner(System.in);
-        AdminClient adminClient = new AdminClient();
-        GymOwnerClient gymOwnerClient = new GymOwnerClient();
-        CustomerClient customerClient = new CustomerClient();
+
         try {
             System.out.println("Enter your Role (1. ADMIN/2. GYMOWNER/3. CUSTOMER) : ");
             int role = scanner.nextInt();
@@ -71,8 +75,7 @@ public class MainApplicationClient {
         }
     }
     private static void registration(int role){
-        GymOwnerClient gymOwnerClient = new GymOwnerClient();
-        CustomerClient customerClient = new CustomerClient();
+
         try {
 
             switch (role){
@@ -91,7 +94,6 @@ public class MainApplicationClient {
         }
     }
     private static void updatePassword(){
-        Scanner scanner=new Scanner(System.in);
         System.out.println("Enter your updated Password :");
         String updatedPassword = scanner.next();
 

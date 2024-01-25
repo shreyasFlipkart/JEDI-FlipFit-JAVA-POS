@@ -1,23 +1,28 @@
 package com.flipkart.client;
 
 import com.flipkart.bean.Admin;
+import com.flipkart.bean.GymCentre;
+import com.flipkart.bean.GymOwner;
 import com.flipkart.business.AdminService;
 import com.flipkart.business.AdminServiceInterface;
 import com.flipkart.business.GymOwnerService;
 import com.flipkart.business.GymOwnerServiceInterface;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.utils.util;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-
+import java.util.List;
 import java.util.Scanner;
 
+import static com.flipkart.client.MainApplicationClient.scanner;
+import static com.flipkart.constants.Constants.*;
 
 public class AdminClient {
 
     private static Admin admin = new Admin();
     private static AdminServiceInterface adminService = new AdminService();
     private static GymOwnerServiceInterface gymOwnerService = new GymOwnerService();
-    Scanner scanner = new Scanner(System.in);
 
     public boolean isUserValid(String userName, String password) {
         if (userName.equals(admin.getUserName()) && password.equals(admin.getPassword())) {
@@ -27,72 +32,112 @@ public class AdminClient {
     }
 
     public boolean adminLogin(String userName, String password) {
-        System.out.println("Successfully logged in");
-        adminClientMenu();
+        if (isUserValid(userName, password)) {
+            System.out.println("Successfully logged in");
+            adminClientMainPage();
+        }
+        else{
+            new LoginFailedException("Admin Login Failed");
+            return false;
+        }
         return true;
     }
 
-    public void adminClientMenu(){
+    private void handleGymOwnerApprovalRequests(){
+        // print the list with indexes from 1
+        System.out.println("Admin Approval for a Gym Owner ----------");
+
+        System.out.println("(Press 0 to exit)\nEnter the Id of Gym Owner:");
+        String requestGymOwnerId = scanner.next();
+
+        if(requestGymOwnerId.equals("0")) {return;}
+
+        System.out.println("1. Approve the request\n2. Reject the request");
+        int choice = scanner.nextInt();
+        if(choice == 1){
+            System.out.println(APPROVAL_GYM_OWNER_CONFIRMATION);
+        } else if (choice == 2) {
+            System.out.println(DISAPPROVAL_GYM_OWNER_CONFIRMATION);
+        }
+
+        adminService.approveGymOwner(requestGymOwnerId,choice);
+        //modify the list
+//            adminClientMainPage();
+    }
+    private void handleGymCenterApprovalRequests(){
+        // print the list with indexes from 1
+        System.out.println("Press 0 to EXIT_MESSAGE or Choose the Gym Centre To Modify:");
+        String requestGymCenterId = scanner.next();
+        if (requestGymCenterId.equals("0")) return;
+//            Now Admin will select an request and we will pop up with two
+        System.out.println("1. Approve the request\n2. Reject the request\n");
+        int choice = scanner.nextInt();
+        if(choice == 1){
+            System.out.println(APPROVAL_GYM_CENTRE_CONFIRMATION);
+        } else if (choice == 2) {
+            System.out.println(DISAPPROVAL_GYM_CENTRE_CONFIRMATION);
+        }
+        adminService.approveGymCenter(requestGymCenterId,choice);
+        //modify the list
+//            adminClientMainPage();
+    }
+
+    private void printOwnerList(List<GymOwner> gymOwnerList){
+        System.out.println(DASHED_LINE);
+        System.out.printf(YELLOW_COLOR + "%-8s\t", "ID");
+        System.out.printf("%-8s\t", "NAME");
+        System.out.printf("%-8s\t", "EMAIL-ID");
+        System.out.printf("%11s\t", "PAN");
+        System.out.printf("%23s\t\n", "IS-APPROVED" + RESET_COLOR);
+        System.out.println(DASHED_LINE);
+        System.out.println("");
+        for(GymOwner gymOwner: gymOwnerList) {
+            System.out.printf("%-8s\t", gymOwner.getUserID());
+            System.out.printf("%-8s\t", gymOwner.getUserName());
+            System.out.printf("%-8s\t", gymOwner.getEmail());
+            System.out.printf("%-8s\t", gymOwner.getPanNumber());
+            if(gymOwner.getIsApproved()==1)
+            {
+                System.out.println("Yes\n");
+            }
+            else if(gymOwner.getIsApproved() == 0)
+            {
+                System.out.println("No\n");
+            } else {
+                System.out.println("Pending\n");
+            }
+        }
+        System.out.println(DASHED_LINE);
+    }
+
+    public void adminClientMainPage(){
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = currentTime.format(myFormat);
-        System.out.println("WELCOME ADMIN!!\nLogin Time: "+currentTime);
-
+        System.out.println(YELLOW_COLOR+"WELCOME ADMIN!!\nLogin Time: "+currentTime+RESET_COLOR);
         while(true){
-            System.out.println("1. View All Gym Owners\n2. View All Gym Centers\n3. GymOwner Approval Requests\n4. GymCenter Approval Requests\n5.EXIT");
-            System.out.println("Enter the Choice:");
+            System.out.println("0. View All Gym Owners\n1. View Pending GymOwner Approval Requests\n2. View Pending GymCenter's Approval Requests\n3. Go Back To Previous Menu");
             int pendingChoice = scanner.nextInt();
             switch (pendingChoice) {
+                case 0:
+                    List<GymOwner> allGymOwners =  gymOwnerService.viewAllGymOwners();
+                    printOwnerList(allGymOwners);
+                    break;
                 case 1:
-//                    List<GymOwner> allGymOwners =  gymOwnerService.viewAllGymOwners();
-                    System.out.println("Fetching Gym owners list...");
-                    System.out.println("Owner1 \nOwner2 \nOwner3\nOwner4");
-                    break;
-                case 2:
-                    System.out.println("Fetching Gym centers list...");
-                    System.out.println("Request from FlipFit, North Bangalore\nRequest from FlipFit, East Bangalore \nRequest from FlipFit, West Bangalore\nRequest from FlipFit, South Bangalore");
-                    break;
-                case 3:
-//                    List<GymOwner> pendingGymOwners = adminService.viewPendingGymOwners();
-                    System.out.println("1. Request from owner1 \n2. Request from owner2 \n3. Request from owner3\n4. Request from owner4");
-                    System.out.println("Approve request from owners: \n1.Yes \n2.No");
-                    System.out.println("Enter your choice:");
-                    int choice = scanner.nextInt();
-                    switch (choice){
-                        case 1:
-                            System.out.println("Enter the id of the gym owner to whose request is required approval");
-                            int ownerId = scanner.nextInt();
-                            System.out.println("Approved request of the owner:"+ownerId);
-                        case 2:
-                            break;
-                        default:
-                            System.out.println("Invalid Choice");
-                            break;
-                    }
+                    List<GymOwner> pendingGymOwners = adminService.viewPendingGymOwners();
+                    printOwnerList(pendingGymOwners);
+                    if(!pendingGymOwners.isEmpty()) handleGymOwnerApprovalRequests();
                     break;
 
-                case 4:
-//                    List<GymCentre> pendingGymCentres = adminService.viewPendingGymCentres(); //get listGymCenterIds
-                    System.out.println("Request from FlipFit, North Bangalore\nRequest from FlipFit, East Bangalore \nRequest from FlipFit, West Bangalore\nRequest from FlipFit, South Bangalore");
-                    System.out.println("Approve request from center: \n1.Yes \n2.No");
-                    System.out.println("Enter your choice:");
-                    int ch = scanner.nextInt();
-                    switch (ch){
-                        case 1:
-                            System.out.println("Enter the id of the gym owner to whose request is required approval");
-                            int ownerId = scanner.nextInt();
-                            System.out.println("Approved request of the owner:"+ownerId);
-                        case 2:
-                            break;
-                        default:
-                            System.out.println("Invalid Choice");
-                            break;
-                    }
+                case 2:
+                    List<GymCentre> pendingGymCentres = adminService.viewPendingGymCentres();//get listGymCenterIds
+                    util.printGymCentres(pendingGymCentres);
+                    if(!pendingGymCentres.isEmpty()) handleGymCenterApprovalRequests();
                     break;
-                default:
-                    System.out.println("Exiting....");
+                case 3:
                     return;
             }
         }
     }
+
 }

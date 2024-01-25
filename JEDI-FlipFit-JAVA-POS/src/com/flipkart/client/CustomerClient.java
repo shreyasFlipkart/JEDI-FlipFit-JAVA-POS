@@ -1,26 +1,39 @@
 package com.flipkart.client;
+
+import com.flipkart.bean.Booking;
+import com.flipkart.bean.Customer;
+import com.flipkart.bean.GymCentre;
+import com.flipkart.bean.Slot;
 import com.flipkart.business.CustomerService;
 import com.flipkart.business.CustomerServiceInterface;
+import com.flipkart.exceptions.DataEntryException;
+import com.flipkart.utils.UserPlan;
+import com.flipkart.utils.util;
+import com.flipkart.validator.Validators;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import static com.flipkart.client.MainApplicationClient.scanner;
+import static com.flipkart.constants.Constants.*;
+import static com.flipkart.constants.Constants.RESET_COLOR;
 
 
 public class CustomerClient {
-    private CustomerServiceInterface customerService  =  new CustomerService();
+    private CustomerServiceInterface customerService  =  CustomerService.getInstance();
 
     public boolean customerLogin(String userName, String password) {
 //        Check if credentials are right
         if (customerService.isUserValid(userName, password)) {
-            LocalDateTime currentTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String formattedDateTime = currentTime.format(formatter);
-
-            System.out.println("Successfully logged in at " + formattedDateTime);
-            customerClientMainPage();
+            System.out.println(GREEN_COLOR+"Successfully logged in"+RESET_COLOR);
+            customerClientMainPage(userName);
         } else {
-            System.out.println("UserName or password doesn't match");
+            System.out.println(RED_COLOR+"UserName or password doesn't match"+RESET_COLOR);
             return false;
         }
         return true;
@@ -28,258 +41,240 @@ public class CustomerClient {
 
 
     public void register(){
-        Scanner scanner=new Scanner(System.in);
         System.out.println("Enter your UserName");
         String userName = scanner.next();
 
-        System.out.println("Enter your Passkey");
+
+        System.out.println("Enter your Password");
         String password = scanner.next();
+
 
         System.out.println("Enter your Email");
         String email = scanner.next();
 
-        System.out.println("Enter your Phone Number (10 Digits)");
+
+        System.out.println("Enter your Phone Number");
         String phoneNumber = scanner.next();
 
-        System.out.println("Enter your Card Number (12 Digits)");
+        System.out.println("Enter your Card Number");
         String cardNumber = scanner.next();
 
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
-        customerClientMainPage();
+        customerClientMainPage(userName);
     }
 
-    public void customerClientMainPage() {
-        Scanner scanner = new Scanner(System.in);
+    private void printSlots(List<Slot> slots){
+        System.out.println(DASHED_LINE);
+        System.out.printf(YELLOW_COLOR + "%-8s\t", "SLOT-ID");
+        System.out.printf("%-8s\t\n", "SLOT-TIME" + RESET_COLOR);
+        System.out.println(DASHED_LINE);
+        for(Slot slot: slots) {
+            System.out.printf("%-8s\t", slot.getSlotId());
+            System.out.printf("%-8s\t\n", slot.getTime());
+        }
+        System.out.println(DASHED_LINE);
+    }
+
+    private void bookSlotSubMenu(String userName){
+        //Get Location for filter
+        System.out.println("Provide Location to search :");
+        String location = scanner.next();
+        List<GymCentre> centreListByLocation = customerService.getAllGymCenterDetailsByCity(location);
+        // Print All Centres
+        util.printGymCentres(centreListByLocation);
+        //Select Gym Centre
+        if(centreListByLocation.isEmpty()){
+            System.out.println(RED_COLOR +"There are no available GYM Centres in " + location + ". Please Select some other location" + RESET_COLOR);
+            customerClientMainPage(userName);
+            return;
+        }
+        System.out.print("Choose a gymCentre ID to proceed:");
+        String chosenGym = scanner.next();
+        //Select Date
+        Date sqlDate = selectDate();
+        //Choose Slot
+        chooseSlot(chosenGym,userName,sqlDate,chosenGym);
+        System.out.println("Booking Successful");
+    }
+
+    private Date selectDate(){
+        //Select Date
+        System.out.print("Enter Date (dd/MM/yyyy): ");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date date;
+        Date sqlDate = null;
+        try {
+            String dat = scanner.next();
+//            if(Validators.isDateValid(dat)){
+//                date = sdf.parse(dat);
+//                sqlDate = new Date(date.getTime());
+//            }
+//            else{
+//                new DataEntryException();
+//                sqlDate = selectDate();
+//            }
+            date = sdf.parse(dat);
+            sqlDate = new Date(date.getTime());
+        } catch (ParseException e) {
+            throw new DataEntryException();
+        }
+        return sqlDate;
+    }
+
+    private void chooseSlot(String gymCentreId,String userName,Date sqlDate,String centreId){
+        System.out.println("Choose from the Below Slots");
+        List<Slot> availableSlots = customerService.getAvailableSlots(gymCentreId,sqlDate);
+        printSlots(availableSlots);
+        if(availableSlots.isEmpty()){
+            System.out.println(RED_COLOR +"There are no available slots in the " + gymCentreId + ". Please Select some other gym" + RESET_COLOR);
+            customerClientMainPage(userName);
+            return;
+        }
+        System.out.println("Enter SlotID :");
+        String slotID = scanner.next();
+        //Select Slot to book
+        if(!customerService.bookSlot(userName,sqlDate,slotID,centreId)) chooseSlot(gymCentreId, userName, sqlDate,centreId);
+    }
+
+    private void printUserPlan(String userName){
+        System.out.println("Bookings : ");
+        List<UserPlan> allUserPlan= customerService.getCustomerPlan(userName);
+        List<Booking> bookingList = customerService.getCustomerBookings(userName);
+        System.out.println(DASHED_LINE);
+        System.out.printf(YELLOW_COLOR + "%-8s\t", "Centre-ID");
+        System.out.printf(YELLOW_COLOR + "%-8s\t", "SLOT-ID");
+        System.out.printf(YELLOW_COLOR + "%-8s\t", "DATE");
+        System.out.printf(YELLOW_COLOR + "%8s\t", "SLOT-TIME");
+        System.out.printf("%-8s\t\n", "SCHEDULE_ID" + RESET_COLOR);
+        System.out.println(DASHED_LINE);
+        for(UserPlan userPlan: allUserPlan) {
+            System.out.printf("%-8s\t", userPlan.getCentreID());
+            System.out.printf("%-8s\t", userPlan.getSlotId());
+            System.out.printf("%-8s\t", userPlan.getDate());
+            System.out.printf("%-8s\t", userPlan.getTime());
+            System.out.printf("%-8s\t\n", userPlan.getScheduleID());
+        }
+        System.out.println(DASHED_LINE);
+    }
+
+    private void printbookingsSubMenu(String userName){
+        System.out.println("Bookings : ");
+        List<Booking> allBookingList= customerService.getCustomerBookings(userName);
+        System.out.println(DASHED_LINE);
+        System.out.printf(YELLOW_COLOR + "%-8s\t", "BOOKING-ID");
+        System.out.printf("%47s\t\n", "SCHEDULE-ID" + RESET_COLOR);
+        System.out.println(DASHED_LINE);
+        for(Booking booking: allBookingList) {
+            System.out.printf("%-8s\t", booking.getBookingID());
+            System.out.printf("%-8s\t\n", booking.getScheduleID());
+        }
+        System.out.println(DASHED_LINE);
+    }
+
+    private void cancelBookingSubMenu(String userName){
+        printbookingsSubMenu(userName);
+        System.out.println("Select the Booking you want to cancel: ");
+        String bookingId = scanner.next();
+        customerService.cancelBookingbyID(bookingId);
+        System.out.println("Booking Cancellation Successful");
+    }
+
+    public void printCustomerProfile(Customer customer){
+        System.out.println(GREEN_COLOR +"------------------------------------------------------------------------" + RESET_COLOR);
+        System.out.println(YELLOW_COLOR + "USER ID: "+ RESET_COLOR + customer.getUserID());
+        System.out.println(YELLOW_COLOR + "USER NAME: "+ RESET_COLOR + customer.getUserName());
+        System.out.println(YELLOW_COLOR + "EMAIL: "+ RESET_COLOR + customer.getEmail());
+        System.out.println(YELLOW_COLOR + "CONTACT: "+ RESET_COLOR + customer.getCustomerPhone());
+        System.out.println(YELLOW_COLOR + "CARD DETAILS: "+ RESET_COLOR + customer.getCardDetails());
+        System.out.println(GREEN_COLOR +"------------------------------------------------------------------------" + RESET_COLOR);
+    }
+    public void updatePassword(String customerId,String newPassword){
+        customerService.updatePassword(customerId,newPassword);
+    }
+
+    public void editCustomerProfile(Customer customer){
+        System.out.println(YELLOW_COLOR+"WELCOME TO EDIT PROFILE");
+        System.out.println(YELLOW_COLOR+"Select what you want to edit");
+        System.out.println("1. Edit user name\n2. Edit email\n3. Edit contact\n4. Edit card details\n5. Go Back");
+        int choice = scanner.nextInt();
+        boolean status = false;
+        switch(choice){
+            case 1:
+                System.out.println("Enter new user name: ");
+                String name = scanner.next();
+                status = customerService.editProfile(customer.getUserID(), name, null, null, null);
+                break;
+            case 2:
+                System.out.println("Enter new email: ");
+                String email = scanner.next();
+                status = customerService.editProfile(customer.getUserID(), null, email, null, null);
+                break;
+            case 3:
+                System.out.println("Enter new phone number: ");
+                String phoneNumber = scanner.next();
+                status = customerService.editProfile(customer.getUserID(), null, null, phoneNumber, null);
+                break;
+            case 4:
+                System.out.println("Enter new card number: ");
+                String cardNumber = scanner.next();
+                status = customerService.editProfile(customer.getUserID(), null, null, null, cardNumber);
+                break;
+            case 5:
+                customerClientMainPage(customer.getUserName());
+                return;
+            default:
+                System.out.println(INVALID_CHOICE_ERROR);
+                break;
+        }
+        if(status){
+            System.out.println(GREEN_COLOR+"Successfully edited customer details");
+        }else{
+            System.out.println(RED_COLOR+"Couldn't edit customer details");
+        }
+        editCustomerProfile(customer);
+    }
+
+
+    public void customerClientMainPage(String userName) {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = currentTime.format(myFormat);
-        System.out.println("\nWELCOME " + " Customer" + "\nWhat do you want to do");
-        while (true) {
-            System.out.println("1. View My Profile \n2. View all centers \n3. View Bookings\n4. Cancel Bookings\n5. Edit Profile \n6. View Available slots and Book");
+        System.out.println(YELLOW_COLOR+"WELCOME "+userName+" !!\nWhat do you want to do\nLogin TIME: "+currentTime+RESET_COLOR);
+        while(true){
+            System.out.println("1. View My Profile \n2. Edit My Profile \n3. Book a slot in a Gym \n4. View Bookings\n5. Cancel Bookings\n6. Go Back to previous menu");
             int choice = scanner.nextInt();
-            switch (choice) {
+            switch(choice){
                 case 1:
-                    System.out.println("Customer Profile");
+                    Customer customer= customerService.viewMyProfile(userName);
+                    printCustomerProfile(customer);
                     break;
                 case 2:
-                    System.out.println("Enter your location: (1. Bangalore)");
-                    int city = scanner.nextInt();
-                    switch(city){
-                        case 1:
-                            System.out.println("Enter your locality: \n 1. North Bangalore \n 2. East Bangalore\n 3. West Bangalore \n 4. South Bangalore \n");
-                            int subcity = scanner.nextInt();
-                            switch(subcity){
-                                case 1:
-                                    System.out.println("FlipFit, North Bangalore");
-                                    break;
-                                case 2:
-                                    System.out.println("FlipFit, East Bangalore");
-                                    break;
-                                case 3:
-                                    System.out.println("FlipFit, West Bangalore");
-                                    break;
-                                case 4:
-                                    System.out.println("FlipFit, South Bangalore");
-                                    break;
-                                default:
-                                    System.out.println("INVALID CHOICE");
-                            }
-                            break;
-                        default:
-                            System.out.println("Gyms not available in this location");
-                    }
-                    break;
+                    Customer cust= customerService.viewMyProfile(userName);
+                    editCustomerProfile(cust);
+                    return;
                 case 3:
-                    System.out.println("View Customer Bookings");
-                    //printUserPlan(userName);
+                    bookSlotSubMenu(userName);
                     break;
                 case 4:
-                    System.out.println("Cancel Booking");
+                    printbookingsSubMenu(userName);
+                    //printUserPlan(userName);
                     break;
                 case 5:
-                    System.out.println("Edit Profile");
+                    cancelBookingSubMenu(userName);
                     break;
                 case 6:
-                    System.out.println("Enter your location: (1. Bangalore)");
-                    int cityCenter = scanner.nextInt();
-                    switch(cityCenter){
-                        case 1:
-                            System.out.println("Enter your locality: \n 1. North Bangalore \n 2. East Bangalore\n 3. West Bangalore \n 4. South Bangalore \n");
-                            int subcity = scanner.nextInt();
-                            int selectedGym;
-                            switch(subcity){
-                                case 1:
-                                    System.out.println("Enter the gym you want -\n 1. FlipFit, North Bangalore\n");
-                                    selectedGym = scanner.nextInt();
-                                    switch(selectedGym){
-                                        case 1:
-                                            System.out.println("Choose a slot\n");
-                                            System.out.println("1. SLOT 1 - 6:00 AM TO 7:00 AM\n");
-                                            System.out.println("2. SLOT 2 - 8:00 AM TO 9:00 AM\n");
-                                            System.out.println("3. SLOT 3 - 10:00 AM TO 11:00 AM\n");
-                                            System.out.println("4. SLOT 4 - 2:00 PM TO 3:00 PM\n");
-                                            int slot = scanner.nextInt();
-                                            switch(slot){
-                                                case 1:
-                                                    System.out.println("25 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 2:
-                                                    System.out.println("2 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 3:
-                                                    System.out.println("21 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 4:
-                                                    System.out.println("12 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                default:
-                                                    System.out.println("Not available");
-                                            }
-
-                                            break;
-                                        default:
-                                            System.out.println("not available");
-                                    }
-                                case 2:
-                                    System.out.println("Enter the gym you want -\n 1. FlipFit, East Bangalore\n");
-                                    selectedGym = scanner.nextInt();
-                                    switch(selectedGym){
-                                        case 1:
-                                            System.out.println("Choose a slot\n");
-                                            System.out.println("1. SLOT 1 - 6:00 AM TO 7:00 AM\n");
-                                            System.out.println("2. SLOT 2 - 8:00 AM TO 9:00 AM\n");
-                                            System.out.println("3. SLOT 3 - 10:00 AM TO 11:00 AM\n");
-                                            System.out.println("4. SLOT 4 - 2:00 PM TO 3:00 PM\n");
-                                            int slot = scanner.nextInt();
-                                            switch(slot){
-                                                case 1:
-                                                    System.out.println("25 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 2:
-                                                    System.out.println("2 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 3:
-                                                    System.out.println("21 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 4:
-                                                    System.out.println("12 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                default:
-                                                    System.out.println("Not available");
-                                            }
-                                            break;
-                                        default:
-                                            System.out.println("not available");
-                                    }
-                                case 3:
-                                    System.out.println("Enter the gym you want -\n 1. FlipFit, West Bangalore\n");
-                                    selectedGym = scanner.nextInt();
-                                    switch(selectedGym){
-                                        case 1:
-                                            System.out.println("Choose a slot\n");
-                                            System.out.println("1. SLOT 1 - 6:00 AM TO 7:00 AM\n");
-                                            System.out.println("2. SLOT 2 - 8:00 AM TO 9:00 AM\n");
-                                            System.out.println("3. SLOT 3 - 10:00 AM TO 11:00 AM\n");
-                                            System.out.println("4. SLOT 4 - 2:00 PM TO 3:00 PM\n");
-                                            int slot = scanner.nextInt();
-                                            int book;
-                                            switch(slot){
-                                                case 1:
-                                                    System.out.println("25 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 2:
-                                                    System.out.println("2 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    book = scanner.nextInt();
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 3:
-                                                    System.out.println("21 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 4:
-                                                    System.out.println("12 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                default:
-                                                    System.out.println("Not available");
-                                            }
-                                            break;
-                                        default:
-                                            System.out.println("not available");
-                                    }
-                                case 4:
-                                    System.out.println("Enter the gym you want -\n 1. FlipFit, South Bangalore\n");
-                                    selectedGym = scanner.nextInt();
-                                    switch(selectedGym){
-                                        case 1:
-                                            System.out.println("Choose a slot\n");
-                                            System.out.println("1. SLOT 1 - 6:00 AM TO 7:00 AM\n");
-                                            System.out.println("2. SLOT 2 - 8:00 AM TO 9:00 AM\n");
-                                            System.out.println("3. SLOT 3 - 10:00 AM TO 11:00 AM\n");
-                                            System.out.println("4. SLOT 4 - 2:00 PM TO 3:00 PM\n");
-                                            int slot = scanner.nextInt();
-                                            switch(slot){
-                                                case 1:
-                                                    System.out.println("25 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 2:
-                                                    System.out.println("2 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 3:
-                                                    System.out.println("21 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                case 4:
-                                                    System.out.println("12 available slots");
-                                                    System.out.println("1. Book the slot");
-                                                    System.out.println("Slot booked!");
-                                                    break;
-                                                default:
-                                                    System.out.println("Not available");
-                                            }
-                                            break;
-                                        default:
-                                            System.out.println("not available");
-                                    }
-                                default:
-                                    System.out.println("INVALID CHOICE");
-                            }
-                        default:
-                            System.out.println("Gyms not available in this location");
-                    }
-                    break;
+                    System.out.println(PREVIOUS_MENU_MESSAGE);
+                    return;
                 default:
-                    System.out.println("INVALID CHOICE");
+                    System.out.println(INVALID_CHOICE_ERROR);
                     break;
             }
         }
     }
 
+    public boolean validateCredentials(String userName,String password){
+        if (customerService.isUserValid(userName, password)) return true;
+        else return false;
+    }
 
 }
