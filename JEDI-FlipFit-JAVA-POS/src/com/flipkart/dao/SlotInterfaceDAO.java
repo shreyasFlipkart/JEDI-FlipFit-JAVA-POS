@@ -10,4 +10,6 @@ public interface SlotInterfaceDAO {
     void addSlot(Slot slot);
     Slot getSlotById(String slotID);
     Slot getSlotByIdandCentreId(String slotID,String gymCentreId);
+
+    boolean deleteSlotById(String slotId);
 }

@@ -1,4 +1,4 @@
-package com.flipkart.dao;
+package com.flipkart.DAO;
 
 import com.flipkart.bean.GymOwner;
 
@@ -12,4 +12,6 @@ public interface GymOwnerInterfaceDAO {
     void sendOwnerApprovalRequest(String gymOwnerId);
     void setPendingGymOwnerList();
     void validateGymOwner(String gymOwnerId, int isApproved);
+
+    public boolean editGymOwner(String gymOwnerId, String username, String email, String cardNumber);
 }

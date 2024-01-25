@@ -5,20 +5,27 @@ import com.flipkart.bean.GymOwner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GymOwnerDAO implements GymOwnerInterfaceDAO {
+public class GymOwnerDAO implements com.flipkart.DAO.GymOwnerInterfaceDAO {
 
     private static List<GymOwner> gymOwnerList = new ArrayList<>();
 
     public List<GymOwner> getGymOwnerList() {
-
-        gymOwnerList.add(new GymOwner("123","name","name@email.com","1234123",1));
-        return gymOwnerList;
+        return new ArrayList<>(gymOwnerList);
     }
 
     public void setGymOwnerList(List<GymOwner> gymOwnerList) {
         this.gymOwnerList = new ArrayList<>(gymOwnerList);
     }
 
+    public GymOwner sendProfileInfo(String gymOwnerId){
+        for (GymOwner owner : gymOwnerList) {
+            if (owner.getUserID().equals(gymOwnerId)) {
+                return owner;
+            }
+        }
+
+        return new GymOwner("-1", "None", "none", "none", "none", "none");
+    }
     public boolean loginGymOwner(String username, String password) {
         for (GymOwner owner : gymOwnerList) {
             if (username.equals(owner.getUserName()) && password.equals(owner.getPassword())) {
@@ -36,7 +43,7 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
 
         // Set the generated ID to the GymOwner object
         gymOwner.setUserID(gymOwnerId);
-        gymOwner.setIsApproved(2);
+        gymOwner.setApproved(2);
 
         // Add the GymOwner object to the list
         gymOwnerList.add(gymOwner);
@@ -56,7 +63,7 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
     public void sendOwnerApprovalRequest(String gymOwnerId) {
         for (GymOwner owner : gymOwnerList) {
             if (owner.getUserID().equals(gymOwnerId)) {
-                owner.setIsApproved(2);
+                owner.setApproved(2);
                 break;
             }
         }
@@ -70,10 +77,22 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
     public void validateGymOwner(String gymOwnerId, int isApproved) {
         for (GymOwner owner : gymOwnerList) {
             if (owner.getUserID().equals(gymOwnerId)) {
-                owner.setIsApproved(isApproved);
+                owner.setApproved(isApproved);
                 break;
             }
         }
+    }
+
+    public boolean editGymOwner(String gymOwnerId, String username, String email, String cardNumber){
+        for(GymOwner gymOwner : gymOwnerList) {
+            if(gymOwner.getUserID().equals(gymOwnerId)) {
+                if(username!=null)gymOwner.setUserName(username);
+                if(email!=null)gymOwner.setEmail(email);
+                if(cardNumber!=null)gymOwner.setCardDetails(cardNumber);
+                return true;
+            }
+        }
+        return false;
     }
 
     private String generateUniqueGymOwnerId(String userName) {

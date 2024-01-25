@@ -13,7 +13,7 @@ public class GymCentreService implements GymCentreServiceInterface{
     private static GymCentreInterfaceDAO gymCentreDAO = new GymCentreDAO();
     private static ScheduleServiceInterface scheduleService = new ScheduleService();
 
-    public List<GymCentre> getAllCentresByOwnerId(String gymOwnerId) {
+    public List<GymCentre> getAllCentresByOwmerId(String gymOwnerId) {
         return gymCentreDAO.getAllCentresByOwmerId(gymOwnerId);
     }
 

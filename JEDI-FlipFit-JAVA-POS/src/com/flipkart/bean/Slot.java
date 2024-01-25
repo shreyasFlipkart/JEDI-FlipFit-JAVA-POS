@@ -3,7 +3,6 @@ package com.flipkart.bean;
 import java.time.LocalTime;
 
 public class Slot {
-    // properties
     private String slotId;
     private String centreID;
     private LocalTime time;
@@ -12,6 +11,14 @@ public class Slot {
         this.slotId = slotId;
         this.centreID = centreID;
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Slot{" +
+                "slotId='" + slotId + '\'' +
+                ", time=" + time +
+                '}';
     }
 
     public String getSlotId() {

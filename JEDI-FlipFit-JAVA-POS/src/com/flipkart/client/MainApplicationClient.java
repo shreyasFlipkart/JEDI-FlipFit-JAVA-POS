@@ -29,6 +29,7 @@ public class MainApplicationClient {
                 break;
             case 3:
                 registration(3);
+                break;
             case 4:
                 updatePassword(2);
                 break;

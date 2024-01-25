@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AdminDAO implements AdminInterfaceDAO {
 
-    private static GymOwnerInterfaceDAO gymOwnerDAO = new GymOwnerDAO();
+    private static GymOwnerDAO gymOwnerDAO = new GymOwnerDAO();
     private static GymCentreInterfaceDAO gymCentreDAO = new GymCentreDAO();
 
 

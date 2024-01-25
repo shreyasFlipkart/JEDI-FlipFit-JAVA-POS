@@ -12,6 +12,10 @@ public class GymOwnerService implements GymOwnerServiceInterface {
 
     }
 
+    public GymOwner viewGymOwnerProfile(String gymOwnerId){
+        return gymOwnerDAO.sendProfileInfo(gymOwnerId);
+    }
+
     public List<GymOwner> viewAllGymOwners() {
         return gymOwnerDAO.getGymOwnerList();
     }
@@ -28,5 +32,9 @@ public class GymOwnerService implements GymOwnerServiceInterface {
 
     public void registerGymOwner(String userId,String userName, String password, String email, String panNumber,String cardNumber) {
         gymOwnerDAO.registerGymOwner(new GymOwner(userId,userName,email,password,panNumber,cardNumber));
+    }
+
+    public boolean editProfile(String gymOwnerId, String username, String email, String cardNumber){
+        return gymOwnerDAO.editGymOwner(gymOwnerId, username, email, cardNumber);
     }
 }
