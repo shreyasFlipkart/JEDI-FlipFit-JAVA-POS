@@ -5,7 +5,7 @@ import com.flipkart.bean.Slot;
 
 import java.util.List;
 
-public class SlotService implements SlotServiceInterface {
+public class SlotFlipfitService implements SlotFlipfitServiceInterface {
     private static SlotDAO slotDAO = new SlotDAO();
     public List<Slot> getAllSlotsByCentre(String centreID) {
         return slotDAO.getSlotByCentreId(centreID);

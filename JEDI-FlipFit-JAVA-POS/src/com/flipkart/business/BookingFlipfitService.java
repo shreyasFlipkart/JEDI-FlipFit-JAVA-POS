@@ -6,17 +6,16 @@ import com.flipkart.bean.Slot;
 import com.flipkart.exceptions.BookingFailedException;
 import com.flipkart.utils.UserPlan;
 
-import java.awt.print.Book;
 import java.util.Date;
 import java.util.List;
 
 
-public class BookingService implements BookingServiceInterface {
+public class BookingFlipfitService implements BookingFlipfitServiceInterface {
 
     private final BookingDAO bookingDAO = new BookingDAO();
-    private final ScheduleService scheduleService  = new ScheduleService();
+    private final ScheduleFlipfitService scheduleService  = new ScheduleFlipfitService();
 
-    private final SlotService slotService = new SlotService();
+    private final SlotFlipfitService slotService = new SlotFlipfitService();
 
     public boolean checkBookingOverlap(String customerId, Date date, String slotId){
         //return whether the customer has already booked a slot at same timing

@@ -6,7 +6,6 @@ import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.Slot;
-import com.flipkart.exceptions.BookingFailedException;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.UserInvalidException;
 import com.flipkart.utils.UserPlan;
@@ -17,20 +16,20 @@ import java.util.List;
 
 import static com.flipkart.constants.Constants.*;
 
-public class CustomerService implements CustomerServiceInterface {
-    private static CustomerService instance;
-    public static CustomerService getInstance() {
+public class CustomerFlipfitService implements CustomerFlipfitServiceInterface {
+    private static CustomerFlipfitService instance;
+    public static CustomerFlipfitService getInstance() {
         if (instance == null) {
-            instance = new CustomerService();
+            instance = new CustomerFlipfitService();
         }
         return instance;
     }
     private CustomerInterfaceDAO customerDAO = CustomerDAO.getInstance();
-    private GymCentreServiceInterface gymCentreService = new GymCentreService();
-    private BookingServiceInterface bookingService = new BookingService();
-    private ScheduleServiceInterface scheduleService = new ScheduleService();
+    private GymCentreFlipfitServiceInterface gymCentreService = new GymCentreFlipfitService();
+    private BookingFlipfitServiceInterface bookingService = new BookingFlipfitService();
+    private ScheduleFlipfitServiceInterface scheduleService = new ScheduleFlipfitService();
 
-    private SlotServiceInterface slotService = new SlotService();
+    private SlotFlipfitServiceInterface slotService = new SlotFlipfitService();
 
     public List<GymCentre> getAllGymCenterDetailsByCity(String city){
         //takes City (Location) as input and returns List<GymCenter>

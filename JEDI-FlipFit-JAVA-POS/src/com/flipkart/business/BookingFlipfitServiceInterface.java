@@ -6,7 +6,7 @@ import com.flipkart.utils.UserPlan;
 import java.util.Date;
 import java.util.List;
 
-public interface BookingServiceInterface {
+public interface BookingFlipfitServiceInterface {
 
     /**
      * Checks if a booking overlap exists for a customer on a specific date and slot.

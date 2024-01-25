@@ -7,13 +7,13 @@ import java.util.Scanner;
 
 import static com.flipkart.constants.Constants.*;
 
-public class MainApplicationClient {
+public class FlipfitClient {
 
     public static int userId = 0;
     public static Scanner scanner = new Scanner(System.in);
-    private static AdminClient adminClient = new AdminClient();
-    private static CustomerClient customerClient = new CustomerClient();
-    private static GymOwnerClient gymOwnerClient = new GymOwnerClient();
+    private static AdminFlipfitClient adminFlipfitClient = new AdminFlipfitClient();
+    private static CustomerFlipfitClient customerFlipfitClient = new CustomerFlipfitClient();
+    private static GymOwnerFlipfitClient gymOwnerFlipfitClient = new GymOwnerFlipfitClient();
 
 
 
@@ -22,7 +22,7 @@ public class MainApplicationClient {
         System.out.println("Enter the Choice\n");
         System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
         int choice = scanner.nextInt();
-        customerClient.registerCustomerManually("Shreyas","Ketkar","1","2","3");
+        customerFlipfitClient.registerCustomerManually("Shreyas","Ketkar","1","2","3");
         switch (choice) {
             case 1:
                 login();
@@ -68,13 +68,13 @@ public class MainApplicationClient {
 
             switch (role){
                 case 1:
-                    adminClient.adminLogin(userName,password);
+                    adminFlipfitClient.adminLogin(userName,password);
                     break;
                 case 2:
-                    gymOwnerClient.gymOwnerLogin(userName,password);
+                    gymOwnerFlipfitClient.gymOwnerLogin(userName,password);
                     break;
                 case 3:
-                    customerClient.customerLogin(userName,password);
+                    customerFlipfitClient.customerLogin(userName,password);
                     break;
                 default:
                     System.out.println(INVALID_CHOICE_ERROR);
@@ -90,10 +90,10 @@ public class MainApplicationClient {
         try {
             switch (role){
                 case 2:
-                    customerClient.register();
+                    customerFlipfitClient.register();
                     break;
                 case 3:
-                    gymOwnerClient.register();
+                    gymOwnerFlipfitClient.register();
                     break;
                 default:
                     System.out.println("INVALID CHOICE");
@@ -108,15 +108,15 @@ public class MainApplicationClient {
 
         Scanner scanner=new Scanner(System.in);
         switch (role){
-            case 2://customerClient
+            case 2://customerFlipfitClient
                 System.out.println("Enter the UserName of the Customer\n");
                 String customerUserId = scanner.next();
                 System.out.println("Enter the Password of the Customer\n");
                 String customerPassword = scanner.next();
-                if (customerClient.validateCredentials(customerUserId,customerPassword)) {
+                if (customerFlipfitClient.validateCredentials(customerUserId,customerPassword)) {
                     System.out.println("Enter the new Password\n");
                     String newPassword = scanner.next();
-                    customerClient.updatePassword(customerUserId,newPassword);
+                    customerFlipfitClient.updatePassword(customerUserId,newPassword);
 
                 } else {
                     System.out.println(RED_COLOR+"UserName or password doesn't match"+RESET_COLOR+'\n');

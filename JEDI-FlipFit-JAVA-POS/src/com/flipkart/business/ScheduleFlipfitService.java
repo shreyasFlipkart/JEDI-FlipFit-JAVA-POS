@@ -8,10 +8,10 @@ import com.flipkart.dao.ScheduleDAO;
 import com.flipkart.bean.Schedule;
 import com.flipkart.bean.Slot;
 
-public class ScheduleService implements ScheduleServiceInterface {
+public class ScheduleFlipfitService implements ScheduleFlipfitServiceInterface {
 
-    private GymCentreService gymCentreService = new GymCentreService();
-    private SlotService slotService = new SlotService();
+    private GymCentreFlipfitService gymCentreService = new GymCentreFlipfitService();
+    private SlotFlipfitService slotService = new SlotFlipfitService();
     private ScheduleDAO scheduleDAO = new ScheduleDAO();
 
     public Schedule createSchedule(Date date, String slotId){

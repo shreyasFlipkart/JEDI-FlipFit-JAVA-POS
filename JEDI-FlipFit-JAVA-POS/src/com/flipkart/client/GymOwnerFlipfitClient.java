@@ -14,16 +14,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.flipkart.client.MainApplicationClient.scanner;
+import static com.flipkart.client.FlipfitClient.scanner;
 import static com.flipkart.constants.Constants.*;
 
-public class GymOwnerClient {
+public class GymOwnerFlipfitClient {
 
     GymOwnerDAO gymOwnerDAO = new GymOwnerDAO();
     //private List<GymOwner> gymOwnerList = gymOwnerDAO.getGymOwnerList();
-    private GymOwnerServiceInterface gymOwnerService = new GymOwnerService();
-    private SlotServiceInterface slotService = new SlotService();
-    private GymCentreServiceInterface gymCentreService = new GymCentreService();
+    private GymOwnerFlipfitServiceInterface gymOwnerService = new GymOwnerFlipfitService();
+    private SlotFlipfitServiceInterface slotService = new SlotFlipfitService();
+    private GymCentreFlipfitServiceInterface gymCentreService = new GymCentreFlipfitService();
 
 
 

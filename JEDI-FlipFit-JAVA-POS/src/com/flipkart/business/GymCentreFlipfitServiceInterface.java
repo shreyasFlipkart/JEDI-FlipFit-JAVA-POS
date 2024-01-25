@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.util.List;
 
 
-public interface GymCentreServiceInterface {
+public interface GymCentreFlipfitServiceInterface {
 
     /**
      * Retrieves all gym centers associated with a specific owner ID.

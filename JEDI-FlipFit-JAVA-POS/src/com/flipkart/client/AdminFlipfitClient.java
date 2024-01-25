@@ -3,26 +3,25 @@ package com.flipkart.client;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.GymOwner;
-import com.flipkart.business.AdminService;
-import com.flipkart.business.AdminServiceInterface;
-import com.flipkart.business.GymOwnerService;
-import com.flipkart.business.GymOwnerServiceInterface;
+import com.flipkart.business.AdminFlipfitService;
+import com.flipkart.business.AdminFlipfitServiceInterface;
+import com.flipkart.business.GymOwnerFlipfitService;
+import com.flipkart.business.GymOwnerFlipfitServiceInterface;
 import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.utils.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Scanner;
 
-import static com.flipkart.client.MainApplicationClient.scanner;
+import static com.flipkart.client.FlipfitClient.scanner;
 import static com.flipkart.constants.Constants.*;
 
-public class AdminClient {
+public class AdminFlipfitClient {
 
     private static Admin admin = new Admin();
-    private static AdminServiceInterface adminService = new AdminService();
-    private static GymOwnerServiceInterface gymOwnerService = new GymOwnerService();
+    private static AdminFlipfitServiceInterface adminService = new AdminFlipfitService();
+    private static GymOwnerFlipfitServiceInterface gymOwnerService = new GymOwnerFlipfitService();
 
     public boolean isUserValid(String userName, String password) {
         if (userName.equals(admin.getUserName()) && password.equals(admin.getPassword())) {
