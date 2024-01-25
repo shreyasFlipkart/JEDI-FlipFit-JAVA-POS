@@ -34,4 +34,7 @@ public class SlotFlipfitService implements SlotFlipfitServiceInterface {
     public boolean isSlotValid(String slotID,String centreId){
         return getSlotByIDandCentreId(slotID,centreId) != null;
     }
+    public boolean deleteSlotById(String slotId){
+        return slotDAO.deleteSlotById(slotId);
+    }
 }

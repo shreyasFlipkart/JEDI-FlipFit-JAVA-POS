@@ -22,9 +22,9 @@ public class FlipfitClient {
         System.out.println("Enter the Choice\n");
         System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
         int choice = scanner.nextInt();
-        customerFlipfitClient.registerCustomerManually("Shreyas","Ketkar","1","2","3");
-        gymOwnerFlipfitClient.registerGymOwnerManually("123","riya","1234","e@gmail.com","1234","12345123");
-        gymOwnerFlipfitClient.registerGymOwnerManually("456","name","3455","f@gmail.com","1235","15345123");
+        //customerFlipfitClient.registerCustomerManually("Shreyas","Ketkar","1","2","3");
+        //gymOwnerFlipfitClient.registerGymOwnerManually("123","riya","1234","e@gmail.com","1234","12345123");
+        //gymOwnerFlipfitClient.registerGymOwnerManually("456","name","3455","f@gmail.com","1235","15345123");
 
         switch (choice) {
             case 1:
