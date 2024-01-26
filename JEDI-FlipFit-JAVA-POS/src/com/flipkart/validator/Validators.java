@@ -59,4 +59,22 @@ public class Validators {
         return matcher.matches();
     }
 
+    public boolean isCardValid(String cardNumber){
+        return (cardNumber.length()==12);
+    }
+
+    public boolean isPanValid(String panNumber){
+        String regex = "^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(panNumber);
+        return matcher.matches();
+    }
+
+    public boolean isGstValid(String gstNumber){
+        String regex = "\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(gstNumber);
+        return matcher.matches();
+    }
+
 }

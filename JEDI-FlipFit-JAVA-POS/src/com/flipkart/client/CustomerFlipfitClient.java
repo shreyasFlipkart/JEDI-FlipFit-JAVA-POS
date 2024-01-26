@@ -9,6 +9,7 @@ import com.flipkart.business.CustomerFlipfitServiceInterface;
 import com.flipkart.exceptions.DataEntryException;
 import com.flipkart.utils.UserPlan;
 import com.flipkart.utils.util;
+import com.flipkart.validator.Validators;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +41,7 @@ public class CustomerFlipfitClient {
 
 
     public void register(){
+        Validators validate = new Validators();
         System.out.println("Enter your UserName");
         String userName = scanner.next();
 
@@ -50,13 +52,26 @@ public class CustomerFlipfitClient {
 
         System.out.println("Enter your Email");
         String email = scanner.next();
+        if (!validate.isEmailValid(email)){
+            System.out.println("Please enter a valid email");
+            register();
+        }
 
 
         System.out.println("Enter your Phone Number");
         String phoneNumber = scanner.next();
+        if(!validate.isPhoneValid(phoneNumber)){
+            System.out.println("Please enter a valid phone number");
+            register();
+        }
+
 
         System.out.println("Enter your Card Number");
         String cardNumber = scanner.next();
+        if(!validate.isCardValid(cardNumber)){
+            System.out.println("Please enter a valid card number");
+            register();
+        }
 
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
 //        customerClientMainPage(userName);
