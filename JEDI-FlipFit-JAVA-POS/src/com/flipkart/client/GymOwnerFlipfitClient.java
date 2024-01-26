@@ -42,7 +42,7 @@ public class GymOwnerFlipfitClient {
         System.out.println("Enter your UserName");
         String userName = scanner.next();
 
-        System.out.println("Enter your Passkey");
+        System.out.println("Enter your Password");
         String password = scanner.next();
 
         System.out.println("Enter your Email");

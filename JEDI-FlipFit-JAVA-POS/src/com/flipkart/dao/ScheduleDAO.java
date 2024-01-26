@@ -55,7 +55,8 @@ public class ScheduleDAO implements ScheduleInterfaceDAO {
     }
 
     public boolean modifySchedule(String scheduleId, int action) {
-        try (Connection conn = DBConnection.connect();
+        try (
+            Connection conn = DBConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(MODIFY_SCHEDULE_AVAILABILITY)) {
             Schedule schedule = getSchedule(scheduleId);
             if (schedule == null) {

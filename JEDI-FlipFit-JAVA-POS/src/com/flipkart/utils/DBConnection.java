@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class DBConnection {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/flipfit";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/FlipFit";
     static final String USER = "root";
-    static final String PASS = "megSpa@123";
+    static final String PASS = "Abcd1234";
     private static Connection singleInstance = null;
 
     static {

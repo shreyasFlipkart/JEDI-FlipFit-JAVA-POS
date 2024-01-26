@@ -57,11 +57,11 @@ public class FlipfitApplication {
     private static void login(){
         Scanner scanner = new Scanner(System.in);
         try {
-            System.out.println("Enter your Role (ADMIN\nGYMOWNER\nCUSTOMER) : ");
-            String curRole = scanner.next();
-            Role roleEnum = Role.valueOf(curRole.toUpperCase());
+            System.out.println("Enter your Role \n1. ADMIN\n2. GYMOWNER\n3. CUSTOMER \n ");
+//            String curRole = scanner.next();
+//            Role roleEnum = Role.valueOf(curRole.toUpperCase());
 
-            int role = roleEnum.ordinal()+1;
+            int role = scanner.nextInt();
 
 
             System.out.println("Enter your UserName : ");

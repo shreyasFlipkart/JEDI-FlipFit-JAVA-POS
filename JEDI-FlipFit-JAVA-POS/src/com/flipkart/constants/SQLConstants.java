@@ -13,7 +13,7 @@ public class SQLConstants {
     // Gym Owner queries
     public static final String FETCH_ALL_GYM_OWNERS = "SELECT * FROM FlipFit.GymOwner";
     public static final String SQL_SEND_GYM_OWNER_APPROVAL_REQ_QUERY = "UPDATE FlipFit.GymOwner SET isApproved = 2 WHERE name = ?";
-    public static final String REGISTER_GYM_OWNER = "INSERT INTO FlipFit.GymOwner (Id, name, password, email, phoneNumber, cardDetails, isApproved) VALUES (?, ?, ?, ?, ?, ?, 0)";
+    public static final String REGISTER_GYM_OWNER = "INSERT INTO FlipFit.GymOwner (Id, name, password, email, panNumber, cardDetails, isApproved) VALUES (?, ?, ?, ?, ?, ?, 0)";
     public static final String SQL_APPROVE_GYM_OWNER_BY_ID_QUERY = "UPDATE FlipFit.GymOwner SET isApproved = ? WHERE Id = ?";
     public static final String SQL_EDIT_GYM_OWNER = "UPDATE FlipFit.GymOwner SET name = ?, email = ?, cardNumber = ? WHERE Id = ?";
     public static final String SQL_GET_GYM_OWNER_BY_ID = "SELECT * FROM FlipFit.GymOwner WHERE name = ?";
@@ -64,7 +64,7 @@ public class SQLConstants {
     public static final String ADD_SCHEDULE="INSERT INTO FlipFit.Schedule(scheduleId, date, slotId, availability ) values (?,?,?,?)";
     public static final String GET_SCHEDULES_BY_DATE="SELECT * FROM FlipFit.Schedule WHERE date=?";
     public static final String GET_SCHEDULE_BY_ID ="SELECT * FROM FlipFit.Schedule WHERE scheduleId=?";
-    public static final String MODIFY_SCHEDULE_AVAILABILITY ="UPDATE `flipfit`.`schedule` SET availability = ? WHERE (`scheduleId` = ?)";
+    public static final String MODIFY_SCHEDULE_AVAILABILITY ="UPDATE FlipFit.Schedule SET availability = ? WHERE scheduleId = ?";
 
     // ---------------- Slot ----------------
     public static final String FETCH_ALL_SLOTS ="SELECT * FROM FlipFit.Slot";
