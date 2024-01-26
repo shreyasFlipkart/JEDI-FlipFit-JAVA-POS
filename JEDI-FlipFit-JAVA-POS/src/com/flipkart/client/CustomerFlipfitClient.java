@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.flipkart.client.FlipfitApplication.mainPage;
 import static com.flipkart.client.FlipfitApplication.scanner;
 import static com.flipkart.constants.Constants.*;
 import static com.flipkart.constants.Constants.RESET_COLOR;
@@ -58,7 +59,8 @@ public class CustomerFlipfitClient {
         String cardNumber = scanner.next();
 
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
-        customerClientMainPage(userName);
+//        customerClientMainPage(userName);
+        mainPage();
     }
     public void registerCustomerManually(String userName,String password, String email, String phoneNumber,String cardNumber ){
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
@@ -258,7 +260,7 @@ public class CustomerFlipfitClient {
         String formattedDate = currentTime.format(myFormat);
         System.out.println(YELLOW_COLOR+"WELCOME "+userName+" !!\nWhat do you want to do\nLogin TIME: "+currentTime+RESET_COLOR);
         while(true){
-            System.out.println("1. View My Profile \n2. Edit My Profile \n3. View gyms by cities \n4. Book a slot in a Gym \n5. View Bookings\n6. Cancel Bookings\n7. Go Back to previous menu");
+            System.out.println("1. View My Profile \n2. Edit My Profile \n3. View gyms by cities \n4. Book a slot in a Gym \n5. View Booked Slots\n6. Cancel Bookings\n7. Go Back to previous menu");
             int choice = scanner.nextInt();
             switch(choice){
                 case 1:

@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.flipkart.client.FlipfitApplication.mainPage;
 import static com.flipkart.client.FlipfitApplication.scanner;
 import static com.flipkart.constants.Constants.*;
 
@@ -54,7 +55,8 @@ public class GymOwnerFlipfitClient {
         String cardNumber = scanner.next();
 
         gymOwnerService.registerGymOwner(userName,userName,password,email,panNumber,cardNumber);
-        gymOwnerClientMainPage(userName);
+//        gymOwnerClientMainPage(userName);
+        mainPage();
     }
 
     public void registerGymOwnerManually(String userid, String userName, String password, String email, String panNumber, String cardNumber){
@@ -195,7 +197,7 @@ public class GymOwnerFlipfitClient {
                                 localTime
                         ));
 
-                        System.out.println("Do you want to enter more slots (y/n)?: ");
+                        System.out.println("Do you want to enter more slots (yes/no)?: ");
                         String addChoice = scanner.next();
                         addChoice = addChoice.toLowerCase();
 
@@ -225,7 +227,7 @@ public class GymOwnerFlipfitClient {
                     break;
 
                 case 9:
-                    System.out.println("Do you wish to continue? (y/n)");
+                    System.out.println("Do you wish to continue? (yes/no)");
                     String ans = scanner.next();
                     if(ans.equals("n") || ans.equals("no")) isContinue = false;
                     break;

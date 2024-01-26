@@ -18,7 +18,7 @@ public class FlipfitApplication {
 
 
 
-    private static void mainPage(){
+    public static void mainPage(){
         System.out.println("Enter the Choice\n");
         System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
         int choice = scanner.nextInt();

@@ -33,7 +33,7 @@ public class util {
             System.out.printf("%-8s\t", gymCentre.getOwnerID());
             System.out.printf("%-8s\t", gymCentre.getCapacity());
             if(gymCentre.getIsApproved() == 0) System.out.println("No\n");
-            else if(gymCentre.getIsApproved() == 1) System.out.println("Yes\n");
+            else if(gymCentre.getIsApproved() == 1) System.out.println("Approved\n");
             else System.out.println("Pending\n");
         }
         System.out.println(DASHED_LINE);
@@ -55,7 +55,7 @@ public class util {
             System.out.printf("%-8s\t", gymOwner.getPanNumber());
             if(gymOwner.getIsApproved()==1)
             {
-                System.out.println("Yes\n");
+                System.out.println("Approved\n");
             }
             else if(gymOwner.getIsApproved() == 0)
             {
@@ -84,7 +84,7 @@ public class util {
             System.out.printf("%-8s\t", gymCentre.getCapacity());
             System.out.printf("%-8s\t", gymCentre.getPrice());
             if(gymCentre.getIsApproved() == 0) System.out.println("No\n");
-            else if(gymCentre.getIsApproved() == 1) System.out.println("Yes\n");
+            else if(gymCentre.getIsApproved() == 1) System.out.println("Approved\n");
             else System.out.println("Pending\n");
         }
         System.out.println("\n" + DASHED_LINE);
