@@ -32,8 +32,8 @@ public class util {
             System.out.printf("%-8s\t", gymCentre.getCity());
             System.out.printf("%-8s\t", gymCentre.getOwnerID());
             System.out.printf("%-8s\t", gymCentre.getCapacity());
-            if(gymCentre.getIsApproved() == 0) System.out.println("No\n");
-            else if(gymCentre.getIsApproved() == 1) System.out.println("Approved\n");
+            if(gymCentre.getIsApproved() == 0) System.out.println(RED_COLOR + "No\n" + RESET_COLOR);
+            else if(gymCentre.getIsApproved() == 1) System.out.println(GREEN_COLOR + "Approved\n" + RESET_COLOR);
             else System.out.println("Pending\n");
         }
         System.out.println(DASHED_LINE);
@@ -55,11 +55,11 @@ public class util {
             System.out.printf("%-8s\t", gymOwner.getPanNumber());
             if(gymOwner.getIsApproved()==1)
             {
-                System.out.println("Approved\n");
+                System.out.println(GREEN_COLOR + "Approved\n" + RESET_COLOR);
             }
             else if(gymOwner.getIsApproved() == 0)
             {
-                System.out.println("No\n");
+                System.out.println(RED_COLOR + "No\n" + RESET_COLOR);
             } else {
                 System.out.println("Pending\n");
             }
@@ -83,8 +83,8 @@ public class util {
             System.out.printf("%-8s\t", gymCentre.getCity());
             System.out.printf("%-8s\t", gymCentre.getCapacity());
             System.out.printf("%-8s\t", gymCentre.getPrice());
-            if(gymCentre.getIsApproved() == 0) System.out.println("No\n");
-            else if(gymCentre.getIsApproved() == 1) System.out.println("Approved\n");
+            if(gymCentre.getIsApproved() == 0) System.out.println(RED_COLOR + "No\n" + RESET_COLOR);
+            else if(gymCentre.getIsApproved() == 1) System.out.println(GREEN_COLOR + "Approved\n" + RESET_COLOR);
             else System.out.println("Pending\n");
         }
         System.out.println("\n" + DASHED_LINE);
