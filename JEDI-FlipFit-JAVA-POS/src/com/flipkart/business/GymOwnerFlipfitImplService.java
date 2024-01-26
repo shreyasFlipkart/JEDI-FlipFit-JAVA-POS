@@ -27,7 +27,7 @@ public class GymOwnerFlipfitImplService implements GymOwnerFlipfitServiceInterfa
     }
 
     public void registerGymOwner(String userId,String userName, String password, String email, String panNumber,String cardNumber) {
-        gymOwnerDAO.registerGymOwner(new GymOwner(userId,userName,email,password,panNumber,cardNumber));
+        gymOwnerDAO.registerGymOwner(new GymOwner(userId,userName,email,password,2,panNumber,cardNumber));
     }
     public boolean editProfile(String gymOwnerId, String username, String email, String cardNumber){
         return gymOwnerDAO.editGymOwner(gymOwnerId, username, email, cardNumber);

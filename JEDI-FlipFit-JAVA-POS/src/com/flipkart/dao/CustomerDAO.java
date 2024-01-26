@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.flipkart.constant.SQLConstants.*;
+import static com.flipkart.constants.SQLConstants.*;
 
 public class CustomerDAO implements CustomerInterfaceDAO {
     private static CustomerDAO instance;
@@ -28,7 +28,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
         try {
             Connection conn = DBConnection.connect();
             PreparedStatement stmt = conn.prepareStatement(ADD_NEW_CUSTOMER);
-            stmt.setString(1, "46");
+            stmt.setString(1,userName);
             stmt.setString(2, userName);
             stmt.setString(3, password);
             stmt.setString(4, email);

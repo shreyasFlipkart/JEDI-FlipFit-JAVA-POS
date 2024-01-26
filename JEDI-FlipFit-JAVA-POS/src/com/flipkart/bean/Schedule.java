@@ -23,6 +23,10 @@ public class Schedule {
         this.availability = availability;
     }
 
+    public Schedule() {
+
+    }
+
     public String getScheduleID() {
         return scheduleID;
     }

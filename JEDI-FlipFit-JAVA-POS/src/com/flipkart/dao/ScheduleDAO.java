@@ -1,62 +1,87 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Schedule;
+import com.flipkart.utils.DBConnection;
 
-import java.sql.Date;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.flipkart.constants.SQLConstants.*;
+
 public class ScheduleDAO implements ScheduleInterfaceDAO {
 
-    private static List<Schedule> scheduleList = new ArrayList<>();
-
     public void addSchedule(Schedule schedule) {
-        // Assuming you have a method to generate a unique Schedule ID
-        String scheduleId = generateUniqueScheduleId(schedule.getDate(), schedule.getSlotID());
-//        String scheduleId = schedule.getScheduleID();
-        // Set the generated ID to the Schedule object
-        schedule.setScheduleID(scheduleId);
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(ADD_SCHEDULE)) {
+            stmt.setString(1, schedule.getScheduleID());
+            stmt.setDate(2, schedule.getDate());
+            stmt.setString(3, schedule.getSlotID());
+            stmt.setInt(4, schedule.getAvailability());
 
-        // Add the Schedule object to the list
-        scheduleList.add(schedule);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Schedule getSchedule(String scheduleId) {
-        for (Schedule schedule : scheduleList) {
-            if (schedule.getScheduleID().equals(scheduleId)) {
-                return schedule;
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(GET_SCHEDULE_BY_ID)) {
+            stmt.setString(1, scheduleId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return mapResultSetToSchedule(rs);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     public List<Schedule> getAllScheduleByDate(Date date) {
         List<Schedule> response = new ArrayList<>();
-        for (Schedule schedule : scheduleList) {
-            if (schedule.getDate().equals(date)) {
-                response.add(schedule);
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(GET_SCHEDULES_BY_DATE)) {
+            stmt.setDate(1, date);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                response.add(mapResultSetToSchedule(rs));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return response;
     }
 
     public boolean modifySchedule(String scheduleId, int action) {
-        // 1 for increasing, -1 for decreasing
-        Schedule schedule = getSchedule(scheduleId);
-        if (schedule == null) {
-            return false;
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(MODIFY_SCHEDULE_AVAILABILITY)) {
+            Schedule schedule = getSchedule(scheduleId);
+            if (schedule == null) {
+                return false;
+            }
+            int availability = schedule.getAvailability();
+            if (availability < 1 && action == -1) {
+                return false;
+            }
+            // Update the availability
+            stmt.setInt(1, availability + action);
+            stmt.setString(2, scheduleId);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        int availability = schedule.getAvailability();
-        if (availability < 1 && action == -1) {
-            return false;
-        }
-        // Update the availability
-        schedule.setAvailability(availability + action);
-        return true;
+        return false;
     }
 
-    private String generateUniqueScheduleId(Date date, String slotId) {
-        // Implement logic to generate a unique Schedule ID based on your requirements
-        return date.toString() + slotId;
+    private Schedule mapResultSetToSchedule(ResultSet rs) throws SQLException {
+        Schedule schedule = new Schedule();
+        schedule.setScheduleID(rs.getString("scheduleId"));
+        schedule.setDate(rs.getDate("date"));
+        schedule.setSlotID(rs.getString("slotId"));
+        schedule.setAvailability(rs.getInt("availability"));
+        return schedule;
     }
 }

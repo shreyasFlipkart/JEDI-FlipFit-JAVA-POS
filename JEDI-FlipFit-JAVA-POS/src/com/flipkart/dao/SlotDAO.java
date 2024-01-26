@@ -1,78 +1,123 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Slot;
+import com.flipkart.utils.DBConnection;
 
+import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.flipkart.constants.SQLConstants.*;
+
 public class SlotDAO implements SlotInterfaceDAO {
 
-    private static List<Slot> slotList = new ArrayList<>();
-
-    public SlotDAO() {
-
-    }
-
     public List<Slot> getSlotList() {
-        return new ArrayList<>(slotList);
+        List<Slot> slotList = new ArrayList<>();
+        try (Connection conn = DBConnection.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(FETCH_ALL_SLOTS)) {
+
+            while (rs.next()) {
+                Slot slot = mapResultSetToSlot(rs);
+                slotList.add(slot);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return slotList;
     }
 
     public List<Slot> getSlotByCentreId(String gymCentreId) {
         List<Slot> filteredSlots = new ArrayList<>();
-        for (Slot slot : slotList) {
-            if (slot.getCentreID().equals(gymCentreId)) {
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(FETCH_SLOT_BY_CENTRE)) {
+            stmt.setString(1, gymCentreId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Slot slot = mapResultSetToSlot(rs);
                 filteredSlots.add(slot);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return filteredSlots;
     }
 
     public void addSlot(Slot slot) {
-        // Assuming you have a method to generate a unique Slot ID
-        //String slotId = generateUniqueSlotId(slot.getCentreID(), slot.getTime());
-        String slotId= slot.getSlotId();
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(ADD_SLOT)) {
+            stmt.setString(1, slot.getSlotId());
+            stmt.setString(2, slot.getCentreID());
+            stmt.setTime(3, Time.valueOf(slot.getTime()));
 
-        // Set the generated ID to the Slot object
-        slot.setSlotId(slotId);
-
-        // Add the Slot object to the list
-        slotList.add(slot);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Slot getSlotById(String slotID) {
-        for (Slot slot : slotList) {
-            if (slot.getSlotId().equals(slotID)) {
-                return slot;
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(FETCH_SLOT_BY_ID)) {
+            stmt.setString(1, slotID);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToSlot(rs);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     public Slot getSlotByIdandCentreId(String slotID, String centreID) {
-        for (Slot slot : slotList) {
-            if (slot.getSlotId().equals(slotID) && slot.getCentreID().equals(centreID)) {
-                return slot;
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(FETCH_SLOT_BY_ID_AND_CENTRE_ID)) {
+            stmt.setString(1, slotID);
+            stmt.setString(2, centreID);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapResultSetToSlot(rs);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    private String generateUniqueSlotId(String centreID, LocalTime time) {
-        return centreID + "-" + time.toString();
+    private Slot mapResultSetToSlot(ResultSet rs) throws SQLException {
+        Slot slot = new Slot();
+        slot.setSlotId(rs.getString("slotId"));
+        slot.setCentreID(rs.getString("centreId"));
+        slot.setTime(rs.getTime("time").toLocalTime());
+        return slot;
     }
 
     public boolean deleteSlotById(String slotId) {
-        boolean flag = false;
-        for(Slot slot : slotList){
-            if(slot.getSlotId().equals(slotId)) {
-                slotList.remove(slot);
-                flag = true;
-                break;
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(FETCH_SLOT_BY_ID)) {
+            stmt.setString(1, slotId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                try (PreparedStatement deleteStmt = conn.prepareStatement(DELETE_SLOT)) {
+                    deleteStmt.setString(1, slotId);
+                    deleteStmt.executeUpdate();
+                    return true;
+                }
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        return flag;
+        return false;
     }
-
 }

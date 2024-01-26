@@ -215,22 +215,26 @@ public class CustomerFlipfitClient {
             case 1:
                 System.out.println("Enter new user name: ");
                 String name = scanner.next();
-                status = customerService.editProfile(customer.getUserID(), name, null, null, null);
+                customer.setUserName(name);
+                status = customerService.editProfile(customer.getUserID(), name, customer.getEmail(), customer.getCustomerPhone(), customer.getCardDetails());
                 break;
             case 2:
                 System.out.println("Enter new email: ");
                 String email = scanner.next();
-                status = customerService.editProfile(customer.getUserID(), null, email, null, null);
+                customer.setEmail(email);
+                status = customerService.editProfile(customer.getUserID(), customer.getUserName(), email, customer.getCustomerPhone(), customer.getCardDetails());
                 break;
             case 3:
                 System.out.println("Enter new phone number: ");
                 String phoneNumber = scanner.next();
-                status = customerService.editProfile(customer.getUserID(), null, null, phoneNumber, null);
+                customer.setCustomerPhone(phoneNumber);
+                status = customerService.editProfile(customer.getUserID(), customer.getUserName(), customer.getEmail(), phoneNumber, customer.getCardDetails());
                 break;
             case 4:
                 System.out.println("Enter new card number: ");
                 String cardNumber = scanner.next();
-                status = customerService.editProfile(customer.getUserID(), null, null, null, cardNumber);
+                customer.setCardDetails(cardNumber);
+                status = customerService.editProfile(customer.getUserID(),  customer.getUserName(), customer.getEmail(), customer.getCustomerPhone(), cardNumber);
                 break;
             case 5:
                 customerClientMainPage(customer.getUserName());

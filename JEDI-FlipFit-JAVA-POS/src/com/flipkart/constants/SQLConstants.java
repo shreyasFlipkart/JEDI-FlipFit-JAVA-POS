@@ -1,4 +1,4 @@
-package com.flipkart.constant;
+package com.flipkart.constants;
 
 public class SQLConstants {
 
@@ -10,12 +10,19 @@ public class SQLConstants {
     public static final String ADD_GYM_CENTRE_QUERY = "INSERT INTO FlipFit.GymCentre (centreId, ownerId, centreName, gstin, city, capacity, price, isApproved) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 //    public static final String ADD_GYM_CENTRE_QUERY = "INSERT INTO FlipFit.GymCentre (centreId, ownerId, centreName, gstin, city, capacity, price, isApproved) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
-
+    // Gym Owner queries
+    public static final String FETCH_ALL_GYM_OWNERS = "SELECT * FROM FlipFit.GymOwner";
+    public static final String SQL_SEND_GYM_OWNER_APPROVAL_REQ_QUERY = "UPDATE FlipFit.GymOwner SET isApproved = 2 WHERE name = ?";
+    public static final String REGISTER_GYM_OWNER = "INSERT INTO FlipFit.GymOwner (Id, name, password, email, phoneNumber, cardDetails, isApproved) VALUES (?, ?, ?, ?, ?, ?, 0)";
+    public static final String SQL_APPROVE_GYM_OWNER_BY_ID_QUERY = "UPDATE FlipFit.GymOwner SET isApproved = ? WHERE Id = ?";
+    public static final String SQL_EDIT_GYM_OWNER = "UPDATE FlipFit.GymOwner SET name = ?, email = ?, cardNumber = ? WHERE Id = ?";
+    public static final String SQL_GET_GYM_OWNER_BY_ID = "SELECT * FROM FlipFit.GymOwner WHERE name = ?";
+    public static final String DELETE_SLOT = "DELETE FROM FlipFit.Slot WHERE slotId = ?";
 
     //  ------------ GYM OWNER ------------
-    public static final String REGISTER_GYM_OWNER = "Insert into GymOwner values (?,?,?,?,?,?,?)";
+    //public static final String REGISTER_GYM_OWNER = "Insert into GymOwner values (?,?,?,?,?,?,?)";
     public static final String LOGIN_GYM_OWNER = "Select * from GymOwner where name=? and password=?";
-    public static final String SQL_APPROVE_GYM_OWNER_BY_ID_QUERY="Update GymOwner Set isApproved=? WHERE Id=?";
+    //public static final String SQL_APPROVE_GYM_OWNER_BY_ID_QUERY="Update GymOwner Set isApproved=? WHERE Id=?";
 //    public static final String SQL_APPROVE_GYM_OWNER_BY_ID_QUERY ="Update GymOwner Set isApproved=? WHERE Id=?";
 
 
@@ -68,6 +75,10 @@ public class SQLConstants {
 
     public static final String GET_BOOKING_BY_BOOKING_ID ="Select * From FlipFit.Booking where bookingId = ?";
 
+    // Gym Centre queries
+    public static final String FETCH_ALL_GYM_CENTRES = "SELECT * FROM FlipFit.GymCentre";
+    public static final String SQL_SEND_GYM_CENTRE_APPROVAL_REQ_QUERY = "UPDATE FlipFit.GymCentre SET isApproved = 2 WHERE centreId = ?";
+    public static final String ADD_GYM_CENTRE = "INSERT INTO FlipFit.GymCentre (centreId, ownerId, centreName, gstin, city, capacity, price, isApproved) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     public static final String GET_USERPLAN_BY_CUSTOMER_ID = "select * from slot join schedule where slot.slotId=schedule.slotId and schedule.scheduleId=?";
 }

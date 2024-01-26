@@ -28,7 +28,7 @@ public class DBInitializer {
     private static void createGymOwnerTable(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS FlipFit.GymOwner (" +
-                    "Id INT PRIMARY KEY," +
+                    "Id VARCHAR(255) PRIMARY KEY," +
                     "name VARCHAR(255) NOT NULL," +
                     "password VARCHAR(255) NOT NULL," +
                     "email VARCHAR(255) NOT NULL," +
@@ -41,8 +41,8 @@ public class DBInitializer {
     private static void createGymCentreTable(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS FlipFit.GymCentre (" +
-                    "centreId INT PRIMARY KEY," +
-                    "ownerId INT NOT NULL," +
+                    "centreId VARCHAR(255) PRIMARY KEY," +
+                    "ownerId VARCHAR(255) NOT NULL," +
                     "centreName VARCHAR(255) NOT NULL," +
                     "gstin VARCHAR(20) NOT NULL," +
                     "city VARCHAR(255) NOT NULL," +
@@ -56,7 +56,7 @@ public class DBInitializer {
     private static void createCustomerTable(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS FlipFit.Customer (" +
-                    "Id INT PRIMARY KEY," +
+                    "Id VARCHAR(255) PRIMARY KEY," +
                     "name VARCHAR(255) NOT NULL," +
                     "password VARCHAR(255) NOT NULL," +
                     "email VARCHAR(255) NOT NULL," +
@@ -68,9 +68,9 @@ public class DBInitializer {
     private static void createBookingTable(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS FlipFit.Booking (" +
-                    "bookingId INT PRIMARY KEY," +
-                    "userID INT NOT NULL," +
-                    "scheduleID INT NOT NULL," +
+                    "bookingId VARCHAR(255) PRIMARY KEY," +
+                    "userID VARCHAR(255) NOT NULL," +
+                    "scheduleID VARCHAR(255) NOT NULL," +
                     "FOREIGN KEY (userID) REFERENCES FlipFit.Customer(Id)," +
                     "FOREIGN KEY (scheduleID) REFERENCES FlipFit.Schedule(scheduleId))");
         }
@@ -79,9 +79,9 @@ public class DBInitializer {
     private static void createScheduleTable(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS FlipFit.Schedule (" +
-                    "scheduleId INT PRIMARY KEY," +
+                    "scheduleId VARCHAR(255) PRIMARY KEY," +
                     "date DATE NOT NULL," +
-                    "slotId INT NOT NULL," +
+                    "slotId VARCHAR(255) NOT NULL," +
                     "availability INT NOT NULL," +
                     "FOREIGN KEY (slotId) REFERENCES FlipFit.Slot(slotId))");
         }
@@ -90,8 +90,8 @@ public class DBInitializer {
     private static void createSlotTable(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS FlipFit.Slot (" +
-                    "slotId INT PRIMARY KEY," +
-                    "centreId INT NOT NULL," +
+                    "slotId VARCHAR(255) PRIMARY KEY," +
+                    "centreId VARCHAR(255) NOT NULL," +
                     "time TIME NOT NULL," +
                     "FOREIGN KEY (centreId) REFERENCES FlipFit.GymCentre(centreId))");
         }

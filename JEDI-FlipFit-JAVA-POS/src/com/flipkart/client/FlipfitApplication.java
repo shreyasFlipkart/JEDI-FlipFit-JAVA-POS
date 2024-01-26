@@ -146,9 +146,9 @@ public class FlipfitApplication {
 
     public static void main(String[] args) {
         System.out.println(WELCOME_MESSAGE);
-        customerFlipfitClient.registerCustomerManually("Demo","Pas","1","2","3");
-        gymOwnerFlipfitClient.registerGymOwnerManually("123","riya","1234","e@gmail.com","1234","12345123");
-        gymOwnerFlipfitClient.registerGymOwnerManually("456","name","3455","f@gmail.com","1235","15345123");
+        //customerFlipfitClient.registerCustomerManually("Demo","Pas","1","2","3");
+        //gymOwnerFlipfitClient.registerGymOwnerManually("123","riya","1234","e@gmail.com","1234","12345123");
+        //gymOwnerFlipfitClient.registerGymOwnerManually("456","name","3455","f@gmail.com","1235","15345123");
         mainPage();
     }
 }

@@ -13,7 +13,7 @@ public class Slot {
         this.centreID = centreID;
         this.time = time;
     }
-
+    public Slot(){}
     public String getSlotId() {
         return slotId;
     }
