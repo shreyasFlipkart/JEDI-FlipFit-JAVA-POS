@@ -57,7 +57,7 @@ public class FlipfitApplication {
     private static void login(){
         Scanner scanner = new Scanner(System.in);
         try {
-            System.out.println("Enter your Role (ADMIN/GYMOWNER/CUSTOMER) : ");
+            System.out.println("Enter your Role (ADMIN\nGYMOWNER\nCUSTOMER) : ");
             String curRole = scanner.next();
             Role roleEnum = Role.valueOf(curRole.toUpperCase());
 
