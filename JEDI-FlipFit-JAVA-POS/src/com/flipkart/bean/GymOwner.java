@@ -9,15 +9,17 @@ public class GymOwner extends User {
     private String cardDetails;
     private int isApproved;
 
-    public GymOwner(String userID, String userName, String email, String password, String panNumber, String cardDetails) {
-        super(userID, userName, email, password, Role.GYMOWNER);
+    public GymOwner() {
+        super();
         this.panNumber = panNumber;
         this.cardDetails = cardDetails;
         this.isApproved = 0;
     }
 
-    public GymOwner(String userId, String userName, String email, String password, int approved) {
+    public GymOwner(String userId, String userName, String email, String password, int approved, String panNumber,String cardNumber) {
         super(userId, userName, email, password, Role.GYMOWNER);
+        this.panNumber=panNumber;
+        this.cardDetails=cardNumber;
         this.isApproved = approved;
     }
 
@@ -51,5 +53,12 @@ public class GymOwner extends User {
 
     public void setIsApproved(int isApproved) {
         this.isApproved = isApproved;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+    }
+
+    public String getPhoneNumber() {
+        return "9899344949";
     }
 }

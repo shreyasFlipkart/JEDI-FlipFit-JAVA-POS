@@ -2,11 +2,11 @@ package com.flipkart.bean;
 
 public class User {
     // Properties
-    private String userID;
-    private String userName;
-    private String email;
+    public String userID;
+    public String userName;
+    public String email;
     private String password;
-    private Role role;
+    public Role role;
 
     public User() {
 
