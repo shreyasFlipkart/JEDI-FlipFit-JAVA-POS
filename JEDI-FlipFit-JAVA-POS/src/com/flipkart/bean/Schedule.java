@@ -11,6 +11,7 @@ public class Schedule {
     private int availability;
 
     public Schedule(Date date, String slotID, int availability) {
+        this.scheduleID = date.toString()+slotID;
         this.date = date;
         this.slotID = slotID;
         this.availability = availability;

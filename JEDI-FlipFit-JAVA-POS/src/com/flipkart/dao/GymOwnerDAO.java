@@ -52,7 +52,7 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
             stmt.setString(2, gymOwner.getUserName());
             stmt.setString(3, gymOwner.getPassword());
             stmt.setString(4, gymOwner.getEmail());
-            stmt.setString(5, gymOwner.getPhoneNumber());
+            stmt.setString(5, gymOwner.getPanNumber());
             stmt.setString(6, gymOwner.getCardDetails());
 
             stmt.executeUpdate();
@@ -138,7 +138,7 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
         gymOwner.setUserName(rs.getString("name"));
         gymOwner.setPassword(rs.getString("password"));
         gymOwner.setEmail(rs.getString("email"));
-        gymOwner.setPhoneNumber(rs.getString("phoneNumber"));
+        gymOwner.setPanNumber(rs.getString("panNumber"));
         gymOwner.setCardDetails(rs.getString("cardDetails"));
         gymOwner.setIsApproved(rs.getInt("isApproved"));
         return gymOwner;

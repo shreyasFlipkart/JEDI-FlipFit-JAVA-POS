@@ -18,7 +18,7 @@ public class FlipfitApplication {
 
 
 
-    private static void mainPage(){
+    public static void mainPage(){
         System.out.println("Enter the Choice\n");
         System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
         int choice = scanner.nextInt();
@@ -57,11 +57,11 @@ public class FlipfitApplication {
     private static void login(){
         Scanner scanner = new Scanner(System.in);
         try {
-            System.out.println("Enter your Role (ADMIN/GYMOWNER/CUSTOMER) : ");
-            String curRole = scanner.next();
-            Role roleEnum = Role.valueOf(curRole.toUpperCase());
+            System.out.println("Enter your Role \n1. ADMIN\n2. GYMOWNER\n3. CUSTOMER \n ");
+//            String curRole = scanner.next();
+//            Role roleEnum = Role.valueOf(curRole.toUpperCase());
 
-            int role = roleEnum.ordinal()+1;
+            int role = scanner.nextInt();
 
 
             System.out.println("Enter your UserName : ");

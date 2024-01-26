@@ -9,6 +9,7 @@ import com.flipkart.business.CustomerFlipfitServiceInterface;
 import com.flipkart.exceptions.DataEntryException;
 import com.flipkart.utils.UserPlan;
 import com.flipkart.utils.util;
+import com.flipkart.validator.Validators;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.flipkart.client.FlipfitApplication.mainPage;
 import static com.flipkart.client.FlipfitApplication.scanner;
 import static com.flipkart.constants.Constants.*;
 import static com.flipkart.constants.Constants.RESET_COLOR;
@@ -39,6 +41,7 @@ public class CustomerFlipfitClient {
 
 
     public void register(){
+        Validators validate = new Validators();
         System.out.println("Enter your UserName");
         String userName = scanner.next();
 
@@ -49,16 +52,30 @@ public class CustomerFlipfitClient {
 
         System.out.println("Enter your Email");
         String email = scanner.next();
+        if (!validate.isEmailValid(email)){
+            System.out.println("Please enter a valid email");
+            register();
+        }
 
 
         System.out.println("Enter your Phone Number");
         String phoneNumber = scanner.next();
+        if(!validate.isPhoneValid(phoneNumber)){
+            System.out.println("Please enter a valid phone number");
+            register();
+        }
+
 
         System.out.println("Enter your Card Number");
         String cardNumber = scanner.next();
+        if(!validate.isCardValid(cardNumber)){
+            System.out.println("Please enter a valid card number");
+            register();
+        }
 
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
-        customerClientMainPage(userName);
+//        customerClientMainPage(userName);
+        mainPage();
     }
     public void registerCustomerManually(String userName,String password, String email, String phoneNumber,String cardNumber ){
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
@@ -258,7 +275,7 @@ public class CustomerFlipfitClient {
         String formattedDate = currentTime.format(myFormat);
         System.out.println(YELLOW_COLOR+"WELCOME "+userName+" !!\nWhat do you want to do\nLogin TIME: "+currentTime+RESET_COLOR);
         while(true){
-            System.out.println("1. View My Profile \n2. Edit My Profile \n3. View gyms by cities \n4. Book a slot in a Gym \n5. View Bookings\n6. Cancel Bookings\n7. Go Back to previous menu");
+            System.out.println("1. View My Profile \n2. Edit My Profile \n3. View gyms by cities \n4. Book a slot in a Gym \n5. View Booked Slots\n6. Cancel Bookings\n7. Go Back to previous menu");
             int choice = scanner.nextInt();
             switch(choice){
                 case 1:

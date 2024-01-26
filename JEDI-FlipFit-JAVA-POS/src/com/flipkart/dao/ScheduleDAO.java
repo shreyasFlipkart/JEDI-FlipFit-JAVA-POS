@@ -12,8 +12,8 @@ import static com.flipkart.constants.SQLConstants.*;
 public class ScheduleDAO implements ScheduleInterfaceDAO {
 
     public void addSchedule(Schedule schedule) {
-        try (Connection conn = DBConnection.connect();
-             PreparedStatement stmt = conn.prepareStatement(ADD_SCHEDULE)) {
+        try {Connection conn= DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(ADD_SCHEDULE);
             stmt.setString(1, schedule.getScheduleID());
             stmt.setDate(2, schedule.getDate());
             stmt.setString(3, schedule.getSlotID());
@@ -26,8 +26,9 @@ public class ScheduleDAO implements ScheduleInterfaceDAO {
     }
 
     public Schedule getSchedule(String scheduleId) {
-        try (Connection conn = DBConnection.connect();
-             PreparedStatement stmt = conn.prepareStatement(GET_SCHEDULE_BY_ID)) {
+        try{
+        Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(GET_SCHEDULE_BY_ID) ;
             stmt.setString(1, scheduleId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -41,8 +42,8 @@ public class ScheduleDAO implements ScheduleInterfaceDAO {
 
     public List<Schedule> getAllScheduleByDate(Date date) {
         List<Schedule> response = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
-             PreparedStatement stmt = conn.prepareStatement(GET_SCHEDULES_BY_DATE)) {
+        try {Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(GET_SCHEDULES_BY_DATE);
             stmt.setDate(1, date);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -55,8 +56,9 @@ public class ScheduleDAO implements ScheduleInterfaceDAO {
     }
 
     public boolean modifySchedule(String scheduleId, int action) {
-        try (Connection conn = DBConnection.connect();
-             PreparedStatement stmt = conn.prepareStatement(MODIFY_SCHEDULE_AVAILABILITY)) {
+        try {
+            Connection conn = DBConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(MODIFY_SCHEDULE_AVAILABILITY) ;
             Schedule schedule = getSchedule(scheduleId);
             if (schedule == null) {
                 return false;

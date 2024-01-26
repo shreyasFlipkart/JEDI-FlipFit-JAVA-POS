@@ -7,6 +7,7 @@ import com.flipkart.dao.GymOwnerDAO;
 import com.flipkart.business.*;
 import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.utils.util;
+import com.flipkart.validator.Validators;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.flipkart.client.FlipfitApplication.mainPage;
 import static com.flipkart.client.FlipfitApplication.scanner;
 import static com.flipkart.constants.Constants.*;
 
@@ -38,23 +40,38 @@ public class GymOwnerFlipfitClient {
     }
 
     public void register() {
+        Validators validate = new Validators();
         System.out.println("Enter your UserName");
         String userName = scanner.next();
 
-        System.out.println("Enter your Passkey");
+        System.out.println("Enter your Password");
         String password = scanner.next();
 
         System.out.println("Enter your Email");
         String email = scanner.next();
+        if (!validate.isEmailValid(email)){
+            System.out.println("Please enter a valid email");
+            register();
+        }
 
         System.out.println("Enter your PAN Number");
         String panNumber = scanner.next();
+        if (!validate.isPanValid(panNumber)){
+            System.out.println("Please enter a valid email");
+            register();
+        }
+
 
         System.out.println("Enter your Card Number");
         String cardNumber = scanner.next();
+        if (!validate.isCardValid(cardNumber)){
+            System.out.println("Please enter a valid Card Number");
+            register();
+        }
 
         gymOwnerService.registerGymOwner(userName,userName,password,email,panNumber,cardNumber);
-        gymOwnerClientMainPage(userName);
+//        gymOwnerClientMainPage(userName);
+        mainPage();
     }
 
     public void registerGymOwnerManually(String userid, String userName, String password, String email, String panNumber, String cardNumber){
@@ -65,6 +82,7 @@ public class GymOwnerFlipfitClient {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = currentTime.format(myFormat);
+        Validators validate = new Validators();
         System.out.println(YELLOW_COLOR+"WELCOME "+gymOwnerId+" !!\nWhat you what to do\nLogin TIME: "+currentTime+RESET_COLOR);
 
         boolean isContinue = true;
@@ -124,6 +142,10 @@ public class GymOwnerFlipfitClient {
 
                     System.out.println("Enter Gym Centre GSTIN: ");
                     String gstin = scanner.next();
+                    if(!validate.isGstValid(gstin)){
+                        System.out.println("Please enter valid GST Number");
+                        break;
+                    }
 
                     System.out.println("Enter Gym Centre Location:\n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. East Bangalore \n");
                     int gymLocationChoice = scanner.nextInt();
@@ -195,7 +217,7 @@ public class GymOwnerFlipfitClient {
                                 localTime
                         ));
 
-                        System.out.println("Do you want to enter more slots (y/n)?: ");
+                        System.out.println("Do you want to enter more slots (yes/no)?: ");
                         String addChoice = scanner.next();
                         addChoice = addChoice.toLowerCase();
 
@@ -225,7 +247,7 @@ public class GymOwnerFlipfitClient {
                     break;
 
                 case 9:
-                    System.out.println("Do you wish to continue? (y/n)");
+                    System.out.println("Do you wish to continue? (yes/no)");
                     String ans = scanner.next();
                     if(ans.equals("n") || ans.equals("no")) isContinue = false;
                     break;
