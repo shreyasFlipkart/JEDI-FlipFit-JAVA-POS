@@ -69,13 +69,31 @@ public class AdminFlipfitClient {
         String requestGymCenterId = scanner.next();
         if (requestGymCenterId.equals("0")) return;
 //            Now Admin will select a request and we will pop up with two
-        System.out.println("1. Approve the request\n2. Reject the request\n");
-        int choice = scanner.nextInt();
-        if(choice == 1){
-            System.out.println(APPROVAL_GYM_CENTRE_CONFIRMATION);
-        } else if (choice == 2) {
-            System.out.println(DISAPPROVAL_GYM_CENTRE_CONFIRMATION);
+        boolean correctChoice = false;
+        int choice = 1;
+        while(!correctChoice){
+            System.out.println("Enter your choice (1, 2): \n");
+            System.out.println("1. Approve the request\n2. Reject the request\n");
+            try{
+                choice = scanner.nextInt();
+                if(choice == 1){
+                    correctChoice = true;
+                    System.out.println(APPROVAL_GYM_CENTRE_CONFIRMATION);
+                } else if (choice == 2) {
+                    correctChoice = true;
+                    System.out.println(DISAPPROVAL_GYM_CENTRE_CONFIRMATION);
+                }
+                else {
+                    System.out.println(INVALID_CHOICE_ERROR);
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Invalid input, please enter a valid numerical value.");
+                scanner.nextLine(); // Clear the buffer
+            }
+
         }
+
         adminService.approveGymCenter(requestGymCenterId,choice);
     }
 
