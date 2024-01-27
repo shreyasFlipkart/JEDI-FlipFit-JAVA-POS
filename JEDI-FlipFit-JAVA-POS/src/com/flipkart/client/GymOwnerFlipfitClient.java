@@ -41,6 +41,9 @@ public class GymOwnerFlipfitClient {
 
     public void register() {
         Validators validate = new Validators();
+        String email = "";
+        String panNumber = "";
+        String cardNumber = "";
         System.out.println("Enter your UserName");
         String userName = scanner.next();
         userName = userName.toUpperCase();
@@ -48,31 +51,34 @@ public class GymOwnerFlipfitClient {
         System.out.println("Enter your Password");
         String password = scanner.next();
 
-        System.out.println("Enter your Email");
-        String email = scanner.next();
-        if (!validate.isEmailValid(email)){
-            System.out.println("Please enter a valid email");
-            register();
+        while(true){
+            System.out.println("Enter your Email");
+            email = scanner.next();
+            if (!validate.isEmailValid(email)){
+                System.out.println("Please enter a valid email");
+            }else break;
         }
 
-        System.out.println("Enter your PAN Number");
-        String panNumber = scanner.next();
-        if (!validate.isPanValid(panNumber)){
-            System.out.println("Please enter a valid PAN Number");
-            register();
+        while(true){
+            System.out.println("Enter your PAN Number");
+            panNumber = scanner.next();
+            if (!validate.isPanValid(panNumber)){
+                System.out.println("Please enter a valid PAN Number");
+            }else break;
         }
 
 
-        System.out.println("Enter your Card Number");
-        String cardNumber = scanner.next();
-        if (!validate.isCardValid(cardNumber)){
-            System.out.println("Please enter a valid Card Number");
-            register();
+        while(true){
+            System.out.println("Enter your Card Number");
+            cardNumber = scanner.next();
+            if (!validate.isCardValid(cardNumber)){
+                System.out.println("Please enter a valid Card Number");
+            }else break;
         }
 
         gymOwnerService.registerGymOwner(userName,userName,password,email,panNumber,cardNumber);
 //        gymOwnerClientMainPage(userName);
-        mainPage();
+//        mainPage();
     }
 
     public void registerGymOwnerManually(String userid, String userName, String password, String email, String panNumber, String cardNumber){
