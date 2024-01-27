@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.flipkart.constants.Constants.GREEN_COLOR;
+import static com.flipkart.constants.Constants.RESET_COLOR;
+
 public class PaymentFlipfitImplService implements PaymentFlipfitServiceInterface {
     public static List<Payment> payments = new ArrayList<>();
     public static List<String> refunds = new ArrayList<>();
@@ -21,7 +24,7 @@ public class PaymentFlipfitImplService implements PaymentFlipfitServiceInterface
         payment.setAmountPaid(String.valueOf(gymCentreDAO.getGymCentreByCentreId(gymCentreId).getPrice()));
         payment.setBookingId(bookingId);
         payments.add(payment);
-        System.out.println("Payment Successfull");
+        System.out.println(GREEN_COLOR + "Payment Successfull" + RESET_COLOR);
 //        return true;
     }
 
@@ -29,7 +32,7 @@ public class PaymentFlipfitImplService implements PaymentFlipfitServiceInterface
         System.out.println("\nInitiating refund...");
         for(Payment payment: payments){
             if(payment.getBookingId().equals(bookingId) && !refunds.contains(bookingId)){
-                System.out.println("Refund successfull for bookingId:" + bookingId);
+                System.out.println("Refund successfull for bookingId:" + bookingId + "\n");
                 refunds.add(bookingId);
             }
         }

@@ -143,7 +143,7 @@ public class CustomerFlipfitClient {
         Date sqlDate = selectDate();
         //Choose Slot
         chooseSlot(chosenGym,userName,sqlDate,chosenGym);
-        System.out.println("Booking Successful");
+        System.out.println(GREEN_COLOR + "Booking Successful\n" + RESET_COLOR);
     }
 
     private Date selectDate(){
@@ -201,15 +201,27 @@ public class CustomerFlipfitClient {
     private void printbookingsSubMenu(String userName){
         System.out.println("Bookings : ");
         List<Booking> allBookingList= customerService.getCustomerBookings(userName);
-        System.out.println(DASHED_LINE);
-        System.out.printf(YELLOW_COLOR + "%-8s\t", "BOOKING-ID");
-        System.out.printf("%47s\t\n", "SCHEDULE-ID" + RESET_COLOR);
-        System.out.println(DASHED_LINE);
-        for(Booking booking: allBookingList) {
-            System.out.printf("%-8s\t", booking.getBookingID());
-            System.out.printf("%-8s\t\n", booking.getScheduleID());
+        String[][] table = new String[allBookingList.size()+1][2];
+//        String[][] table_dup = new String[allBookingList.size()+1][2];
+        String[] cols = { "BOOKING-ID", "SCHEDULE-ID" };
+        for(int i =0;i<2;i++){
+            table[0][i] = cols[i];
+//            table_dup[0][i] = cols[i];
         }
-        System.out.println(DASHED_LINE);
+        for(int i=1;i< allBookingList.size()+1;i++){
+            table[i][0] = allBookingList.get(i - 1).getBookingID();
+            table[i][1] = allBookingList.get(i - 1).getScheduleID();
+        }
+//        System.out.println(DASHED_LINE);
+//        System.out.printf(YELLOW_COLOR + "%-8s\t", "BOOKING-ID");
+//        System.out.printf("%47s\t\n", "SCHEDULE-ID" + RESET_COLOR);
+//        System.out.println(DASHED_LINE);
+//        for(Booking booking: allBookingList) {
+//            System.out.printf("%-8s\t", booking.getBookingID());
+//            System.out.printf("%-8s\t\n", booking.getScheduleID());
+//        }
+//        System.out.println(DASHED_LINE);
+        util.tableWithLines(table, table);
     }
 
     private void cancelBookingSubMenu(String userName){
@@ -217,7 +229,7 @@ public class CustomerFlipfitClient {
         System.out.println("Select the Booking you want to cancel: ");
         String bookingId = scanner.next();
         customerService.cancelBookingbyID(bookingId);
-        System.out.println("Booking Cancellation Successful");
+        System.out.println(GREEN_COLOR + "Booking Cancellation Successful\n" + RESET_COLOR);
     }
 
     public void printCustomerProfile(Customer customer){

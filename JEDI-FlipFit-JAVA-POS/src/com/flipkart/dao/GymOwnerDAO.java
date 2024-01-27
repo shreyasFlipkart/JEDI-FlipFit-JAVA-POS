@@ -10,14 +10,36 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.flipkart.constants.Constants.GREEN_COLOR;
+import static com.flipkart.constants.Constants.RESET_COLOR;
 import static com.flipkart.constants.SQLConstants.*;
 
 public class GymOwnerDAO implements GymOwnerInterfaceDAO {
 
-    List<GymOwner> gymOwnerList = new ArrayList<>();
+//    List<GymOwner> gymOwnerList = new ArrayList<>();
+
+    public boolean updatePassword(String gymownerName, String newPassword) {
+        try {
+            Connection conn = DBConnection.connect();
+            PreparedStatement stmt = conn.prepareStatement(UPDATE_GYMOWNER_PASSWORD_QUERY);
+            stmt.setString(1, newPassword);
+            stmt.setString(2, gymownerName);
+
+            int rowsAffected = stmt.executeUpdate();
+            stmt.close();
+
+            return rowsAffected > 0;
+        } catch (SQLException exp) {
+            exp.printStackTrace();
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+
+        return false;
+    }
 
     public List<GymOwner> getGymOwnerList() {
-
+        List<GymOwner> gymOwnerList = new ArrayList<>();
         try (Connection conn = DBConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_GYM_OWNERS)) {
             ResultSet rs = stmt.executeQuery();
@@ -31,11 +53,11 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
     }
 
     public void setGymOwnerList(List<GymOwner> gymOwnerList) {
-        this.gymOwnerList = new ArrayList<>(gymOwnerList);
+//        this.gymOwnerList = new ArrayList<>(gymOwnerList);
     }
 
     public boolean loginGymOwner(String username, String password) {
-        getGymOwnerList();
+        List<GymOwner> gymOwnerList = getGymOwnerList();
         for (GymOwner owner : gymOwnerList) {
             if (username.equals(owner.getUserName()) && password.equals(owner.getPassword())) {
                 System.out.println("Login Success\n");
@@ -56,7 +78,7 @@ public class GymOwnerDAO implements GymOwnerInterfaceDAO {
             stmt.setString(6, gymOwner.getCardDetails());
 
             stmt.executeUpdate();
-            System.out.println("Registration Success\n");
+            System.out.println(GREEN_COLOR + "\nRegistration Success\n" + RESET_COLOR);
         } catch (SQLException e) {
             e.printStackTrace();
         }

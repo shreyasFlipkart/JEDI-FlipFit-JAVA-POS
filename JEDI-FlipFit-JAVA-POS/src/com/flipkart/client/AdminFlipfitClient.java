@@ -34,11 +34,11 @@ public class AdminFlipfitClient {
 
     public boolean adminLogin(String userName, String password) {
         if (isUserValid(userName, password)) {
-            System.out.println("Successfully logged in");
+            System.out.println(Admin_login_success);
             adminClientMenu();
         }
         else{
-            System.out.println("ADMIN login failed");
+            System.out.println(Admin_login_failed);
             return false;
         }
         return true;
@@ -68,7 +68,7 @@ public class AdminFlipfitClient {
         System.out.println("Press 0 to EXIT_MESSAGE or Choose the Gym Centre To Modify:");
         String requestGymCenterId = scanner.next();
         if (requestGymCenterId.equals("0")) return;
-//            Now Admin will select an request and we will pop up with two
+//            Now Admin will select a request and we will pop up with two
         System.out.println("1. Approve the request\n2. Reject the request\n");
         int choice = scanner.nextInt();
         if(choice == 1){

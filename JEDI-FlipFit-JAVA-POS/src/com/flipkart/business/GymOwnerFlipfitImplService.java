@@ -22,6 +22,11 @@ public class GymOwnerFlipfitImplService implements GymOwnerFlipfitServiceInterfa
 //        return new Object();
 //    }
 
+    public boolean updatePassword(String customerId, String newPassword){
+
+        return gymOwnerDAO.updatePassword(customerId,newPassword);
+    }
+
     public boolean loginGymOwner(String username,String password){
         return gymOwnerDAO.loginGymOwner(username,password);
     }
