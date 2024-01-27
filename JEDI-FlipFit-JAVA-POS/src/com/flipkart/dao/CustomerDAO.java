@@ -4,6 +4,7 @@ import com.flipkart.bean.Customer;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.UserInvalidException;
 import com.flipkart.utils.DBConnection;
+import com.flipkart.utils.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +29,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
         try {
             Connection conn = DBConnection.connect();
             PreparedStatement stmt = conn.prepareStatement(ADD_NEW_CUSTOMER);
-            stmt.setString(1,userName);
+            stmt.setString(1, util.generateNewId());
             stmt.setString(2, userName);
             stmt.setString(3, password);
             stmt.setString(4, email);

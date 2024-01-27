@@ -3,10 +3,7 @@ package com.flipkart.utils;
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.GymOwner;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static com.flipkart.constants.Constants.*;
@@ -203,5 +200,18 @@ public class util {
                         System.out.printf(formatString.toString(), table[a])
                 );
         System.out.print(line);
+    }
+
+    public static String generateNewId(){
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        return random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 }

@@ -76,7 +76,7 @@ public class GymOwnerFlipfitClient {
             }else break;
         }
 
-        gymOwnerService.registerGymOwner(userName,userName,password,email,panNumber,cardNumber);
+        gymOwnerService.registerGymOwner(util.generateNewId(),userName,password,email,panNumber,cardNumber);
 //        gymOwnerClientMainPage(userName);
 //        mainPage();
     }
