@@ -63,38 +63,49 @@ public class FlipfitApplication {
     private static void login(){
         Scanner scanner = new Scanner(System.in);
         try {
+            System.out.println("Enter your choice (1, 2, 3): \n");
             System.out.println("Enter your Role \n1. ADMIN\n2. GYMOWNER\n3. CUSTOMER \n ");
 //            String curRole = scanner.next();
 //            Role roleEnum = Role.valueOf(curRole.toUpperCase());
+            int role = 1;
+            try {
+                role = scanner.nextInt();
+                String userName="";String password = "";
+                if(role>=1 &&  role<=3){
+                    System.out.println("Enter your UserName : ");
+                    userName = scanner.next();
+                    System.out.println("Enter your Password :");
+                    password = scanner.next();
+                }
 
-            int role = scanner.nextInt();
 
-
-            System.out.println("Enter your UserName : ");
-            String userName = scanner.next();
-//            userName = userName.toUpperCase();
-//            System.out.println(userName);
-
-            System.out.println("Enter your Password :");
-            String password = scanner.next();
-
-            switch (role){
-                case 1:
-                    adminFlipfitClient.adminLogin(userName,password);
-                    break;
-                case 2:
-                    gymOwnerFlipfitClient.gymOwnerLogin(userName,password);
-                    break;
-                case 3:
-                    customerFlipfitClient.customerLogin(userName,password);
-                    break;
-                default:
-                    System.out.println(INVALID_CHOICE_ERROR);
-                    break;
+                switch (role){
+                    case 1:
+                        adminFlipfitClient.adminLogin(userName,password);
+                        break;
+                    case 2:
+                        gymOwnerFlipfitClient.gymOwnerLogin(userName,password);
+                        break;
+                    case 3:
+                        customerFlipfitClient.customerLogin(userName,password);
+                        break;
+                    default:
+                        login();
+                        System.out.println(INVALID_CHOICE_ERROR);
+                        break;
+                }
+            }catch (IllegalArgumentException e){
+                System.out.println(INVALID_CHOICE_ERROR);
             }
-        }catch (IllegalArgumentException e){
-            System.out.println(INVALID_CHOICE_ERROR);
-        }
+            }
+            catch (Exception e) {
+                login();
+                System.out.println("Invalid input, please enter a numerical value.");
+                scanner.nextLine(); // Clear the buffer
+            }
+
+
+
     }
 
     private static void registration(int role){
