@@ -41,9 +41,9 @@ public class CustomerFlipfitImplService implements CustomerFlipfitServiceInterfa
         return gymCentreService.getAvailableSlotsByCentreAndDate(centreID,date);
     }
 
-    public List<Booking> getCustomerBookings(String customerId){
+    public List<Booking> getCustomerBookings(String customerName){
         //takes userId and returns List<Bookings>
-        return bookingService.getBookingByCustomerId(customerId);
+        return bookingService.getBookingByCustomerId(viewMyProfile(customerName).getUserID());
     }
 
     public List<UserPlan> getCustomerPlan(String customerId){
