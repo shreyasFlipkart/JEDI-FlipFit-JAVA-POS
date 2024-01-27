@@ -148,8 +148,10 @@ public class CustomerFlipfitClient {
             //Select Date
             Date sqlDate = selectDate();
             //Choose Slot
-            chooseSlot(chosenGym,userName,sqlDate,chosenGym);
-            System.out.println(GREEN_COLOR + "Booking Successful\n" + RESET_COLOR);
+            boolean result = chooseSlot(chosenGym,userName,sqlDate,chosenGym);
+            if(result){
+                System.out.println(GREEN_COLOR + "Booking Successful\n" + RESET_COLOR);
+            }
         }catch (Exception e) {
             System.out.println("Invalid input, please enter a numerical value.");
             scanner.nextLine();
@@ -176,19 +178,23 @@ public class CustomerFlipfitClient {
         return sqlDate;
     }
 
-    private void chooseSlot(String gymCentreId,String userName,Date sqlDate,String centreId){
-        System.out.println("Choose from the Below Slots");
-        List<Slot> availableSlots = customerService.getAvailableSlots(gymCentreId,sqlDate);
-        printSlots(availableSlots);
-        if(availableSlots.isEmpty()){
-            System.out.println(RED_COLOR +"There are no available slots in the " + gymCentreId + ". Please Select some other gym" + RESET_COLOR);
-            customerClientMainPage(userName);
-            return;
+    private boolean chooseSlot(String gymCentreId,String userName,Date sqlDate,String centreId){
+        while(true){
+            System.out.println("Choose from the Below Slots");
+            List<Slot> availableSlots = customerService.getAvailableSlots(gymCentreId,sqlDate);
+            printSlots(availableSlots);
+            if(availableSlots.isEmpty()){
+                System.out.println(RED_COLOR +"There are no available slots in the " + gymCentreId + ". Please Select some other gym" + RESET_COLOR);
+                customerClientMainPage(userName);
+                return false;
+            }
+            System.out.println("Press 0 to exit");
+            System.out.println("Enter SlotID :");
+            String slotID = scanner.next();
+            if(slotID.equals("0"))return false;
+            //Select Slot to book
+            if(customerService.bookSlot(userName,sqlDate,slotID,centreId))return true;
         }
-        System.out.println("Enter SlotID :");
-        String slotID = scanner.next();
-        //Select Slot to book
-        if(!customerService.bookSlot(userName,sqlDate,slotID,centreId)) chooseSlot(gymCentreId, userName, sqlDate,centreId);
     }
 
     private void printUserPlan(String userName){

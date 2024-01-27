@@ -64,6 +64,7 @@ public class CustomerFlipfitImplService implements CustomerFlipfitServiceInterfa
             return false;
         }
         String bookingId = bookingService.addBooking(userName, scheduleId);
+        if(bookingId.isEmpty())return false;
         paymentService.makePayment(userName, centreId, bookingId);
         return true;
     }
