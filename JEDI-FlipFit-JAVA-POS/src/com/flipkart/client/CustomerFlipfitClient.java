@@ -44,6 +44,7 @@ public class CustomerFlipfitClient {
         Validators validate = new Validators();
         System.out.println("Enter your UserName");
         String userName = scanner.next();
+        userName = userName.toUpperCase();
 
 
         System.out.println("Enter your Password");
