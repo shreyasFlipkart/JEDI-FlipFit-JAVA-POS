@@ -110,6 +110,7 @@ public class GymOwnerFlipfitClient {
             );
 
             GymOwner g = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
+            String curId = g.getUserID();
             if(g.getIsApproved()==0){
                 System.out.println("You are currently not approved. Please press 3 to send a approval request.");
             }
@@ -240,7 +241,7 @@ public class GymOwnerFlipfitClient {
                         gymCentreService.addCenter(
                                 new GymCentre(
                                         gymId,
-                                        gymOwnerId,
+                                        curId,
                                         gymCentreName,
                                         gstin,
                                         city,

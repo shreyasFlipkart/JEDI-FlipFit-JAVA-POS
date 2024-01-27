@@ -65,7 +65,7 @@ public class AdminFlipfitClient {
     }
     private void handleGymCenterApprovalRequests(){
         // print the list with indexes from 1
-        System.out.println("Press 0 to EXIT_MESSAGE or Choose the Gym Centre To Modify:");
+        System.out.println("Press 0 to EXIT_MESSAGE or Choose the Id of the Gym Centre To Modify:");
         String requestGymCenterId = scanner.next();
         if (requestGymCenterId.equals("0")) return;
 //            Now Admin will select a request and we will pop up with two
@@ -79,6 +79,7 @@ public class AdminFlipfitClient {
                 if(choice == 1){
                     correctChoice = true;
                     System.out.println(APPROVAL_GYM_CENTRE_CONFIRMATION);
+                    //also gym should be added in the respective gym owners table
                 } else if (choice == 2) {
                     correctChoice = true;
                     System.out.println(DISAPPROVAL_GYM_CENTRE_CONFIRMATION);
