@@ -16,4 +16,6 @@ public class Constants {
     public static String APPROVAL_GYM_OWNER_CONFIRMATION = GREEN_COLOR + "\nAdmin Approved the Gym Owner\n"+ RESET_COLOR;
     public static String DISAPPROVAL_GYM_OWNER_CONFIRMATION =RED_COLOR +  "\nAdmin Disapproved the Gym Owner\n"+ RESET_COLOR;
     public static String INVALID_SLOT = RED_COLOR + "PLEASE CHOOSE A VALID SLOT"+RESET_COLOR;
+    public static String Admin_login_failed=RED_COLOR+"ADMIN login failed"+RESET_COLOR;
+    public static String Admin_login_success=GREEN_COLOR+"Successfully logged in"+RESET_COLOR;
 }

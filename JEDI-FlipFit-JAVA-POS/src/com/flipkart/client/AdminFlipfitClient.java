@@ -34,11 +34,11 @@ public class AdminFlipfitClient {
 
     public boolean adminLogin(String userName, String password) {
         if (isUserValid(userName, password)) {
-            System.out.println("Successfully logged in");
+            System.out.println(Admin_login_success);
             adminClientMenu();
         }
         else{
-            System.out.println("ADMIN login failed");
+            System.out.println(Admin_login_failed);
             return false;
         }
         return true;
