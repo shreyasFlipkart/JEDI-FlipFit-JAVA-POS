@@ -22,9 +22,9 @@ import static com.flipkart.constants.Constants.*;
 
 public class GymOwnerFlipfitClient {
 
-    GymOwnerDAO gymOwnerDAO = new GymOwnerDAO();
+
     //private List<GymOwner> gymOwnerList = gymOwnerDAO.getGymOwnerList();
-    private GymOwnerFlipfitServiceInterface gymOwnerService = new GymOwnerFlipfitImplService();
+    private GymOwnerFlipfitServiceInterface gymOwnerService = GymOwnerFlipfitImplService.getInstance();
     private SlotFlipfitServiceInterface slotService = new SlotFlipfitImplService();
     private GymCentreFlipfitServiceInterface gymCentreService = new GymCentreFlipfitImplService();
 
@@ -124,12 +124,12 @@ public class GymOwnerFlipfitClient {
                 case 0:
                     GymOwner owner = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
                     if (owner.getUserID().equals("none")) System.out.println("User not found");
-                    System.out.println("Profile: \nUsername: " + owner.getUserName() + "\nPAN Card: " + owner.getPanNumber() + "\nCard Number: " + owner.getCardDetails());
+                    System.out.println("Profile: \nUsername: " + owner.getUserName() + "\nPAN Card: " + owner.getPanNumber() + "\nEmail: " + owner.getEmail());
                     break;
                 case 1:
                     //edit profile
                     editGymOwnerProfile(gymOwnerId);
-                    break;
+                    return ;
                 case 2:
                     List<GymCentre> allGymCentres = gymCentreService.getAllCentresByOwmerId(gymOwnerId);
                     util.printGymCentres(allGymCentres);
@@ -279,20 +279,20 @@ public class GymOwnerFlipfitClient {
             case 1:
                 System.out.println("Enter new user name: ");
                 String name = scanner.next();
-                status = gymOwnerService.editProfile(gymOwner.getUserID(), name, null, null);
+                status = gymOwnerService.editProfile(gymOwner.getUserID(), name, gymOwner.getEmail(), gymOwner.getCardDetails());
                 break;
             case 2:
                 System.out.println("Enter new email: ");
                 String email = scanner.next();
-                status = gymOwnerService.editProfile(gymOwner.getUserID(), null, email, null);
+                status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), email, gymOwner.getCardDetails());
                 break;
             case 3:
                 System.out.println("Enter new card number: ");
                 String cardNumber = scanner.next();
-                status = gymOwnerService.editProfile(gymOwner.getUserID(), null, null, cardNumber);
+                status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), gymOwner.getEmail(), cardNumber);
                 break;
             case 4:
-                gymOwnerClientMainPage(gymOwner.getUserID());
+                gymOwnerClientMainPage(gymOwner.getUserName());
                 return;
             default:
                 System.out.println(INVALID_CHOICE_ERROR);
@@ -305,7 +305,7 @@ public class GymOwnerFlipfitClient {
             System.out.println(RED_COLOR+"Couldn't edit customer details");
         }
 
-        editGymOwnerProfile(gymOwner.getUserID());
+        editGymOwnerProfile(gymOwner.getUserName());
     }
 
     public boolean validateCredentials(String userName,String password){

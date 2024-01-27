@@ -15,7 +15,7 @@ public class SQLConstants {
     public static final String SQL_SEND_GYM_OWNER_APPROVAL_REQ_QUERY = "UPDATE FlipFit.GymOwner SET isApproved = 2 WHERE name = ?";
     public static final String REGISTER_GYM_OWNER = "INSERT INTO FlipFit.GymOwner (Id, name, password, email, panNumber, cardDetails, isApproved) VALUES (?, ?, ?, ?, ?, ?, 0)";
     public static final String SQL_APPROVE_GYM_OWNER_BY_ID_QUERY = "UPDATE FlipFit.GymOwner SET isApproved = ? WHERE Id = ?";
-    public static final String SQL_EDIT_GYM_OWNER = "UPDATE FlipFit.GymOwner SET name = ?, email = ?, cardNumber = ? WHERE Id = ?";
+    public static final String SQL_EDIT_GYM_OWNER = "UPDATE FlipFit.GymOwner SET name = ?, email = ?, cardDetails = ? WHERE Id = ?";
     public static final String SQL_GET_GYM_OWNER_BY_ID = "SELECT * FROM FlipFit.GymOwner WHERE name = ?";
     public static final String DELETE_SLOT = "DELETE FROM FlipFit.Slot WHERE slotId = ?";
     public static final String UPDATE_GYMOWNER_PASSWORD_QUERY = "UPDATE FlipFit.GymOwner SET password=? WHERE name=?";

@@ -17,6 +17,14 @@ import static com.flipkart.constants.SQLConstants.*;
 public class GymOwnerDAO implements GymOwnerInterfaceDAO {
 
 //    List<GymOwner> gymOwnerList = new ArrayList<>();
+private static GymOwnerDAO instance;
+
+    public static GymOwnerDAO getInstance() {
+        if (instance == null) {
+            instance = new GymOwnerDAO();
+        }
+        return instance;
+    }
 
     public boolean updatePassword(String gymownerName, String newPassword) {
         try {
