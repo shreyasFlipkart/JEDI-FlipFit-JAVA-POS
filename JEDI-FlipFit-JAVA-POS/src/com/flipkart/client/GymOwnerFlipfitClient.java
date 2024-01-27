@@ -299,6 +299,7 @@ public class GymOwnerFlipfitClient {
     }
 
     public void editGymOwnerProfile(String gymOwnerId){
+        Validators validate = new Validators();
 
         System.out.println(YELLOW_COLOR+"WELCOME TO EDIT PROFILE");
         System.out.println(YELLOW_COLOR+"Select what you want to edit");
@@ -314,13 +315,25 @@ public class GymOwnerFlipfitClient {
                 status = gymOwnerService.editProfile(gymOwner.getUserID(), name, gymOwner.getEmail(), gymOwner.getCardDetails());
                 break;
             case 2:
-                System.out.println("Enter new email: ");
-                String email = scanner.next();
+                String email = "";
+                while(true){
+                    System.out.println("Enter your Email");
+                    email = scanner.next();
+                    if (!validate.isEmailValid(email)){
+                        System.out.println("Please enter a valid email");
+                    }else break;
+                }
                 status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), email, gymOwner.getCardDetails());
                 break;
             case 3:
-                System.out.println("Enter new card number: ");
-                String cardNumber = scanner.next();
+                String cardNumber = "";
+                while(true){
+                    System.out.println("Enter your Card Number");
+                    cardNumber = scanner.next();
+                    if (!validate.isCardValid(cardNumber)){
+                        System.out.println("Please enter a valid Card Number");
+                    }else break;
+                }
                 status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), gymOwner.getEmail(), cardNumber);
                 break;
             case 4:
