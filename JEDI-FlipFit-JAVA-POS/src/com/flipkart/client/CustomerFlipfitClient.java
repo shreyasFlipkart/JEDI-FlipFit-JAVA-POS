@@ -260,6 +260,7 @@ public class CustomerFlipfitClient {
     }
 
     public void editCustomerProfile(Customer customer){
+        Validators validate = new Validators();
         System.out.println(YELLOW_COLOR+"WELCOME TO EDIT PROFILE");
         System.out.println(YELLOW_COLOR+"Select what you want to edit\n");
         System.out.println("Enter your choice (1, 2, 3, 4, 5 ): \n");
@@ -276,20 +277,45 @@ public class CustomerFlipfitClient {
                     status = customerService.editProfile(customer.getUserID(), name, customer.getEmail(), customer.getCustomerPhone(), customer.getCardDetails());
                     break;
                 case 2:
-                    System.out.println("Enter new email: ");
-                    String email = scanner.next();
+                    boolean isValidEmail = false;
+                    String email ="";
+                    while(!isValidEmail){
+                        System.out.println("Enter your Email");
+                        email = scanner.next();
+                        if (!validate.isEmailValid(email)){
+                            System.out.println("Please enter a valid email");
+                        }
+                        else isValidEmail = true;
+                    }
                     customer.setEmail(email);
                     status = customerService.editProfile(customer.getUserID(), customer.getUserName(), email, customer.getCustomerPhone(), customer.getCardDetails());
                     break;
                 case 3:
-                    System.out.println("Enter new phone number: ");
-                    String phoneNumber = scanner.next();
+                    boolean isValidPhone = false;
+                    String phoneNumber = "";
+                    while(!isValidPhone){
+                        System.out.println("Enter your Phone Number");
+                        phoneNumber = scanner.next();
+                        if(!validate.isPhoneValid(phoneNumber)){
+                            System.out.println("Please enter a valid phone number");
+                        }
+                        else isValidPhone = true;
+
+                    }
                     customer.setCustomerPhone(phoneNumber);
                     status = customerService.editProfile(customer.getUserID(), customer.getUserName(), customer.getEmail(), phoneNumber, customer.getCardDetails());
                     break;
                 case 4:
-                    System.out.println("Enter new card number: ");
-                    String cardNumber = scanner.next();
+                    boolean isValidCard = false;
+                    String cardNumber = "";
+                    while(!isValidCard){
+                        System.out.println("Enter your Card Number");
+                        cardNumber = scanner.next();
+                        if(!validate.isCardValid(cardNumber)){
+                            System.out.println("Please enter a valid card number");
+                        }
+                        else isValidCard = true;
+                    }
                     customer.setCardDetails(cardNumber);
                     status = customerService.editProfile(customer.getUserID(),  customer.getUserName(), customer.getEmail(), customer.getCustomerPhone(), cardNumber);
                     break;
