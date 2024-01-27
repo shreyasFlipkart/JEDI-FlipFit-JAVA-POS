@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface GymOwnerFlipfitServiceInterface {
 
+    public boolean updatePassword(String customerId, String newPassword);
+
     /**
      * Sends a request for approval for a specific gym owner.
      *

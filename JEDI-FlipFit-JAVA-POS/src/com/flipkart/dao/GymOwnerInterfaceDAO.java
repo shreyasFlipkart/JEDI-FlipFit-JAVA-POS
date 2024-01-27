@@ -5,6 +5,7 @@ import com.flipkart.bean.GymOwner;
 import java.util.List;
 
 public interface GymOwnerInterfaceDAO {
+    boolean updatePassword(String gymownerName, String newPassword);
     List<GymOwner> getGymOwnerList();
     void setGymOwnerList(List<GymOwner> gymOwnerList);
     void registerGymOwner(GymOwner gymOwner);

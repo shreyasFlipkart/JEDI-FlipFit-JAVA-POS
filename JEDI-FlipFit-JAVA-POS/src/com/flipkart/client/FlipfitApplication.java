@@ -22,9 +22,6 @@ public class FlipfitApplication {
         System.out.println("Enter the Choice\n");
         System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
         int choice = scanner.nextInt();
-//        customerFlipfitClient.registerCustomerManually("Demo","Pas","1","2","3");
-//        gymOwnerFlipfitClient.registerGymOwnerManually("123","riya","1234","e@gmail.com","1234","12345123");
-//        gymOwnerFlipfitClient.registerGymOwnerManually("456","name","3455","f@gmail.com","1235","15345123");
 
         switch (choice) {
             case 1:
@@ -66,8 +63,8 @@ public class FlipfitApplication {
 
             System.out.println("Enter your UserName : ");
             String userName = scanner.next();
-            userName = userName.toUpperCase();
-            System.out.println(userName);
+//            userName = userName.toUpperCase();
+//            System.out.println(userName);
 
             System.out.println("Enter your Password :");
             String password = scanner.next();
@@ -115,12 +112,12 @@ public class FlipfitApplication {
         Scanner scanner=new Scanner(System.in);
         switch (role){
             case 2://customerFlipfitClient
-                System.out.println("Enter the UserName of the Customer\n");
+                System.out.println("Enter the UserName of the Customer: ");
                 String customerUserId = scanner.next();
-                System.out.println("Enter the Password of the Customer\n");
+                System.out.println("Enter the Password of the Customer: ");
                 String customerPassword = scanner.next();
                 if (customerFlipfitClient.validateCredentials(customerUserId,customerPassword)) {
-                    System.out.println("Enter the new Password\n");
+                    System.out.println("Enter the new Password: ");
                     String newPassword = scanner.next();
                     customerFlipfitClient.updatePassword(customerUserId,newPassword);
 
@@ -131,10 +128,19 @@ public class FlipfitApplication {
                 }
                 break;
             case 3:
-                System.out.println("Enter the User Id of the Gym Owner\n");
+                System.out.println("Enter the User Id of the Gym Owner: ");
                 String gymOwnerUserId = scanner.next();
-                System.out.println("Enter the Password of the Gym Owner\n");
+                System.out.println("Enter the Password of the Gym Owner: ");
                 String gymOwnerPassword = scanner.next();
+                if(gymOwnerFlipfitClient.validateCredentials(gymOwnerUserId, gymOwnerPassword)){
+                    System.out.println("Enter the new password: ");
+                    String newPassword = scanner.next();
+                    gymOwnerFlipfitClient.updatePassword(gymOwnerUserId, newPassword);
+                } else {
+                    System.out.println(RED_COLOR + "UserName or password doesn't match" + RESET_COLOR + '\n');
+                    System.out.println(EXIT_MESSAGE);
+                    return;
+                }
                 break;
             default:
                 System.out.println("INVALID CHOICE");
@@ -142,15 +148,12 @@ public class FlipfitApplication {
         }
 
 
-        System.out.println("Password updated!");
+        System.out.println( GREEN_COLOR + "Password updated!\n" + RESET_COLOR);
 
     }
 
     public static void main(String[] args) {
         System.out.println(WELCOME_MESSAGE);
-        //customerFlipfitClient.registerCustomerManually("Demo","Pas","1","2","3");
-        //gymOwnerFlipfitClient.registerGymOwnerManually("123","riya","1234","e@gmail.com","1234","12345123");
-        //gymOwnerFlipfitClient.registerGymOwnerManually("456","name","3455","f@gmail.com","1235","15345123");
         mainPage();
     }
 }

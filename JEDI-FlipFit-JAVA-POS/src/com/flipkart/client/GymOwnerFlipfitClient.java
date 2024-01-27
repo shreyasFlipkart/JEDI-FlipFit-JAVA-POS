@@ -314,5 +314,8 @@ public class GymOwnerFlipfitClient {
         else return false;
     }
 
+    public void updatePassword(String customerId,String newPassword){
+        gymOwnerService.updatePassword(customerId,newPassword);
+    }
 
 }
