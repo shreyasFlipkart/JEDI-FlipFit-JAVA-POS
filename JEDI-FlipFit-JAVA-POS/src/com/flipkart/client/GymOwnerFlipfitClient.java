@@ -46,7 +46,6 @@ public class GymOwnerFlipfitClient {
         String cardNumber = "";
         System.out.println("Enter your UserName");
         String userName = scanner.next();
-        userName = userName.toUpperCase();
 
         System.out.println("Enter your Password");
         String password = scanner.next();
