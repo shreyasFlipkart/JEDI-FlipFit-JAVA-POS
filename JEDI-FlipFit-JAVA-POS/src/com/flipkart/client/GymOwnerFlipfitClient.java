@@ -140,6 +140,16 @@ public class GymOwnerFlipfitClient {
 
                 case 4:
 
+                    if(gymOwnerService.viewGymOwnerProfile(gymOwnerId).getIsApproved()==0){
+                        System.out.println(RED_COLOR + "Please get yourself approved first!!!" + RESET_COLOR);
+                        break;
+                    }
+
+                    if(gymOwnerService.viewGymOwnerProfile(gymOwnerId).getIsApproved()==2){
+                        System.out.println(YELLOW_COLOR + "Please wait for admin to approve you!" + RESET_COLOR);
+                        break;
+                    }
+
                     System.out.println("Enter gym centre id: ");
                     String gymId = scanner.next();
 
@@ -200,6 +210,16 @@ public class GymOwnerFlipfitClient {
 
                 case 6:
 
+                    if(gymOwnerService.viewGymOwnerProfile(gymOwnerId).getIsApproved()==0){
+                        System.out.println(RED_COLOR + "Please get yourself approved first!!!" + RESET_COLOR);
+                        break;
+                    }
+
+                    if(gymOwnerService.viewGymOwnerProfile(gymOwnerId).getIsApproved()==2){
+                        System.out.println(YELLOW_COLOR + "Please wait for admin to approve you!" + RESET_COLOR);
+                        break;
+                    }
+
                     boolean isAdding = true;
                     String centreId = null;
 
@@ -210,6 +230,18 @@ public class GymOwnerFlipfitClient {
 
                         System.out.println("Enter Gym Centre ID: ");
                         centreId = scanner.next();
+
+                        if(gymCentreService.getGymCentreById(centreId).getIsApproved()==0){
+                            System.out.println(RED_COLOR + "Please get your center approved first!!!" + RESET_COLOR);
+                            isAdding=false;
+                            break;
+                        }
+
+                        if(gymCentreService.getGymCentreById(centreId).getIsApproved()==2){
+                            System.out.println(YELLOW_COLOR + "Please wait for admin to approve your gym!" + RESET_COLOR);
+                            isAdding=false;
+                            break;
+                        }
 
                         System.out.println("Enter time in 24h format (hh:mm:ss) : ");
                         String time = scanner.next();
@@ -232,7 +264,7 @@ public class GymOwnerFlipfitClient {
                         }
                     }
 
-                    slotService.addSlotsForGym(centreId, newSlotList);
+                    if(centreId!=null)slotService.addSlotsForGym(centreId, newSlotList);
                     break;
                 case 7:
                     System.out.println("Enter Gym Centre ID: ");
