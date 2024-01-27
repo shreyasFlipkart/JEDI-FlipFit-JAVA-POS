@@ -58,7 +58,7 @@ public class GymOwnerFlipfitClient {
         System.out.println("Enter your PAN Number");
         String panNumber = scanner.next();
         if (!validate.isPanValid(panNumber)){
-            System.out.println("Please enter a valid email");
+            System.out.println("Please enter a valid PAN Number");
             register();
         }
 

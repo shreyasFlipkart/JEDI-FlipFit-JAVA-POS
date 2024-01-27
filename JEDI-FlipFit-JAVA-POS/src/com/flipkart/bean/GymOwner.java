@@ -54,11 +54,4 @@ public class GymOwner extends User {
     public void setIsApproved(int isApproved) {
         this.isApproved = isApproved;
     }
-
-    public void setPhoneNumber(String phoneNumber) {
-    }
-
-    public String getPhoneNumber() {
-        return "9899344949";
-    }
 }
