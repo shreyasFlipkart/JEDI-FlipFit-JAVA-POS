@@ -108,42 +108,56 @@ public class CustomerFlipfitClient {
     private void bookSlotSubMenu(String userName){
         //Get Location for filter
         System.out.println("Provide Location to search :");
+        System.out.println("Enter your choice (1, 2, 3, 4): \n");
         System.out.println("Choose the location: \n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. East Bangalore \n");
-        int choice = scanner.nextInt();
-        String location = null;
-        switch (choice){
-            case 1:
-                location = "North Bangalore";
-                break;
-            case 2:
-                location = "South Bangalore";
-                break;
-            case 3:
-                location = "West Bangalore";
-                break;
-            case 4:
-                location = "East Bangalore";
-                break;
-            default:
-                break;
+        int choice = 1;
+        try{
+            choice = scanner.nextInt();
+            String location = null;
+            switch (choice){
+                case 1:
+                    location = "North Bangalore";
+                    break;
+                case 2:
+                    location = "South Bangalore";
+                    break;
+                case 3:
+                    location = "West Bangalore";
+                    break;
+                case 4:
+                    location = "East Bangalore";
+                    break;
+                default:
+                    System.out.println("Invalid input, please enter a valid numerical value.");
+                    bookSlotSubMenu(userName);
+                    return ;
 
+
+            }
+            List<GymCentre> centreListByLocation = customerService.getAllGymCenterDetailsByCity(location);
+            // Print All Centres
+            util.printGymCentres(centreListByLocation);
+            //Select Gym Centre
+            if(centreListByLocation.isEmpty()){
+                System.out.println(RED_COLOR +"There are no available GYM Centres in " + location + ". Please Select some other location" + RESET_COLOR);
+                customerClientMainPage(userName);
+                return;
+            }
+            System.out.print("Choose a gymCentre ID to proceed:");
+            String chosenGym = scanner.next();
+            //Select Date
+            Date sqlDate = selectDate();
+            //Choose Slot
+            chooseSlot(chosenGym,userName,sqlDate,chosenGym);
+            System.out.println(GREEN_COLOR + "Booking Successful\n" + RESET_COLOR);
+        }catch (Exception e) {
+            System.out.println("Invalid input, please enter a numerical value.");
+            scanner.nextLine();
+            bookSlotSubMenu(userName);
+            // Clear the buffer
         }
-        List<GymCentre> centreListByLocation = customerService.getAllGymCenterDetailsByCity(location);
-        // Print All Centres
-        util.printGymCentres(centreListByLocation);
-        //Select Gym Centre
-        if(centreListByLocation.isEmpty()){
-            System.out.println(RED_COLOR +"There are no available GYM Centres in " + location + ". Please Select some other location" + RESET_COLOR);
-            customerClientMainPage(userName);
-            return;
-        }
-        System.out.print("Choose a gymCentre ID to proceed:");
-        String chosenGym = scanner.next();
-        //Select Date
-        Date sqlDate = selectDate();
-        //Choose Slot
-        chooseSlot(chosenGym,userName,sqlDate,chosenGym);
-        System.out.println(GREEN_COLOR + "Booking Successful\n" + RESET_COLOR);
+
+
     }
 
     private Date selectDate(){
@@ -247,48 +261,58 @@ public class CustomerFlipfitClient {
 
     public void editCustomerProfile(Customer customer){
         System.out.println(YELLOW_COLOR+"WELCOME TO EDIT PROFILE");
-        System.out.println(YELLOW_COLOR+"Select what you want to edit");
+        System.out.println(YELLOW_COLOR+"Select what you want to edit\n");
+        System.out.println("Enter your choice (1, 2, 3, 4, 5 ): \n");
         System.out.println("1. Edit user name\n2. Edit email\n3. Edit contact\n4. Edit card details\n5. Go Back");
-        int choice = scanner.nextInt();
-        boolean status = false;
-        switch(choice){
-            case 1:
-                System.out.println("Enter new user name: ");
-                String name = scanner.next();
-                customer.setUserName(name);
-                status = customerService.editProfile(customer.getUserID(), name, customer.getEmail(), customer.getCustomerPhone(), customer.getCardDetails());
-                break;
-            case 2:
-                System.out.println("Enter new email: ");
-                String email = scanner.next();
-                customer.setEmail(email);
-                status = customerService.editProfile(customer.getUserID(), customer.getUserName(), email, customer.getCustomerPhone(), customer.getCardDetails());
-                break;
-            case 3:
-                System.out.println("Enter new phone number: ");
-                String phoneNumber = scanner.next();
-                customer.setCustomerPhone(phoneNumber);
-                status = customerService.editProfile(customer.getUserID(), customer.getUserName(), customer.getEmail(), phoneNumber, customer.getCardDetails());
-                break;
-            case 4:
-                System.out.println("Enter new card number: ");
-                String cardNumber = scanner.next();
-                customer.setCardDetails(cardNumber);
-                status = customerService.editProfile(customer.getUserID(),  customer.getUserName(), customer.getEmail(), customer.getCustomerPhone(), cardNumber);
-                break;
-            case 5:
-                customerClientMainPage(customer.getUserName());
-                return;
-            default:
-                System.out.println(INVALID_CHOICE_ERROR);
-                break;
+        int choice = 1;
+        try{
+            choice = scanner.nextInt();
+            boolean status = false;
+            switch(choice){
+                case 1:
+                    System.out.println("Enter new user name: ");
+                    String name = scanner.next();
+                    customer.setUserName(name);
+                    status = customerService.editProfile(customer.getUserID(), name, customer.getEmail(), customer.getCustomerPhone(), customer.getCardDetails());
+                    break;
+                case 2:
+                    System.out.println("Enter new email: ");
+                    String email = scanner.next();
+                    customer.setEmail(email);
+                    status = customerService.editProfile(customer.getUserID(), customer.getUserName(), email, customer.getCustomerPhone(), customer.getCardDetails());
+                    break;
+                case 3:
+                    System.out.println("Enter new phone number: ");
+                    String phoneNumber = scanner.next();
+                    customer.setCustomerPhone(phoneNumber);
+                    status = customerService.editProfile(customer.getUserID(), customer.getUserName(), customer.getEmail(), phoneNumber, customer.getCardDetails());
+                    break;
+                case 4:
+                    System.out.println("Enter new card number: ");
+                    String cardNumber = scanner.next();
+                    customer.setCardDetails(cardNumber);
+                    status = customerService.editProfile(customer.getUserID(),  customer.getUserName(), customer.getEmail(), customer.getCustomerPhone(), cardNumber);
+                    break;
+                case 5:
+                    customerClientMainPage(customer.getUserName());
+                    return;
+                default:
+                    System.out.println(INVALID_CHOICE_ERROR);
+                    editCustomerProfile(customer);
+                    return ;
+            }
+            if(status){
+                System.out.println(GREEN_COLOR+"Successfully edited customer details");
+            }else{
+                System.out.println(RED_COLOR+"Couldn't edit customer details");
+            }
+            editCustomerProfile(customer);
+        }catch (Exception e) {
+            System.out.println("Invalid input, please enter a valid numerical value.");
+            scanner.nextLine(); // Clear the buffer
+            editCustomerProfile(customer);
         }
-        if(status){
-            System.out.println(GREEN_COLOR+"Successfully edited customer details");
-        }else{
-            System.out.println(RED_COLOR+"Couldn't edit customer details");
-        }
-        editCustomerProfile(customer);
+
     }
 
 
@@ -297,38 +321,51 @@ public class CustomerFlipfitClient {
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = currentTime.format(myFormat);
         System.out.println(YELLOW_COLOR+"WELCOME "+userName+" !!\nWhat do you want to do\nLogin TIME: "+currentTime+RESET_COLOR);
+        int choice = 1;
+
+
         while(true){
+            System.out.println("Enter your choice (1, 2, 3, 4, 5, 6, 7 ): \n");
             System.out.println("1. View My Profile \n2. Edit My Profile \n3. View gyms by cities \n4. Book a slot in a Gym \n5. View Booked Slots\n6. Cancel Bookings\n7. Go Back to previous menu");
-            int choice = scanner.nextInt();
-            switch(choice){
-                case 1:
-                    Customer customer= customerService.viewMyProfile(userName);
-                    printCustomerProfile(customer);
-                    break;
-                case 2:
-                    Customer cust= customerService.viewMyProfile(userName);
-                    editCustomerProfile(cust);
-                    return;
-                case 3:
-                    displayCentersSortedByCities();
-                    break;
-                case 4:
-                    bookSlotSubMenu(userName);
-                    break;
-                case 5:
-                    printbookingsSubMenu(userName);
-                    //printUserPlan(userName);
-                    break;
-                case 6:
-                    cancelBookingSubMenu(userName);
-                    break;
-                case 7:
-                    System.out.println(PREVIOUS_MENU_MESSAGE);
-                    return;
-                default:
-                    System.out.println(INVALID_CHOICE_ERROR);
-                    break;
+
+            try{
+                choice = scanner.nextInt();
+                switch(choice){
+                    case 1:
+                        Customer customer= customerService.viewMyProfile(userName);
+                        printCustomerProfile(customer);
+                        break;
+                    case 2:
+                        Customer cust= customerService.viewMyProfile(userName);
+                        editCustomerProfile(cust);
+                        return;
+                    case 3:
+                        displayCentersSortedByCities();
+                        break;
+                    case 4:
+                        bookSlotSubMenu(userName);
+                        break;
+                    case 5:
+                        printbookingsSubMenu(userName);
+                        //printUserPlan(userName);
+                        break;
+                    case 6:
+                        cancelBookingSubMenu(userName);
+                        break;
+                    case 7:
+                        System.out.println(PREVIOUS_MENU_MESSAGE);
+                        return;
+                    default:
+                        System.out.println(INVALID_CHOICE_ERROR);
+                        break;
+                }
             }
+            catch (Exception e) {
+                System.out.println("Invalid input, please enter a valid numerical value.");
+                scanner.nextLine(); // Clear the buffer
+            }
+
+
         }
     }
 
