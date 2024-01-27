@@ -341,54 +341,69 @@ public class GymOwnerFlipfitClient {
 
         System.out.println(YELLOW_COLOR+"WELCOME TO EDIT PROFILE");
         System.out.println(YELLOW_COLOR+"Select what you want to edit");
-        System.out.println("1. Edit user name\n2. Edit email\n3. Edit card details\n4. Go Back");
-        int choice = scanner.nextInt();
+        int choice = 1;
+        boolean validChoice = false;
+        while(!validChoice){
+            System.out.println("1. Edit user name\n2. Edit email\n3. Edit card details\n4. Go Back");
+            System.out.println("Enter your choice (1, 2, 3, 4 ): \n");
+            try{
+                choice = scanner.nextInt();
+                GymOwner gymOwner = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
+                boolean status = false;
+                if(choice>=1 && choice<=4)validChoice = true;
+                switch(choice){
+                    case 1:
+                        System.out.println("Enter new user name: ");
+                        String name = scanner.next();
+                        status = gymOwnerService.editProfile(gymOwner.getUserID(), name, gymOwner.getEmail(), gymOwner.getCardDetails());
+                        break;
+                    case 2:
+                        String email = "";
+                        while(true){
+                            System.out.println("Enter your Email");
+                            email = scanner.next();
+                            if (!validate.isEmailValid(email)){
+                                System.out.println("Please enter a valid email");
+                            }else break;
+                        }
+                        status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), email, gymOwner.getCardDetails());
+                        break;
+                    case 3:
+                        String cardNumber = "";
+                        while(true){
+                            System.out.println("Enter your Card Number");
+                            cardNumber = scanner.next();
+                            if (!validate.isCardValid(cardNumber)){
+                                System.out.println("Please enter a valid Card Number");
+                            }else break;
+                        }
+                        status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), gymOwner.getEmail(), cardNumber);
+                        break;
+                    case 4:
+                        gymOwnerClientMainPage(gymOwner.getUserName());
+                        return;
+                    default:
+                        System.out.println(INVALID_CHOICE_ERROR);
+                        continue;
 
-        GymOwner gymOwner = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
-        boolean status = false;
-        switch(choice){
-            case 1:
-                System.out.println("Enter new user name: ");
-                String name = scanner.next();
-                status = gymOwnerService.editProfile(gymOwner.getUserID(), name, gymOwner.getEmail(), gymOwner.getCardDetails());
-                break;
-            case 2:
-                String email = "";
-                while(true){
-                    System.out.println("Enter your Email");
-                    email = scanner.next();
-                    if (!validate.isEmailValid(email)){
-                        System.out.println("Please enter a valid email");
-                    }else break;
                 }
-                status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), email, gymOwner.getCardDetails());
-                break;
-            case 3:
-                String cardNumber = "";
-                while(true){
-                    System.out.println("Enter your Card Number");
-                    cardNumber = scanner.next();
-                    if (!validate.isCardValid(cardNumber)){
-                        System.out.println("Please enter a valid Card Number");
-                    }else break;
+
+                if(status){
+                    System.out.println(GREEN_COLOR+"Successfully edited gym owner details");
+                }else{
+                    System.out.println(RED_COLOR+"Couldn't edit customer details");
                 }
-                status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), gymOwner.getEmail(), cardNumber);
-                break;
-            case 4:
-                gymOwnerClientMainPage(gymOwner.getUserName());
-                return;
-            default:
-                System.out.println(INVALID_CHOICE_ERROR);
-                break;
+                editGymOwnerProfile(gymOwner.getUserName());
+            }
+            catch (Exception e) {
+                System.out.println("Invalid input, please enter a valid numerical value.");
+                scanner.nextLine(); // Clear the buffer
+            }
+
         }
 
-        if(status){
-            System.out.println(GREEN_COLOR+"Successfully edited gym owner details");
-        }else{
-            System.out.println(RED_COLOR+"Couldn't edit customer details");
-        }
 
-        editGymOwnerProfile(gymOwner.getUserName());
+
     }
 
     public boolean validateCredentials(String userName,String password){
