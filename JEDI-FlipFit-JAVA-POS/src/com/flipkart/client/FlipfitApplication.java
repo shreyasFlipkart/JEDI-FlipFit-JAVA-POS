@@ -19,35 +19,44 @@ public class FlipfitApplication {
 
 
     public static void mainPage(){
-        System.out.println("Enter the Choice\n");
+        System.out.println("Enter your choice (1, 2, 3, 4, 5, 6): \n");
         System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
-        int choice = scanner.nextInt();
+        int choice = 1;
+        try {
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    login();
+                    break;
+                case 2:
+                    registration(2);
+                    break;
+                case 3:
+                    registration(3);
+                    break;
+                case 4:
+                    updatePassword(2);
+                    break;
+                case 5:
+                    updatePassword(3);
+                    break;
+                case 6:
+                    System.out.println(EXIT_MESSAGE);
+                    return;
 
-        switch (choice) {
-            case 1:
-                login();
-                break;
-            case 2:
-                registration(2);
-                break;
-            case 3:
-                registration(3);
-                break;
-            case 4:
-                updatePassword(2);
-                break;
-            case 5:
-                updatePassword(3);
-                break;
-            case 6:
-                System.out.println(EXIT_MESSAGE);
-                return;
+                default:
+                    System.out.println(INVALID_CHOICE_ERROR);
+                    break;
+            }
 
 
-            default:
-                System.out.println(INVALID_CHOICE_ERROR);
-                break;
+
+        } catch (Exception e) {
+            System.out.println("Invalid input, please enter a numerical value.");
+            scanner.nextLine(); // Clear the buffer
         }
+
+
         mainPage();
     }
 
