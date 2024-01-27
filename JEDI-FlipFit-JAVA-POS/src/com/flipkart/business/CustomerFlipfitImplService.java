@@ -63,7 +63,7 @@ public class CustomerFlipfitImplService implements CustomerFlipfitServiceInterfa
             System.out.println(RED_COLOR + "There exists a conflicting booking, First cancel it!!!!" + RESET_COLOR);
             return false;
         }
-        String bookingId = bookingService.addBooking(userName, scheduleId);
+        String bookingId = bookingService.addBooking(viewMyProfile(userName).getUserID(), scheduleId);
         if(bookingId.isEmpty())return false;
         paymentService.makePayment(userName, centreId, bookingId);
         return true;

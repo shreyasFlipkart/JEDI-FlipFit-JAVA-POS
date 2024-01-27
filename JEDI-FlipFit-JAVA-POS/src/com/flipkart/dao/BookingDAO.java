@@ -21,22 +21,23 @@ public class BookingDAO implements BookingInterfaceDAO {
 
     private static ScheduleDAO scheduleDAO = new ScheduleDAO();
 
-    public String addBooking(String userName, String scheduleID) throws BookingFailedException {
+    public String addBooking(String userID, String scheduleID) throws BookingFailedException {
         try {
             // Assuming you have a method to generate a unique booking ID
-            String bookingId = generateUniqueBookingId(userName, scheduleID);
+            String bookingId = generateUniqueBookingId(userID, scheduleID);
 
             // Add the booking to the database
             try (Connection conn = DBConnection.connect();
                  PreparedStatement stmt = conn.prepareStatement(ADD_BOOKING)) {
                 stmt.setString(1, bookingId);
-                stmt.setString(2, userName);
+                stmt.setString(2, userID);
                 stmt.setString(3, scheduleID);
                 stmt.executeUpdate();
             }
 
             return bookingId;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new BookingFailedException("Booking failed for current slot. Try again later.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,7 +102,7 @@ public class BookingDAO implements BookingInterfaceDAO {
         }
     }
 
-    private String generateUniqueBookingId(String userName, String scheduleID) {
-        return userName + scheduleID;
+    private String generateUniqueBookingId(String userID, String scheduleID) {
+        return userID + scheduleID;
     }
 }
