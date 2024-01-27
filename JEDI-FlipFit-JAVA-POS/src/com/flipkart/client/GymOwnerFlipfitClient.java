@@ -208,12 +208,34 @@ public class GymOwnerFlipfitClient {
 
                         }
 
+                        boolean isValidCapacity = false;
+                        int capacity = 0;
+                        while(!isValidCapacity){
+                            System.out.println("Enter Gym Centre capacity: ");
+                            try{
+                                capacity = scanner.nextInt();
+                                isValidCapacity = true;
+                            }
+                            catch (Exception e) {
+                                System.out.println("Invalid input, please enter a valid numerical value.");
+                                scanner.nextLine(); // Clear the buffer
+                            }
+                        }
+                        boolean isValidPrice = false;
+                        int price = 0;
+                        while(!isValidPrice){
+                            System.out.println("Enter price: ");
+                            try{
+                                price = scanner.nextInt();
+                                isValidPrice = true;
+                            }
+                            catch (Exception e) {
+                                System.out.println("Invalid input, please enter a valid numerical value.");
+                                scanner.nextLine(); // Clear the buffer
+                            }
+                        }
 
-                        System.out.println("Enter Gym Centre capacity: ");
-                        int capacity = scanner.nextInt();
 
-                        System.out.println("Enter price: ");
-                        int price = scanner.nextInt();
 
                         gymCentreService.addCenter(
                                 new GymCentre(
