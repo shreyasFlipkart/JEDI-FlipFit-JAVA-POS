@@ -83,34 +83,44 @@ public class AdminFlipfitClient {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         System.out.println(YELLOW_COLOR+"WELCOME ADMIN!!\nLogin Time: "+currentTime+RESET_COLOR);
+        int pendingChoice = 1;
         while(true){
+            System.out.println("Enter your choice (1, 2, 3, 4, 5 ): \n");
             System.out.println("1. View All Gym Owners\n2. View All Gym Centers\n3. View Pending GymOwner Approval Requests\n4. View Pending GymCenter's Approval Requests\n5. Exit");
-            System.out.print("\nEnter your choice: ");
-            int pendingChoice = scanner.nextInt();
-            switch (pendingChoice) {
-                case 1:
-                    List<GymOwner> allGymOwners =  gymOwnerService.viewAllGymOwners();
-                    util.printOwnerList(allGymOwners);
-                    break;
-                case 2:
-                    List<GymCentre> allGymCentre = gymCenterService.viewAllGymCentres();
-                    util.printGymCentreList(allGymCentre);
-                    break;
+            try{
+                pendingChoice = scanner.nextInt();
+                switch (pendingChoice) {
+                    case 1:
+                        List<GymOwner> allGymOwners =  gymOwnerService.viewAllGymOwners();
+                        util.printOwnerList(allGymOwners);
+                        break;
+                    case 2:
+                        List<GymCentre> allGymCentre = gymCenterService.viewAllGymCentres();
+                        util.printGymCentreList(allGymCentre);
+                        break;
 
-                case 3:
-                    List<GymOwner> pendingGymOwners = adminService.viewPendingGymOwners();
-                    util.printOwnerList(pendingGymOwners);
-                    if(!pendingGymOwners.isEmpty()) handleGymOwnerApprovalRequests();
-                    break;
+                    case 3:
+                        List<GymOwner> pendingGymOwners = adminService.viewPendingGymOwners();
+                        util.printOwnerList(pendingGymOwners);
+                        if(!pendingGymOwners.isEmpty()) handleGymOwnerApprovalRequests();
+                        break;
 
-                case 4:
-                    List<GymCentre> pendingGymCentres = adminService.viewPendingGymCentres();//get listGymCenterIds
-                    util.printGymCentres(pendingGymCentres);
-                    if(!pendingGymCentres.isEmpty()) handleGymCenterApprovalRequests();
-                    break;
-                case 5:
-                    return;
+                    case 4:
+                        List<GymCentre> pendingGymCentres = adminService.viewPendingGymCentres();//get listGymCenterIds
+                        util.printGymCentres(pendingGymCentres);
+                        if(!pendingGymCentres.isEmpty()) handleGymCenterApprovalRequests();
+                        break;
+                    case 5:
+                        return;
+                    default:
+                        System.out.println(INVALID_CHOICE_ERROR);
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input, please enter a valid numerical value.");
+                scanner.nextLine(); // Clear the buffer
             }
+
         }
     }
 
