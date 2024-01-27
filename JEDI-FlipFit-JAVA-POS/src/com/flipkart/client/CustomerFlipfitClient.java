@@ -51,32 +51,42 @@ public class CustomerFlipfitClient {
         String password = scanner.next();
 
 
-        System.out.println("Enter your Email");
-        String email = scanner.next();
-        if (!validate.isEmailValid(email)){
-            System.out.println("Please enter a valid email");
-            register();
+
+        boolean isValidEmail = false;
+        String email ="";
+        while(!isValidEmail){
+            System.out.println("Enter your Email");
+            email = scanner.next();
+            if (!validate.isEmailValid(email)){
+                System.out.println("Please enter a valid email");
+            }
+            else isValidEmail = true;
         }
+        boolean isValidPhone = false;
+        String phoneNumber = "";
+        while(!isValidPhone){
+            System.out.println("Enter your Phone Number");
+            phoneNumber = scanner.next();
+            if(!validate.isPhoneValid(phoneNumber)){
+                System.out.println("Please enter a valid phone number");
+            }
+            else isValidPhone = true;
 
-
-        System.out.println("Enter your Phone Number");
-        String phoneNumber = scanner.next();
-        if(!validate.isPhoneValid(phoneNumber)){
-            System.out.println("Please enter a valid phone number");
-            register();
         }
-
-
-        System.out.println("Enter your Card Number");
-        String cardNumber = scanner.next();
-        if(!validate.isCardValid(cardNumber)){
-            System.out.println("Please enter a valid card number");
-            register();
+        boolean isValidCard = false;
+        String cardNumber = "";
+        while(!isValidCard){
+            System.out.println("Enter your Card Number");
+            cardNumber = scanner.next();
+            if(!validate.isCardValid(cardNumber)){
+                System.out.println("Please enter a valid card number");
+            }
+            else isValidCard = true;
         }
 
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
 //        customerClientMainPage(userName);
-        mainPage();
+        //mainPage();
     }
     public void registerCustomerManually(String userName,String password, String email, String phoneNumber,String cardNumber ){
         customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
