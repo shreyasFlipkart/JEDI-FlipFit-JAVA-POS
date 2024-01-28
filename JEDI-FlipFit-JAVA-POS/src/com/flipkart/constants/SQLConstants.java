@@ -57,7 +57,8 @@ public class SQLConstants {
     public static final String UPDATE_CUSTOMER_PASSWORD_QUERY = "UPDATE FlipFit.Customer SET password=? WHERE name=?";
 
     //  ----------- Booking -----------
-    public static final String GET_BOOKING_BY_CUSTOMER_ID ="Select * From FlipFit.Booking where userID = ?";
+    public static final String GET_BOOKING_BY_CUSTOMER_ID = "SELECT b.bookingId, s.scheduleId, s.date, sl.time FROM FlipFit.Booking AS b JOIN FlipFit.Schedule AS s ON b.scheduleID = s.scheduleId JOIN FlipFit.Slot AS sl ON s.slotId = sl.slotId where b.userID=?";
+            //"Select * From FlipFit.Booking where userID = ?"
     public static final String CANCEL_BOOKING_BY_ID= "Delete from FlipFit.Booking where bookingId = ?";
     public static final String ADD_BOOKING= "INSERT INTO FlipFit.Booking (bookingId, userID, scheduleID) values( ?, ?, ?)";
 

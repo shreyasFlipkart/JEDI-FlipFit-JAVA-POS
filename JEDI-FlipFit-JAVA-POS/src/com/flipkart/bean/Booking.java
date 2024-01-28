@@ -1,10 +1,17 @@
 package com.flipkart.bean;
 
+import java.time.LocalTime;
+import java.util.Date;
+
 public class Booking {
     // properties
     private String bookingID;
     private String userID;
     private String scheduleID;
+
+    private Date date;
+
+    private LocalTime time;
 
     public Booking(String userID, String scheduleID) {
         this.userID = userID;
@@ -15,6 +22,14 @@ public class Booking {
         this.bookingID = bookingID;
         this.userID = userID;
         this.scheduleID = scheduleID;
+    }
+
+    public Booking(String bookingID, String userID, String scheduleID, Date date, LocalTime time){
+        this.bookingID = bookingID;
+        this.userID = userID;
+        this.scheduleID = scheduleID;
+        this.date = date;
+        this.time = time;
     }
 
     public String getBookingID() {
@@ -39,5 +54,21 @@ public class Booking {
 
     public void setScheduleID(String scheduleID) {
         this.scheduleID = scheduleID;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }

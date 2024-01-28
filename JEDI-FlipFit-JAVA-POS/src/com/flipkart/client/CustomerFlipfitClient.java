@@ -221,16 +221,19 @@ public class CustomerFlipfitClient {
     private void printbookingsSubMenu(String userName){
         System.out.println("Bookings : ");
         List<Booking> allBookingList= customerService.getCustomerBookings(userName);
-        String[][] table = new String[allBookingList.size()+1][2];
+        String[][] table = new String[allBookingList.size()+1][4];
 //        String[][] table_dup = new String[allBookingList.size()+1][2];
-        String[] cols = { "BOOKING-ID", "SCHEDULE-ID" };
-        for(int i =0;i<2;i++){
+        String[] cols = { "BOOKING-ID", "SCHEDULE-ID" , "DATE", "TIME"};
+        for(int i =0;i<4;i++){
             table[0][i] = cols[i];
 //            table_dup[0][i] = cols[i];
         }
         for(int i=1;i< allBookingList.size()+1;i++){
             table[i][0] = allBookingList.get(i - 1).getBookingID();
             table[i][1] = allBookingList.get(i - 1).getScheduleID();
+            table[i][2] = new SimpleDateFormat("yyyy-mm-dd").format(allBookingList.get(i-1).getDate());
+            table[i][3] = allBookingList.get(i-1).getTime().toString();
+
         }
 //        System.out.println(DASHED_LINE);
 //        System.out.printf(YELLOW_COLOR + "%-8s\t", "BOOKING-ID");
@@ -241,6 +244,7 @@ public class CustomerFlipfitClient {
 //            System.out.printf("%-8s\t\n", booking.getScheduleID());
 //        }
 //        System.out.println(DASHED_LINE);
+
         util.tableWithLines(table, table);
     }
 

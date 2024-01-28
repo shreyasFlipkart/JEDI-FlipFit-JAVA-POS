@@ -10,10 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.flipkart.constants.SQLConstants.*;
 
@@ -54,7 +56,14 @@ public class BookingDAO implements BookingInterfaceDAO {
             while (rs.next()) {
                 String bookingId = rs.getString("bookingId");
                 String scheduleId = rs.getString("scheduleID");
-                customerBookings.add(new Booking(bookingId, customerId, scheduleId));
+                Date date =null;
+                try {
+                    date = new SimpleDateFormat("yyyy-mm-dd").parse(rs.getString("date"));
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+                LocalTime time = LocalTime.parse(rs.getString("time"));
+                customerBookings.add(new Booking(bookingId, customerId, scheduleId, date, time));
             }
         } catch (SQLException e) {
             throw new BookingFailedException("Failed to retrieve customer bookings.");
