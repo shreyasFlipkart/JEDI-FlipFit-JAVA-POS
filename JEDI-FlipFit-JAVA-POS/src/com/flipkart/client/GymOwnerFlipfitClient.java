@@ -132,7 +132,7 @@ public class GymOwnerFlipfitClient {
                         editGymOwnerProfile(gymOwnerId);
                         return ;
                     case 2:
-                        List<GymCentre> allGymCentres = gymCentreService.getAllCentresByOwmerId(gymOwnerId);
+                        List<GymCentre> allGymCentres = gymCentreService.getAllCentresByOwmerId(curId);
                         util.printGymCentres(allGymCentres);
                         break;
                     case 3:
