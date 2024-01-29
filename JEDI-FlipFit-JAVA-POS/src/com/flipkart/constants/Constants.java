@@ -15,7 +15,10 @@ public class Constants {
     public static String EXIT_MESSAGE = RED_COLOR + "\nEXITING THE APPLICATION\n" + RESET_COLOR;
 
     public static String PREVIOUS_MENU_MESSAGE = "\nGOING BACK TO PREVIOUS MENU\n";
-    public static String WELCOME_MESSAGE = GREEN_COLOR + BOLD_TEXT + "\n<------------ Welcome to the FlipFit Application ------------>\n"  + RESET_COLOR;
+    public static String WELCOME_MESSAGE = YELLOW_COLOR + BOLD_TEXT +
+           "░█▀▀░█░░░▀█▀░█▀█░█▀▀░▀█▀░▀█▀\n"+
+                   "░█▀▀░█░░░░█░░█▀▀░█▀▀░░█░░░█░\n"+
+                  "░▀░░░▀▀▀░▀▀▀░▀░░░▀░░░▀▀▀░░▀░\n"+RESET_COLOR;
     public static String APPROVAL_GYM_CENTRE_CONFIRMATION =GREEN_COLOR + "\nAdmin Approved the Gym Centre\n"+ RESET_COLOR;
     public static String DISAPPROVAL_GYM_CENTRE_CONFIRMATION =RED_COLOR +  "\nAdmin Disapproved the Gym Centre\n"+ RESET_COLOR;
     public static String APPROVAL_GYM_OWNER_CONFIRMATION = GREEN_COLOR + "\nAdmin Approved the Gym Owner\n"+ RESET_COLOR;
