@@ -9,19 +9,69 @@ import com.flipkart.bean.UserPlan;
 import java.sql.Date;
 import java.util.List;
 
+
+/**
+ * Interface defining the contract for Flipfit services related to customer operations.
+ */
 public interface CustomerFlipfitServiceInterface {
+
+    /**
+     * Retrieves details of all gym centers in a given city.
+     */
     List<GymCentre> getAllGymCenterDetailsByCity(String city);
+
+    /**
+     * Retrieves available slots for a specific gym center on a given date.
+     */
     List<Slot> getAvailableSlots(String centreID, Date date);
+
+    /**
+     * Retrieves bookings made by a specific customer.
+     */
     List<Booking> getCustomerBookings(String customerId);
-    boolean bookSlot(String userID,Date date, String slotId,String centreId);
+
+    /**
+     * Books a slot for a user on a specified date and gym center.
+     */
+    boolean bookSlot(String userID, Date date, String slotId, String centreId);
+
+    /**
+     * Cancels a booking based on the booking ID.
+     */
     void cancelBookingbyID(String bookingID);
+
+    /**
+     * Registers a new customer with the provided details.
+     */
     void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber);
+
+    /**
+     * Views the profile of a customer based on the username.
+     */
     Customer viewMyProfile(String userName);
+
+    /**
+     * Validates user credentials for login.
+     */
     boolean isUserValid(String userName, String password);
 
+    /**
+     * Edits the profile of a customer with the given details.
+     */
     boolean editProfile(String customerId, String username, String email, String phoneNumber, String cardNumber);
 
+    /**
+     * Retrieves the plan subscribed by a customer.
+     */
     List<UserPlan> getCustomerPlan(String userName);
+
+    /**
+     * Updates the password for a customer.
+     */
     boolean updatePassword(String customerId, String newPassword);
+
+    /**
+     * Retrieves gym centers sorted by cities.
+     */
     List<GymCentre> getCentersSortedByCities();
 }
