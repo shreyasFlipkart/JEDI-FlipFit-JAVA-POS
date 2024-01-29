@@ -39,7 +39,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
             stmt.close();
 
         } catch (SQLException exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
             throw new RegistrationFailedException(RED_COLOR+"Failed to register the user. Try again."+RESET_COLOR);
         } catch (Exception e) {
             System.out.println(RED_COLOR+"Oops! An error occurred. Try again later."+RESET_COLOR);
@@ -83,9 +83,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
             stmt.close();
         } catch (SQLException exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         } catch (Exception exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         }
 
         return customer;
@@ -106,9 +106,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
             return rowsAffected > 0;
         } catch (SQLException exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         } catch (Exception exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         }
 
         return false;
@@ -126,9 +126,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
             return rowsAffected > 0;
         } catch (SQLException exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         } catch (Exception exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         }
 
         return false;

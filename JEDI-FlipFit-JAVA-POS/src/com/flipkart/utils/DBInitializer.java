@@ -12,7 +12,7 @@ public class DBInitializer {
             createTables(connection);
             System.out.println(GREEN_COLOR+"Database tables created successfully!"+RESET_COLOR);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

@@ -55,7 +55,7 @@ private static GymOwnerDAO instance;
                 gymOwnerList.add(mapResultSetToGymOwner(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return gymOwnerList;
     }
@@ -88,7 +88,7 @@ private static GymOwnerDAO instance;
             stmt.executeUpdate();
             System.out.println(GREEN_COLOR + "\nRegistration Success\n" + RESET_COLOR);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ private static GymOwnerDAO instance;
                 pendingList.add(mapResultSetToGymOwner(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return pendingList;
     }
@@ -113,7 +113,7 @@ private static GymOwnerDAO instance;
             stmt.executeUpdate();
             System.out.println(GREEN_COLOR+"Approval Request sent to Admin"+RESET_COLOR);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -131,7 +131,7 @@ private static GymOwnerDAO instance;
             stmt.setString(2, gymOwnerId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -145,7 +145,7 @@ private static GymOwnerDAO instance;
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }
@@ -159,7 +159,7 @@ private static GymOwnerDAO instance;
                 return mapResultSetToGymOwner(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return new GymOwner();

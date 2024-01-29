@@ -21,7 +21,7 @@ public class ScheduleDAO implements ScheduleInterfaceDAO {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -35,7 +35,7 @@ public class ScheduleDAO implements ScheduleInterfaceDAO {
                 return mapResultSetToSchedule(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -50,7 +50,7 @@ public class ScheduleDAO implements ScheduleInterfaceDAO {
                 response.add(mapResultSetToSchedule(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return response;
     }
@@ -73,7 +73,7 @@ public class ScheduleDAO implements ScheduleInterfaceDAO {
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }

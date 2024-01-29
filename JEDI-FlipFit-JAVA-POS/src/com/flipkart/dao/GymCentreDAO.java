@@ -25,7 +25,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 allGymCentres.add(mapResultSetToGymCentre(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return allGymCentres;
     }
@@ -40,7 +40,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 ownerGymCentres.add(mapResultSetToGymCentre(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return ownerGymCentres;
     }
@@ -54,7 +54,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 return mapResultSetToGymCentre(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -74,7 +74,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
             stmt.executeUpdate();
             System.out.println(GREEN_COLOR+"Your Gym Center has been added, Send an admin approval request by pressing 5 to get your gym registered"+RESET_COLOR);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 pendingList.add(mapResultSetToGymCentre(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return pendingList;
     }
@@ -99,7 +99,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
             stmt.setString(2, gymCentreId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -110,7 +110,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
             stmt.executeUpdate();
             System.out.println(GREEN_COLOR+"Sending gym centre approval request for ID: "+RESET_COLOR + gymCentreId);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -126,7 +126,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return allCentreByCity;
     }
@@ -160,7 +160,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         allCentreByCity.sort(Comparator.comparing(GymCentre::getCity));
         return allCentreByCity;

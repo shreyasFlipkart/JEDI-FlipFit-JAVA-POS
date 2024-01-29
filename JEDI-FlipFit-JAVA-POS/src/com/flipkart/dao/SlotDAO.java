@@ -23,7 +23,7 @@ public class SlotDAO implements SlotInterfaceDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());;
         }
         return slotList;
     }
@@ -41,7 +41,7 @@ public class SlotDAO implements SlotInterfaceDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return filteredSlots;
     }
@@ -55,7 +55,7 @@ public class SlotDAO implements SlotInterfaceDAO {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class SlotDAO implements SlotInterfaceDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -87,7 +87,7 @@ public class SlotDAO implements SlotInterfaceDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -115,7 +115,7 @@ public class SlotDAO implements SlotInterfaceDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }

@@ -38,10 +38,10 @@ public class BookingDAO implements BookingInterfaceDAO {
 
             return bookingId;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new BookingFailedException(RED_COLOR+"Booking failed for current slot. Try again later."+RESET_COLOR);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new BookingFailedException(RED_COLOR+"Booking failed for current slot. Try again later."+RESET_COLOR);
         }
     }
@@ -59,7 +59,7 @@ public class BookingDAO implements BookingInterfaceDAO {
                 try {
                     date = new SimpleDateFormat("yyyy-mm-dd").parse(rs.getString("date"));
                 }catch(Exception e){
-                    System.out.println(e);
+                    System.out.println(e.getMessage());
                 }
                 LocalTime time = LocalTime.parse(rs.getString("time"));
                 customerBookings.add(new Booking(bookingId, customerId, scheduleId, date, time));

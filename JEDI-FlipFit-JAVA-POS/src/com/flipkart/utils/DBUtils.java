@@ -28,13 +28,13 @@ public class DBUtils {
                 connection = DriverManager.getConnection(url, user, password);
 
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
             return connection;
         }
