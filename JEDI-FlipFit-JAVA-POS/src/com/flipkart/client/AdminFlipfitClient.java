@@ -11,7 +11,9 @@ import com.flipkart.business.GymCentreFlipfitServiceInterface;
 import com.flipkart.business.GymCentreFlipfitImplService;
 import com.flipkart.utils.util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -100,9 +102,12 @@ public class AdminFlipfitClient {
     }
 
     public void adminClientMenu(){
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        System.out.println(YELLOW_COLOR+"WELCOME ADMIN!!\nLogin Time: "+currentTime+RESET_COLOR);
+//        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = currentTime.format(myFormat);
+        System.out.println(YELLOW_COLOR+"WELCOME ADMIN!!\nLogin Time: "+currentDate+ " " + currentDate.getDayOfWeek() + " " + formattedTime+RESET_COLOR);
         int pendingChoice = 1;
         while(true){
             System.out.println(CYAN_COLOR+"\nEnter your choice (1, 2, 3, 4, 5 ): \n"+RESET_COLOR);
