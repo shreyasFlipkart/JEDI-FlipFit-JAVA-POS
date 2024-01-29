@@ -140,7 +140,6 @@ public class CustomerFlipfitClient {
             //Select Gym Centre
             if(centreListByLocation.isEmpty()){
                 System.out.println(RED_COLOR +"There are no available GYM Centres in " + location + ". Please Select some other location" + RESET_COLOR);
-                customerClientMainPage(userName);
                 return;
             }
             System.out.print("Choose a gymCentre ID to proceed:");
@@ -185,7 +184,6 @@ public class CustomerFlipfitClient {
             printSlots(availableSlots);
             if(availableSlots.isEmpty()){
                 System.out.println(RED_COLOR +"There are no available slots in the " + gymCentreId + ". Please Select some other gym" + RESET_COLOR);
-                customerClientMainPage(userName);
                 return false;
             }
             System.out.println("Press 0 to exit");
