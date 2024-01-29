@@ -72,7 +72,7 @@ public class AdminFlipfitClient {
         boolean correctChoice = false;
         int choice = 1;
         while(!correctChoice){
-            System.out.println("Enter your choice (1, 2): \n");
+            System.out.println(CYAN_COLOR+"Enter your choice (1, 2): \n"+RESET_COLOR);
             System.out.println("1. Approve the request\n2. Reject the request\n");
             try{
                 choice = scanner.nextInt();
@@ -89,7 +89,7 @@ public class AdminFlipfitClient {
                 }
             }
             catch (Exception e) {
-                System.out.println("Invalid input, please enter a valid numerical value.");
+                System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }
 
@@ -104,8 +104,8 @@ public class AdminFlipfitClient {
         System.out.println(YELLOW_COLOR+"WELCOME ADMIN!!\nLogin Time: "+currentTime+RESET_COLOR);
         int pendingChoice = 1;
         while(true){
-            System.out.println("Enter your choice (1, 2, 3, 4, 5 ): \n");
-            System.out.println("1. View All Gym Owners\n2. View All Gym Centers\n3. View Pending GymOwner Approval Requests\n4. View Pending GymCenter's Approval Requests\n5. Exit");
+            System.out.println(CYAN_COLOR+"\nEnter your choice (1, 2, 3, 4, 5 ): \n"+RESET_COLOR);
+            System.out.println(BLUE_COLOR+"1. View All Gym Owners\n2. View All Gym Centers\n3. View Pending GymOwner Approval Requests\n4. View Pending GymCenter's Approval Requests\n5. Exit"+RESET_COLOR);
             try{
                 pendingChoice = scanner.nextInt();
                 switch (pendingChoice) {
@@ -136,7 +136,7 @@ public class AdminFlipfitClient {
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("Invalid input, please enter a valid numerical value.");
+                System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }
 

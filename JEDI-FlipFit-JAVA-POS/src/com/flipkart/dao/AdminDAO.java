@@ -30,6 +30,9 @@ public class AdminDAO implements AdminInterfaceDAO {
         try {
             Connection conn = DBConnection.connect();
             PreparedStatement stmt = conn.prepareStatement(SQL_APPROVE_GYM_CENTRE_BY_ID_QUERY);
+            if(isApproved == 2){
+                isApproved = 0;
+            }
             stmt.setInt(1, isApproved);
             stmt.setString(2, gymCentreId);
             stmt.executeUpdate();

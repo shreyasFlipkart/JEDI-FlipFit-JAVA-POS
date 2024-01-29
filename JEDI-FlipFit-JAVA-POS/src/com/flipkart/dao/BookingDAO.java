@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.flipkart.constants.SQLConstants.*;
+import static com.flipkart.constants.Constants.*;
 
 public class BookingDAO implements BookingInterfaceDAO {
 
@@ -40,10 +41,10 @@ public class BookingDAO implements BookingInterfaceDAO {
             return bookingId;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new BookingFailedException("Booking failed for current slot. Try again later.");
+            throw new BookingFailedException(RED_COLOR+"Booking failed for current slot. Try again later."+RESET_COLOR);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BookingFailedException("Booking failed for current slot. Try again later.");
+            throw new BookingFailedException(RED_COLOR+"Booking failed for current slot. Try again later."+RESET_COLOR);
         }
     }
 
@@ -66,7 +67,7 @@ public class BookingDAO implements BookingInterfaceDAO {
                 customerBookings.add(new Booking(bookingId, customerId, scheduleId, date, time));
             }
         } catch (SQLException e) {
-            throw new BookingFailedException("Failed to retrieve customer bookings.");
+            throw new BookingFailedException(RED_COLOR+"Failed to retrieve customer bookings."+RESET_COLOR);
         }
         return customerBookings;
     }
@@ -87,10 +88,10 @@ public class BookingDAO implements BookingInterfaceDAO {
             stmt.setString(1, bookingID);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                throw new BookingFailedException("Could not cancel booking for BookingId: " + bookingID);
+                throw new BookingFailedException(RED_COLOR+"Could not cancel booking for BookingId: "+RESET_COLOR + bookingID);
             }
         } catch (SQLException e) {
-            throw new BookingFailedException("Failed to cancel booking for BookingId: " + bookingID);
+            throw new BookingFailedException(RED_COLOR+"Failed to cancel booking for BookingId: "+RESET_COLOR + bookingID);
         }
     }
 
@@ -104,10 +105,10 @@ public class BookingDAO implements BookingInterfaceDAO {
                 String scheduleId = rs.getString("scheduleID");
                 return new Booking(bookingId, customerId, scheduleId);
             } else {
-                throw new BookingFailedException("Could not fetch booking by bookingId: " + bookingId);
+                throw new BookingFailedException(RED_COLOR+"Could not fetch booking by bookingId: "+RESET_COLOR + bookingId);
             }
         } catch (SQLException e) {
-            throw new BookingFailedException("Failed to fetch booking by bookingId: " + bookingId);
+            throw new BookingFailedException(RED_COLOR+"Failed to fetch booking by bookingId: " +RESET_COLOR+ bookingId);
         }
     }
 

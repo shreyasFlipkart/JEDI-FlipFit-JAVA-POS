@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static com.flipkart.constants.SQLConstants.*;
+import static com.flipkart.constants.Constants.*;
 
 public class GymCentreDAO implements GymCentreInterfaceDAO {
 
@@ -71,7 +72,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
             stmt.setInt(8, centre.getIsApproved());
 
             stmt.executeUpdate();
-            System.out.println("Your Gym Center has been added, Send an admin approval request by pressing 5 to get your gym registered");
+            System.out.println(GREEN_COLOR+"Your Gym Center has been added, Send an admin approval request by pressing 5 to get your gym registered"+RESET_COLOR);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -107,7 +108,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
              PreparedStatement stmt = conn.prepareStatement(SQL_SEND_GYM_CENTRE_APPROVAL_REQ_QUERY)) {
             stmt.setString(1, gymCentreId);
             stmt.executeUpdate();
-            System.out.println("Sending gym centre approval request for ID: " + gymCentreId);
+            System.out.println(GREEN_COLOR+"Sending gym centre approval request for ID: "+RESET_COLOR + gymCentreId);
         } catch (SQLException e) {
             e.printStackTrace();
         }

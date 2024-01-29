@@ -1,6 +1,7 @@
 package com.flipkart.utils;
 
 import java.sql.*;
+import static com.flipkart.constants.Constants.*;
 
 public class DBConnection {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -13,7 +14,7 @@ public class DBConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
-            throw new ExceptionInInitializerError("Could not find JDBC driver. Make sure you have the MySQL Connector/J JAR in your classpath.");
+            throw new ExceptionInInitializerError(RED_COLOR+"Could not find JDBC driver. Make sure you have the MySQL Connector/J JAR in your classpath."+RESET_COLOR);
         }
     }
 
@@ -26,7 +27,7 @@ public class DBConnection {
                 singleInstance = connection;
                 return connection;
             } catch (SQLException e) {
-                throw new RuntimeException("Error establishing the database connection", e);
+                throw new RuntimeException(RED_COLOR+"Error establishing the database connection"+RESET_COLOR, e);
             }
         } else {
             return singleInstance;

@@ -8,7 +8,7 @@ import com.flipkart.utils.UserPlan;
 
 import java.util.Date;
 import java.util.List;
-
+import static com.flipkart.constants.Constants.*;
 
 public class BookingFlipfitImplService implements BookingFlipfitServiceInterface {
 
@@ -26,7 +26,7 @@ public class BookingFlipfitImplService implements BookingFlipfitServiceInterface
         try {
             boolean isAvailable = scheduleService.modifySchedule(scheduleID,-1);
             if(!isAvailable){
-                System.out.println("No seats available for the booking");
+                System.out.println(RED_COLOR+"No seats available for the booking"+RESET_COLOR);
                 return "";
             }
             return bookingDAO.addBooking(userID, scheduleID);

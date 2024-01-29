@@ -36,10 +36,10 @@ public class util {
                 table[i][5] = GREEN_COLOR + "Approved   " + RESET_COLOR;
             }
             else if(gymCentres.get(i - 1).getIsApproved() == 0){
-                table[i][5] = RED_COLOR + "No         " + RESET_COLOR;
+                table[i][5] = RED_COLOR + "Rejected   " + RESET_COLOR;
             }
             else {
-                table[i][5] = "Pending   ";
+                table[i][5] = YELLOW_COLOR+"Pending    "+RESET_COLOR;
             }
 
             table_dup[i][0] = gymCentres.get(i - 1).getGymCentreID();
@@ -48,13 +48,13 @@ public class util {
             table_dup[i][3] = String.valueOf(gymCentres.get(i - 1).getOwnerID());
             table_dup[i][4] = String.valueOf(gymCentres.get(i-1).getCapacity());
             if(gymCentres.get(i - 1).getIsApproved() == 1){
-                table_dup[i][5] =  "Approved   " ;
+                table_dup[i][5] = GREEN_COLOR+ "Approved" +RESET_COLOR;
             }
             else if(gymCentres.get(i - 1).getIsApproved() == 0){
-                table_dup[i][5] = "No         ";
+                table_dup[i][5] = RED_COLOR+"Rejected"+RESET_COLOR;
             }
             else {
-                table_dup[i][5] = "Pending   ";
+                table_dup[i][5] = YELLOW_COLOR+"Pending"+RESET_COLOR;
             }
         }
         tableWithLines(table, table_dup);
@@ -78,10 +78,10 @@ public class util {
                 table[i][4] = GREEN_COLOR + "Approved   " + RESET_COLOR;
             }
             else if(gymOwnerList.get(i - 1).getIsApproved() == 0){
-                table[i][4] = RED_COLOR + "No         " + RESET_COLOR;
+                table[i][4] = RED_COLOR + "Rejected   " + RESET_COLOR;
             }
             else {
-                table[i][4] = "Pending   ";
+                table[i][4] = YELLOW_COLOR+"Pending    "+RESET_COLOR;
             }
 
             table_dup[i][0] = gymOwnerList.get(i - 1).getUserID();
@@ -89,13 +89,13 @@ public class util {
             table_dup[i][2] = gymOwnerList.get(i - 1).getEmail();
             table_dup[i][3] = String.valueOf(gymOwnerList.get(i - 1).getPanNumber());
             if(gymOwnerList.get(i - 1).getIsApproved() == 1){
-                table_dup[i][4] =  "Approved";
+                table_dup[i][4] =  GREEN_COLOR+"Approved"+RESET_COLOR;
             }
             else if(gymOwnerList.get(i - 1).getIsApproved() == 0){
-                table_dup[i][4] = "No";
+                table_dup[i][4] = RED_COLOR+"Rejected"+RESET_COLOR;
             }
             else {
-                table_dup[i][4] = "Pending";
+                table_dup[i][4] = YELLOW_COLOR+"Pending"+RESET_COLOR;
             }
         }
         tableWithLines(table, table_dup);
@@ -120,10 +120,10 @@ public class util {
                 table[i][5] = GREEN_COLOR + "Approved   " + RESET_COLOR;
             }
             else if(gymCentreList.get(i - 1).getIsApproved() == 0){
-                table[i][5] = RED_COLOR + "No         " + RESET_COLOR;
+                table[i][5] = RED_COLOR + "Rejected   " + RESET_COLOR;
             }
             else{
-                table[i][5] = "Pending   ";
+                table[i][5] = YELLOW_COLOR+"Pending    "+RESET_COLOR;
             }
 
             table_dup[i][0] = gymCentreList.get(i - 1).getGymCentreID();
@@ -132,13 +132,13 @@ public class util {
             table_dup[i][3] = String.valueOf(gymCentreList.get(i - 1).getCapacity());
             table_dup[i][4] = String.valueOf(gymCentreList.get(i - 1).getPrice());
             if(gymCentreList.get(i - 1).getIsApproved() == 1){
-                table_dup[i][5] = "Approved";
+                table_dup[i][5] = GREEN_COLOR+"Approved"+RESET_COLOR;
             }
             else if(gymCentreList.get(i - 1).getIsApproved() == 0){
-                table_dup[i][5] = "No";
+                table_dup[i][5] = RED_COLOR+"Rejected"+RESET_COLOR;
             }
             else{
-                table_dup[i][5] = "Pending";
+                table_dup[i][5] = YELLOW_COLOR+"Pending"+RESET_COLOR;
             }
         }
 

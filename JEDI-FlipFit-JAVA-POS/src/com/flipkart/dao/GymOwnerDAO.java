@@ -13,6 +13,7 @@ import java.util.List;
 import static com.flipkart.constants.Constants.GREEN_COLOR;
 import static com.flipkart.constants.Constants.RESET_COLOR;
 import static com.flipkart.constants.SQLConstants.*;
+import static com.flipkart.constants.Constants.*;
 
 public class GymOwnerDAO implements GymOwnerInterfaceDAO {
 
@@ -68,7 +69,7 @@ private static GymOwnerDAO instance;
         List<GymOwner> gymOwnerList = getGymOwnerList();
         for (GymOwner owner : gymOwnerList) {
             if (username.equals(owner.getUserName()) && password.equals(owner.getPassword())) {
-                System.out.println("Login Success\n");
+                System.out.println(GREEN_COLOR+"Login Success\n"+RESET_COLOR);
                 return true;
             }
         }
@@ -111,7 +112,7 @@ private static GymOwnerDAO instance;
              PreparedStatement stmt = conn.prepareStatement(SQL_SEND_GYM_OWNER_APPROVAL_REQ_QUERY)) {
             stmt.setString(1, gymOwnerId);
             stmt.executeUpdate();
-            System.out.println("Approval Request sent to Admin");
+            System.out.println(GREEN_COLOR+"Approval Request sent to Admin"+RESET_COLOR);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -124,6 +125,9 @@ private static GymOwnerDAO instance;
     public void validateGymOwner(String gymOwnerId, int isApproved) {
         try (Connection conn = DBConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_APPROVE_GYM_OWNER_BY_ID_QUERY)) {
+            if(isApproved == 2){
+                isApproved = 0;
+            }
             stmt.setInt(1, isApproved);
             stmt.setString(2, gymOwnerId);
             stmt.executeUpdate();

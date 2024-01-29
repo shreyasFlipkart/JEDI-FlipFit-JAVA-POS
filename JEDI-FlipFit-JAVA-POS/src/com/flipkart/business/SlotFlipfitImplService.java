@@ -4,6 +4,7 @@ import com.flipkart.dao.SlotDAO;
 import com.flipkart.bean.Slot;
 
 import java.util.List;
+import static com.flipkart.constants.Constants.*;
 
 public class SlotFlipfitImplService implements SlotFlipfitServiceInterface {
     private static SlotDAO slotDAO = new SlotDAO();
@@ -24,7 +25,7 @@ public class SlotFlipfitImplService implements SlotFlipfitServiceInterface {
     }
 
     public void addSlotsForGym(String gymCentreId, List<Slot> slotList){
-        System.out.println("Adding all slots to gym: " + gymCentreId);
+        System.out.println(GREEN_COLOR+"Adding all slots to gym: " +RESET_COLOR+ gymCentreId);
         for(Slot slot : slotList) {
             slot.setCentreID(gymCentreId);
             slotDAO.addSlot(slot);

@@ -19,8 +19,8 @@ public class FlipfitApplication {
 
 
     public static void mainPage(){
-        System.out.println("Enter your choice (1, 2, 3, 4, 5, 6): \n");
-        System.out.println("1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit");
+        System.out.println(BOLD_TEXT+CYAN_COLOR+"Enter your choice (1, 2, 3, 4, 5, 6): \n"+RESET_COLOR);
+        System.out.println(BLUE_COLOR+"1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit"+RESET_COLOR);
         int choice = 1;
         try {
             choice = scanner.nextInt();
@@ -52,7 +52,7 @@ public class FlipfitApplication {
 
 
         } catch (Exception e) {
-            System.out.println("Invalid input, please enter a numerical value.");
+            System.out.println(RED_COLOR+"Invalid input, please enter a numerical value."+RESET_COLOR);
             scanner.nextLine(); // Clear the buffer
         }
 
@@ -63,8 +63,8 @@ public class FlipfitApplication {
     private static void login(){
         Scanner scanner = new Scanner(System.in);
         try {
-            System.out.println("Enter your choice (1, 2, 3): \n");
-            System.out.println("Enter your Role \n1. ADMIN\n2. GYMOWNER\n3. CUSTOMER \n ");
+            System.out.println(CYAN_COLOR+"Enter your choice (1, 2, 3): \n"+RESET_COLOR);
+            System.out.println(MAGENTA_COLOR+"Enter your Role \n1. ADMIN\n2. GYMOWNER\n3. CUSTOMER \n "+RESET_COLOR);
 //            String curRole = scanner.next();
 //            Role roleEnum = Role.valueOf(curRole.toUpperCase());
             int role = 1;
@@ -100,7 +100,7 @@ public class FlipfitApplication {
             }
             catch (Exception e) {
                 login();
-                System.out.println("Invalid input, please enter a numerical value.");
+                System.out.println(RED_COLOR+"Invalid input, please enter a numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }
 
@@ -119,11 +119,11 @@ public class FlipfitApplication {
                     gymOwnerFlipfitClient.register();
                     break;
                 default:
-                    System.out.println("INVALID CHOICE");
+                    System.out.println(RED_COLOR+"INVALID CHOICE"+RESET_COLOR);
                     break;
             }
         }catch (IllegalArgumentException e){
-            System.out.println("INVALID CHOICE");
+            System.out.println(RED_COLOR+"INVALID CHOICE"+RESET_COLOR);
         }
 
     }
@@ -163,7 +163,7 @@ public class FlipfitApplication {
                 }
                 break;
             default:
-                System.out.println("INVALID CHOICE");
+                System.out.println(RED_COLOR+"INVALID CHOICE"+RESET_COLOR);
                 break;
         }
 

@@ -10,12 +10,13 @@ import java.util.UUID;
 
 import static com.flipkart.constants.Constants.GREEN_COLOR;
 import static com.flipkart.constants.Constants.RESET_COLOR;
+import static com.flipkart.constants.Constants.*;
 
 public class PaymentFlipfitImplService implements PaymentFlipfitServiceInterface {
     public static List<Payment> payments = new ArrayList<>();
     public static List<String> refunds = new ArrayList<>();
     public void makePayment(String userName, String gymCentreId, String bookingId){
-        System.out.println("\nPayment initiated");
+        System.out.println(YELLOW_COLOR+"\nPayment initiated"+RESET_COLOR);
         Payment payment = new Payment();
         CustomerDAO customerDAO = new CustomerDAO();
         GymCentreDAO gymCentreDAO = new GymCentreDAO();
@@ -29,10 +30,10 @@ public class PaymentFlipfitImplService implements PaymentFlipfitServiceInterface
     }
 
     public void initiateRefund(String bookingId){
-        System.out.println("\nInitiating refund...");
+        System.out.println(YELLOW_COLOR+"\nInitiating refund..."+RESET_COLOR);
         for(Payment payment: payments){
             if(payment.getBookingId().equals(bookingId) && !refunds.contains(bookingId)){
-                System.out.println("Refund successfull for bookingId:" + bookingId + "\n");
+                System.out.println(GREEN_COLOR+"Refund successfull for bookingId:"+RESET_COLOR + bookingId + "\n");
                 refunds.add(bookingId);
             }
         }

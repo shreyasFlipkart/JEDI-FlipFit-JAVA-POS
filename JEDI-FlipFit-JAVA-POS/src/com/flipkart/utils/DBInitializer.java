@@ -4,13 +4,14 @@ import com.flipkart.utils.DBConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import static com.flipkart.constants.Constants.*;
 
 public class DBInitializer {
 
     public static void main(String[] args) {
         try (Connection connection = DBConnection.connect()) {
             createTables(connection);
-            System.out.println("Database tables created successfully!");
+            System.out.println(GREEN_COLOR+"Database tables created successfully!"+RESET_COLOR);
         } catch (SQLException e) {
             e.printStackTrace();
         }

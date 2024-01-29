@@ -58,7 +58,7 @@ public class CustomerFlipfitClient {
             System.out.println("Enter your Email");
             email = scanner.next();
             if (!validate.isEmailValid(email)){
-                System.out.println("Please enter a valid email");
+                System.out.println(RED_COLOR+"Please enter a valid email"+RESET_COLOR);
             }
             else isValidEmail = true;
         }
@@ -68,7 +68,7 @@ public class CustomerFlipfitClient {
             System.out.println("Enter your Phone Number");
             phoneNumber = scanner.next();
             if(!validate.isPhoneValid(phoneNumber)){
-                System.out.println("Please enter a valid phone number");
+                System.out.println(RED_COLOR+"Please enter a valid phone number"+RESET_COLOR);
             }
             else isValidPhone = true;
 
@@ -79,7 +79,7 @@ public class CustomerFlipfitClient {
             System.out.println("Enter your Card Number");
             cardNumber = scanner.next();
             if(!validate.isCardValid(cardNumber)){
-                System.out.println("Please enter a valid card number");
+                System.out.println(RED_COLOR+"Please enter a valid card number"+RESET_COLOR);
             }
             else isValidCard = true;
         }
@@ -108,8 +108,8 @@ public class CustomerFlipfitClient {
     private void bookSlotSubMenu(String userName){
         //Get Location for filter
         System.out.println("Provide Location to search :");
-        System.out.println("Enter your choice (1, 2, 3, 4): \n");
-        System.out.println("Choose the location: \n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. East Bangalore \n");
+        System.out.println(CYAN_COLOR+"Enter your choice (1, 2, 3, 4): \n"+RESET_COLOR);
+        System.out.println(ORANGE_COLOR+"Choose the location: \n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. East Bangalore \n"+RESET_COLOR);
         int choice = 1;
         try{
             choice = scanner.nextInt();
@@ -128,7 +128,7 @@ public class CustomerFlipfitClient {
                     location = "East Bangalore";
                     break;
                 default:
-                    System.out.println("Invalid input, please enter a valid numerical value.");
+                    System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                     bookSlotSubMenu(userName);
                     return ;
 
@@ -153,7 +153,7 @@ public class CustomerFlipfitClient {
                 System.out.println(GREEN_COLOR + "Booking Successful\n" + RESET_COLOR);
             }
         }catch (Exception e) {
-            System.out.println("Invalid input, please enter a numerical value.");
+            System.out.println(RED_COLOR+"Invalid input, please enter a numerical value."+RESET_COLOR);
             scanner.nextLine();
             bookSlotSubMenu(userName);
             // Clear the buffer
@@ -250,7 +250,7 @@ public class CustomerFlipfitClient {
 
     private void cancelBookingSubMenu(String userName){
         printbookingsSubMenu(userName);
-        System.out.println("Select the Booking you want to cancel: ");
+        System.out.println(YELLOW_COLOR+"Select the Booking you want to cancel: "+RESET_COLOR);
         String bookingId = scanner.next();
         customerService.cancelBookingbyID(bookingId);
         System.out.println(GREEN_COLOR + "Booking Cancellation Successful\n" + RESET_COLOR);
@@ -273,8 +273,8 @@ public class CustomerFlipfitClient {
         Validators validate = new Validators();
         System.out.println(YELLOW_COLOR+"WELCOME TO EDIT PROFILE");
         System.out.println(YELLOW_COLOR+"Select what you want to edit\n");
-        System.out.println("Enter your choice (1, 2, 3, 4, 5 ): \n");
-        System.out.println("1. Edit user name\n2. Edit email\n3. Edit contact\n4. Edit card details\n5. Go Back");
+        System.out.println(CYAN_COLOR+"Enter your choice (1, 2, 3, 4, 5 ): \n"+RESET_COLOR);
+        System.out.println(ORANGE_COLOR+"1. Edit user name\n2. Edit email\n3. Edit contact\n4. Edit card details\n5. Go Back"+RESET_COLOR);
         int choice = 1;
         try{
             choice = scanner.nextInt();
@@ -293,7 +293,7 @@ public class CustomerFlipfitClient {
                         System.out.println("Enter your Email");
                         email = scanner.next();
                         if (!validate.isEmailValid(email)){
-                            System.out.println("Please enter a valid email");
+                            System.out.println(RED_COLOR+"Please enter a valid email"+RESET_COLOR);
                         }
                         else isValidEmail = true;
                     }
@@ -307,7 +307,7 @@ public class CustomerFlipfitClient {
                         System.out.println("Enter your Phone Number");
                         phoneNumber = scanner.next();
                         if(!validate.isPhoneValid(phoneNumber)){
-                            System.out.println("Please enter a valid phone number");
+                            System.out.println(RED_COLOR+"Please enter a valid phone number"+RESET_COLOR);
                         }
                         else isValidPhone = true;
 
@@ -322,7 +322,7 @@ public class CustomerFlipfitClient {
                         System.out.println("Enter your Card Number");
                         cardNumber = scanner.next();
                         if(!validate.isCardValid(cardNumber)){
-                            System.out.println("Please enter a valid card number");
+                            System.out.println(RED_COLOR+"Please enter a valid card number"+RESET_COLOR);
                         }
                         else isValidCard = true;
                     }
@@ -344,7 +344,7 @@ public class CustomerFlipfitClient {
             }
             editCustomerProfile(customer);
         }catch (Exception e) {
-            System.out.println("Invalid input, please enter a valid numerical value.");
+            System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
             scanner.nextLine(); // Clear the buffer
             editCustomerProfile(customer);
         }
@@ -361,8 +361,8 @@ public class CustomerFlipfitClient {
 
 
         while(true){
-            System.out.println("Enter your choice (1, 2, 3, 4, 5, 6, 7 ): \n");
-            System.out.println("1. View My Profile \n2. Edit My Profile \n3. View gyms by cities \n4. Book a slot in a Gym \n5. View Booked Slots\n6. Cancel Bookings\n7. Go Back to previous menu");
+            System.out.println(CYAN_COLOR+"Enter your choice (1, 2, 3, 4, 5, 6, 7 ): \n"+RESET_COLOR);
+            System.out.println(MAGENTA_COLOR+"1. View My Profile \n2. Edit My Profile \n3. View gyms by cities \n4. Book a slot in a Gym \n5. View Booked Slots\n6. Cancel Bookings\n7. Go Back to previous menu"+RESET_COLOR);
 
             try{
                 choice = scanner.nextInt();
@@ -397,7 +397,7 @@ public class CustomerFlipfitClient {
                 }
             }
             catch (Exception e) {
-                System.out.println("Invalid input, please enter a valid numerical value.");
+                System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }
 

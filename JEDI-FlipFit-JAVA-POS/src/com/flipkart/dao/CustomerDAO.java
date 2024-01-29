@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.flipkart.constants.SQLConstants.*;
+import static com.flipkart.constants.Constants.*;
 
 public class CustomerDAO implements CustomerInterfaceDAO {
     private static CustomerDAO instance;
@@ -41,9 +42,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
         } catch (SQLException exp) {
             exp.printStackTrace();
-            throw new RegistrationFailedException("Failed to register the user. Try again.");
+            throw new RegistrationFailedException(RED_COLOR+"Failed to register the user. Try again."+RESET_COLOR);
         } catch (Exception e) {
-            System.out.println("Oops! An error occurred. Try again later.");
+            System.out.println(RED_COLOR+"Oops! An error occurred. Try again later."+RESET_COLOR);
         }
     }
 
@@ -60,9 +61,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
             }
             stmt.close();
         } catch (SQLException exp) {
-            throw new UserInvalidException("User is Invalid. Try again.");
+            throw new UserInvalidException(RED_COLOR+"User is Invalid. Try again."+RESET_COLOR);
         } catch (Exception exp) {
-            System.out.println("Oops! An error occurred. Try again later.");
+            System.out.println(RED_COLOR+"Oops! An error occurred. Try again later."+RESET_COLOR);
         }
         return false;
     }

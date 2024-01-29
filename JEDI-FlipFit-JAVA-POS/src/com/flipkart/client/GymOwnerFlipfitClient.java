@@ -30,10 +30,10 @@ public class GymOwnerFlipfitClient {
 
     public boolean gymOwnerLogin(String userName, String password) {
         if (gymOwnerService.loginGymOwner(userName,password)) {
-            System.out.println("Successfully logged in");
+            System.out.println(GREEN_COLOR+"Successfully logged in"+RESET_COLOR);
             gymOwnerClientMainPage(userName);
         } else {
-            new LoginFailedException("Gym Owner Login Failed");
+            new LoginFailedException(RED_COLOR+"Gym Owner Login Failed"+RESET_COLOR);
             return false;
         }
         return true;
@@ -54,7 +54,7 @@ public class GymOwnerFlipfitClient {
             System.out.println("Enter your Email");
             email = scanner.next();
             if (!validate.isEmailValid(email)){
-                System.out.println("Please enter a valid email");
+                System.out.println(RED_COLOR+"Please enter a valid email"+RESET_COLOR);
             }else break;
         }
 
@@ -62,7 +62,7 @@ public class GymOwnerFlipfitClient {
             System.out.println("Enter your PAN Number");
             panNumber = scanner.next();
             if (!validate.isPanValid(panNumber)){
-                System.out.println("Please enter a valid PAN Number");
+                System.out.println(RED_COLOR+"Please enter a valid PAN Number"+RESET_COLOR);
             }else break;
         }
 
@@ -71,7 +71,7 @@ public class GymOwnerFlipfitClient {
             System.out.println("Enter your Card Number");
             cardNumber = scanner.next();
             if (!validate.isCardValid(cardNumber)){
-                System.out.println("Please enter a valid Card Number");
+                System.out.println(RED_COLOR+"Please enter a valid Card Number"+RESET_COLOR);
             }else break;
         }
 
@@ -95,8 +95,8 @@ public class GymOwnerFlipfitClient {
         int choice  = 1;
 
         while(isContinue){
-            System.out.println("Enter your choice (1, 2, 3, 4, 5, 6, 7, 8, 9 ): \n");
-            System.out.println("" +
+            System.out.println(CYAN_COLOR+"Enter your choice (1, 2, 3, 4, 5, 6, 7, 8, 9 ): \n"+RESET_COLOR);
+            System.out.println(BLUE_COLOR+"" +
                     "0: View Profile\n" +
                     "1: Edit Profile\n" +
                     "2. View all Gym Centres\n" +
@@ -106,17 +106,17 @@ public class GymOwnerFlipfitClient {
                     "6. Add Slots to a Gym Centre\n" +
                     "7: View All Slots by Centre\n" +
                     "8: Delete Slot\n" +
-                    "9: Exit"
+                    "9: Exit"+RESET_COLOR
             );
 
             GymOwner g = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
             String curId = g.getUserID();
             if(g.getIsApproved()==0){
-                System.out.println("You are currently not approved. Please press 3 to send a approval request.");
+                System.out.println(RED_COLOR+"You are currently not approved. Please press 3 to send a approval request."+RESET_COLOR);
             }
 
             if(g.getIsApproved()==2){
-                System.out.println("Your approval request is under process.");
+                System.out.println(YELLOW_COLOR+"Your approval request is under process."+RESET_COLOR);
             }
             try{
                 choice = scanner.nextInt();
@@ -164,7 +164,7 @@ public class GymOwnerFlipfitClient {
                             System.out.println("Enter Gym Centre GSTIN: ");
                             gstin = scanner.next();
                             if(!validate.isGstValid(gstin)){
-                                System.out.println("Please enter valid GST Number");
+                                System.out.println(RED_COLOR+"Please enter valid GST Number"+RESET_COLOR);
                             }
                             else isValidGst = true;
                         }
@@ -174,8 +174,8 @@ public class GymOwnerFlipfitClient {
                         boolean isValidGymCentre = false;
                         while(!isValidGymCentre){
 
-                            System.out.println("Enter Gym Centre Location:\n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. East Bangalore \n");
-                            System.out.println("Enter your choice (1, 2, 3, 4 ): \n");
+                            System.out.println(ORANGE_COLOR+"Enter Gym Centre Location:\n1. North Bangalore\n2. South Bangalore\n3. West Bangalore \n4. East Bangalore \n"+RESET_COLOR);
+                            System.out.println(CYAN_COLOR+"Enter your choice (1, 2, 3, 4 ): \n"+RESET_COLOR);
                             isValidGymCentre = true;
                             int gymLocationChoice = 1;
                             try
@@ -202,7 +202,7 @@ public class GymOwnerFlipfitClient {
                             }
                             catch (Exception e) {
                                 isValidGymCentre = false;
-                                System.out.println("Invalid input, please enter a valid numerical value.");
+                                System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                                 scanner.nextLine(); // Clear the buffer
                             }
 
@@ -218,7 +218,7 @@ public class GymOwnerFlipfitClient {
                                 isValidCapacity = true;
                             }
                             catch (Exception e) {
-                                System.out.println("Invalid input, please enter a valid numerical value.");
+                                System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                                 scanner.nextLine(); // Clear the buffer
                             }
                         }
@@ -231,7 +231,7 @@ public class GymOwnerFlipfitClient {
                                 isValidPrice = true;
                             }
                             catch (Exception e) {
-                                System.out.println("Invalid input, please enter a valid numerical value.");
+                                System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                                 scanner.nextLine(); // Clear the buffer
                             }
                         }
@@ -306,7 +306,7 @@ public class GymOwnerFlipfitClient {
                                     localTime
                             ));
 
-                            System.out.println("Do you want to enter more slots (yes/no)?: ");
+                            System.out.println(YELLOW_COLOR+"Do you want to enter more slots (yes/no)?: "+RESET_COLOR);
                             String addChoice = scanner.next();
                             addChoice = addChoice.toLowerCase();
 
@@ -330,13 +330,13 @@ public class GymOwnerFlipfitClient {
                         System.out.println("Enter Slot ID: ");
                         String slotIdToDelete = scanner.next();
                         boolean flag = slotService.deleteSlotById(slotIdToDelete);
-                        if (flag) System.out.println("Successfully Deleted");
-                        else System.out.println("Slot not found");
+                        if (flag) System.out.println(GREEN_COLOR+"Successfully Deleted"+RESET_COLOR);
+                        else System.out.println(RED_COLOR+"Slot not found"+RESET_COLOR);
 
                         break;
 
                     case 9:
-                        System.out.println("Do you wish to continue? (yes/no)");
+                        System.out.println(YELLOW_COLOR+"Do you wish to continue? (yes/no)"+RESET_COLOR);
                         String ans = scanner.next();
                         if(ans.equals("n") || ans.equals("no")) isContinue = false;
                         break;
@@ -347,7 +347,7 @@ public class GymOwnerFlipfitClient {
                 }
             }
             catch (Exception e) {
-                System.out.println("Invalid input, please enter a valid numerical value.");
+                System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }
 
@@ -367,8 +367,8 @@ public class GymOwnerFlipfitClient {
         int choice = 1;
         boolean validChoice = false;
         while(!validChoice){
-            System.out.println("1. Edit user name\n2. Edit email\n3. Edit card details\n4. Go Back");
-            System.out.println("Enter your choice (1, 2, 3, 4 ): \n");
+            System.out.println(ORANGE_COLOR+"1. Edit user name\n2. Edit email\n3. Edit card details\n4. Go Back"+RESET_COLOR);
+            System.out.println(CYAN_COLOR+"Enter your choice (1, 2, 3, 4 ): \n"+RESET_COLOR);
             try{
                 choice = scanner.nextInt();
                 GymOwner gymOwner = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
@@ -419,7 +419,7 @@ public class GymOwnerFlipfitClient {
                 editGymOwnerProfile(gymOwner.getUserName());
             }
             catch (Exception e) {
-                System.out.println("Invalid input, please enter a valid numerical value.");
+                System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }
 
