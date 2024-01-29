@@ -3,7 +3,7 @@ package com.flipkart.utils;
 import java.sql.*;
 import static com.flipkart.constants.Constants.*;
 
-public class DBConnection {
+public class DBUtils {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/FlipFit";
     static final String USER = "root";

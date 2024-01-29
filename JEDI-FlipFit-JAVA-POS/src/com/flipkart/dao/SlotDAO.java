@@ -1,10 +1,9 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Slot;
-import com.flipkart.utils.DBConnection;
+import com.flipkart.utils.DBUtils;
 
 import java.sql.*;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class SlotDAO implements SlotInterfaceDAO {
 
     public List<Slot> getSlotList() {
         List<Slot> slotList = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(FETCH_ALL_SLOTS)) {
 
@@ -31,7 +30,7 @@ public class SlotDAO implements SlotInterfaceDAO {
 
     public List<Slot> getSlotByCentreId(String gymCentreId) {
         List<Slot> filteredSlots = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_SLOT_BY_CENTRE)) {
             stmt.setString(1, gymCentreId);
             ResultSet rs = stmt.executeQuery();
@@ -48,7 +47,7 @@ public class SlotDAO implements SlotInterfaceDAO {
     }
 
     public void addSlot(Slot slot) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(ADD_SLOT)) {
             stmt.setString(1, slot.getSlotId());
             stmt.setString(2, slot.getCentreID());
@@ -61,7 +60,7 @@ public class SlotDAO implements SlotInterfaceDAO {
     }
 
     public Slot getSlotById(String slotID) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_SLOT_BY_ID)) {
             stmt.setString(1, slotID);
             ResultSet rs = stmt.executeQuery();
@@ -77,7 +76,7 @@ public class SlotDAO implements SlotInterfaceDAO {
     }
 
     public Slot getSlotByIdandCentreId(String slotID, String centreID) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_SLOT_BY_ID_AND_CENTRE_ID)) {
             stmt.setString(1, slotID);
             stmt.setString(2, centreID);
@@ -102,7 +101,7 @@ public class SlotDAO implements SlotInterfaceDAO {
     }
 
     public boolean deleteSlotById(String slotId) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_SLOT_BY_ID)) {
             stmt.setString(1, slotId);
             ResultSet rs = stmt.executeQuery();

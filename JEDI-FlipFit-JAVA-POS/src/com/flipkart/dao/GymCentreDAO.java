@@ -1,7 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.GymCentre;
-import com.flipkart.utils.DBConnection;
+import com.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
 
     public List<GymCentre> getGymCentreList() {
         List<GymCentre> allGymCentres = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_GYM_CENTRES)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -32,7 +32,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
 
     public List<GymCentre> getAllCentresByOwmerId(String ownerId) {
         List<GymCentre> ownerGymCentres = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_GYM_CENTRES_BY_OWNER_ID)) {
             stmt.setString(1, ownerId);
             ResultSet rs = stmt.executeQuery();
@@ -46,7 +46,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
     }
 
     public GymCentre getGymCentreByCentreId(String gymCentreId) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_GYM_CENTRE_BY_ID)) {
             stmt.setString(1, gymCentreId);
             ResultSet rs = stmt.executeQuery();
@@ -60,7 +60,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
     }
 
     public void addGymCentre(GymCentre centre) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(ADD_GYM_CENTRE)) {
             stmt.setString(1, centre.getGymCentreID());
             stmt.setString(2, centre.getOwnerID());
@@ -80,7 +80,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
 
     public List<GymCentre> getPendingGymCentreList() {
         List<GymCentre> pendingList = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_PENDING_GYM_CENTRES_QUERY)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -93,7 +93,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
     }
 
     public void validateGymCentre(String gymCentreId, int isApproved) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_APPROVE_GYM_CENTRE_BY_ID_QUERY)) {
             stmt.setInt(1, isApproved);
             stmt.setString(2, gymCentreId);
@@ -104,7 +104,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
     }
 
     public void sendCentreApprovalRequest(String gymCentreId) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEND_GYM_CENTRE_APPROVAL_REQ_QUERY)) {
             stmt.setString(1, gymCentreId);
             stmt.executeUpdate();
@@ -116,7 +116,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
 
     public List<GymCentre> getGymCentreListByCity(String city) {
         List<GymCentre> allCentreByCity = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_GYM_CENTRES_BY_CITY)) {
             stmt.setString(1, city);
             ResultSet rs = stmt.executeQuery();
@@ -149,7 +149,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
 
     public List<GymCentre> getCentersSortedByCities() {
         List<GymCentre> allCentreByCity = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_GYM_CENTRES)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

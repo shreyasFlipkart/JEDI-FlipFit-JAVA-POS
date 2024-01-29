@@ -3,15 +3,13 @@ package com.flipkart.dao;
 import com.flipkart.bean.Customer;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.UserInvalidException;
-import com.flipkart.utils.DBConnection;
+import com.flipkart.utils.DBUtils;
 import com.flipkart.utils.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.flipkart.constants.SQLConstants.*;
 import static com.flipkart.constants.Constants.*;
@@ -28,7 +26,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
     public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) throws RegistrationFailedException {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(ADD_NEW_CUSTOMER);
             stmt.setString(1, util.generateNewId());
             stmt.setString(2, userName);
@@ -50,7 +48,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
     public boolean isUserValid(String userName, String password) throws UserInvalidException {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(CUSTOMER_LOGIN_QUERY);
             stmt.setString(1, userName);
             stmt.setString(2, password);
@@ -71,7 +69,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
     public Customer getCustomerById(String userName) {
         Customer customer = new Customer();
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(GET_CUSTOMER_BY_ID);
             stmt.setString(1, userName);
             ResultSet rs = stmt.executeQuery();
@@ -95,7 +93,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
     public boolean editCustomer(String customerId, String username, String email, String phoneNumber, String cardNumber) {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(EDIT_CUSTOMER_QUERY);
             stmt.setString(1, username);
             stmt.setString(2, email);
@@ -118,7 +116,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
     public boolean updatePassword(String customerName, String newPassword) {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(UPDATE_CUSTOMER_PASSWORD_QUERY);
             stmt.setString(1, newPassword);
             stmt.setString(2, customerName);

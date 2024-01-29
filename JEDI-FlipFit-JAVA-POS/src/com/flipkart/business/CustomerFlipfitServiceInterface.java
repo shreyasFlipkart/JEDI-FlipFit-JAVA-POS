@@ -4,7 +4,7 @@ import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.Slot;
-import com.flipkart.utils.UserPlan;
+import com.flipkart.bean.UserPlan;
 
 import java.sql.Date;
 import java.util.List;

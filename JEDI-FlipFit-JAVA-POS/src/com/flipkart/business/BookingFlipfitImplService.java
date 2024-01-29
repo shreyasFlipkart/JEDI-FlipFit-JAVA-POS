@@ -4,7 +4,7 @@ import com.flipkart.dao.BookingDAO;
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.Slot;
 import com.flipkart.exceptions.BookingFailedException;
-import com.flipkart.utils.UserPlan;
+import com.flipkart.bean.UserPlan;
 
 import java.util.Date;
 import java.util.List;

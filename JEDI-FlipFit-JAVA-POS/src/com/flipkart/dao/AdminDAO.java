@@ -2,13 +2,11 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.GymOwner;
-import com.flipkart.utils.DBConnection;
+import com.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.flipkart.constants.SQLConstants.*;
@@ -28,7 +26,7 @@ public class AdminDAO implements AdminInterfaceDAO {
 
     public void validateGymCentre(String gymCentreId, int isApproved) {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(SQL_APPROVE_GYM_CENTRE_BY_ID_QUERY);
             if(isApproved == 2){
                 isApproved = 0;

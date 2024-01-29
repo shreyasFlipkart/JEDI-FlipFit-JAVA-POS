@@ -1,6 +1,5 @@
 
 package com.flipkart.utils;
-import com.flipkart.utils.DBConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,7 +8,7 @@ import static com.flipkart.constants.Constants.*;
 public class DBInitializer {
 
     public static void main(String[] args) {
-        try (Connection connection = DBConnection.connect()) {
+        try (Connection connection = DBUtils.connect()) {
             createTables(connection);
             System.out.println(GREEN_COLOR+"Database tables created successfully!"+RESET_COLOR);
         } catch (SQLException e) {

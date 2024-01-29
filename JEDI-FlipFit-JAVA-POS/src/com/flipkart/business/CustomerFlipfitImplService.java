@@ -8,7 +8,7 @@ import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.Slot;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.UserInvalidException;
-import com.flipkart.utils.UserPlan;
+import com.flipkart.bean.UserPlan;
 
 import java.sql.Date;
 import java.util.List;

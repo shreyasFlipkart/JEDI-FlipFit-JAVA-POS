@@ -7,7 +7,7 @@ import com.flipkart.bean.Slot;
 import com.flipkart.business.CustomerFlipfitImplService;
 import com.flipkart.business.CustomerFlipfitServiceInterface;
 import com.flipkart.exceptions.DataEntryException;
-import com.flipkart.utils.UserPlan;
+import com.flipkart.bean.UserPlan;
 import com.flipkart.utils.util;
 import com.flipkart.validator.Validators;
 
@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.flipkart.client.FlipfitApplication.mainPage;
 import static com.flipkart.client.FlipfitApplication.scanner;
 import static com.flipkart.constants.Constants.*;
 import static com.flipkart.constants.Constants.RESET_COLOR;

@@ -1,7 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.GymOwner;
-import com.flipkart.utils.DBConnection;
+import com.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +13,6 @@ import java.util.List;
 import static com.flipkart.constants.Constants.GREEN_COLOR;
 import static com.flipkart.constants.Constants.RESET_COLOR;
 import static com.flipkart.constants.SQLConstants.*;
-import static com.flipkart.constants.Constants.*;
 
 public class GymOwnerDAO implements GymOwnerInterfaceDAO {
 
@@ -29,7 +28,7 @@ private static GymOwnerDAO instance;
 
     public boolean updatePassword(String gymownerName, String newPassword) {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(UPDATE_GYMOWNER_PASSWORD_QUERY);
             stmt.setString(1, newPassword);
             stmt.setString(2, gymownerName);
@@ -49,7 +48,7 @@ private static GymOwnerDAO instance;
 
     public List<GymOwner> getGymOwnerList() {
         List<GymOwner> gymOwnerList = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_GYM_OWNERS)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -77,7 +76,7 @@ private static GymOwnerDAO instance;
     }
 
     public void registerGymOwner(GymOwner gymOwner) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(REGISTER_GYM_OWNER)) {
             stmt.setString(1, gymOwner.getUserID());
             stmt.setString(2, gymOwner.getUserName());
@@ -95,7 +94,7 @@ private static GymOwnerDAO instance;
 
     public List<GymOwner> getPendingGymOwnerList() {
         List<GymOwner> pendingList = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_PENDING_GYM_OWNERS_QUERY)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -108,7 +107,7 @@ private static GymOwnerDAO instance;
     }
 
     public void sendOwnerApprovalRequest(String gymOwnerId) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEND_GYM_OWNER_APPROVAL_REQ_QUERY)) {
             stmt.setString(1, gymOwnerId);
             stmt.executeUpdate();
@@ -123,7 +122,7 @@ private static GymOwnerDAO instance;
     }
 
     public void validateGymOwner(String gymOwnerId, int isApproved) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_APPROVE_GYM_OWNER_BY_ID_QUERY)) {
             if(isApproved == 2){
                 isApproved = 0;
@@ -137,7 +136,7 @@ private static GymOwnerDAO instance;
     }
 
     public boolean editGymOwner(String gymOwnerId, String username, String email, String cardNumber) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_EDIT_GYM_OWNER)) {
             stmt.setString(1, username);
             stmt.setString(2, email);
@@ -152,7 +151,7 @@ private static GymOwnerDAO instance;
     }
 
     public GymOwner sendProfileInfo(String gymOwnerId) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_GET_GYM_OWNER_BY_ID)) {
             stmt.setString(1, gymOwnerId);
             ResultSet rs = stmt.executeQuery();

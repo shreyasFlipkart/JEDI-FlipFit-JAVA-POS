@@ -2,20 +2,18 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Booking;
 import com.flipkart.exceptions.BookingFailedException;
-import com.flipkart.utils.UserPlan;
-import com.flipkart.utils.DBConnection;
+import com.flipkart.bean.UserPlan;
+import com.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import static com.flipkart.constants.SQLConstants.*;
 import static com.flipkart.constants.Constants.*;
@@ -30,7 +28,7 @@ public class BookingDAO implements BookingInterfaceDAO {
             String bookingId = generateUniqueBookingId(userID, scheduleID);
 
             // Add the booking to the database
-            try (Connection conn = DBConnection.connect();
+            try (Connection conn = DBUtils.connect();
                  PreparedStatement stmt = conn.prepareStatement(ADD_BOOKING)) {
                 stmt.setString(1, bookingId);
                 stmt.setString(2, userID);
@@ -50,7 +48,7 @@ public class BookingDAO implements BookingInterfaceDAO {
 
     public List<Booking> getBookingByCustomerId(String customerId) throws BookingFailedException {
         List<Booking> customerBookings = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(GET_BOOKING_BY_CUSTOMER_ID)) {
             stmt.setString(1, customerId);
             ResultSet rs = stmt.executeQuery();
@@ -83,7 +81,7 @@ public class BookingDAO implements BookingInterfaceDAO {
     }
 
     public void cancelBookingById(String bookingID) throws BookingFailedException {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(CANCEL_BOOKING_BY_ID)) {
             stmt.setString(1, bookingID);
             int rowsAffected = stmt.executeUpdate();
@@ -96,7 +94,7 @@ public class BookingDAO implements BookingInterfaceDAO {
     }
 
     public Booking getBookingByBookingId(String bookingId) throws BookingFailedException {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(GET_BOOKING_BY_BOOKING_ID)) {
             stmt.setString(1, bookingId);
             ResultSet rs = stmt.executeQuery();
