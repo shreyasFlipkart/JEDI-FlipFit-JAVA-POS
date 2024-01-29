@@ -121,7 +121,9 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
             stmt.setString(1, city);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                allCentreByCity.add(mapResultSetToGymCentre(rs));
+                if (rs.getInt("isApproved") == 1) {
+                    allCentreByCity.add(mapResultSetToGymCentre(rs));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
