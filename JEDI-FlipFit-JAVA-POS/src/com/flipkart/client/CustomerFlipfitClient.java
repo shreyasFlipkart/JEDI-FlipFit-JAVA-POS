@@ -29,6 +29,12 @@ import static com.flipkart.constants.Constants.RESET_COLOR;
 public class CustomerFlipfitClient {
     private CustomerFlipfitServiceInterface customerService  =  CustomerFlipfitImplService.getInstance();
 
+    /**
+     * Logs In the customer based on username and password
+     * @param userName Username of the Customer
+     * @param password Password of the customer
+     * @return boolean true if successful login
+     */
     public boolean customerLogin(String userName, String password) {
 //        Check if credentials are right
         if (customerService.isUserValid(userName, password)) {
@@ -41,7 +47,9 @@ public class CustomerFlipfitClient {
         return true;
     }
 
-
+    /**
+     * Registers a customer
+     */
     public void register(){
         Validators validate = new Validators();
         System.out.println("Enter your UserName");
@@ -95,6 +103,10 @@ public class CustomerFlipfitClient {
 
     }
 
+    /**
+     * Prints the list of slots
+     * @param slots List of slots
+     */
     private void printSlots(List<Slot> slots){
         String[][] table = new String[slots.size()+1][2];
 //        String[][] table_dup = new String[gymCentres.size()+1][6];
@@ -121,6 +133,10 @@ public class CustomerFlipfitClient {
 //        System.out.println(DASHED_LINE);
     }
 
+    /**
+     * Prints the Book Slot Sub-Menu
+     * @param userName Username of the customer
+     */
     private void bookSlotSubMenu(String userName){
         //Get Location for filter
         System.out.println("Provide Location to search :");
@@ -177,6 +193,10 @@ public class CustomerFlipfitClient {
 
     }
 
+    /**
+     * Selects date
+     * @return Date
+     */
     private Date selectDate(){
         //Select Date
         System.out.print("Enter Date (dd/MM/yyyy): ");
@@ -194,6 +214,14 @@ public class CustomerFlipfitClient {
         return sqlDate;
     }
 
+    /**
+     * Selects slot
+     * @param gymCentreId Id of the gym Center selected
+     * @param userName Username of the customer
+     * @param sqlDate Date of the slot
+     * @param centreId Id of the center
+     * @return boolean
+     */
     private boolean chooseSlot(String gymCentreId,String userName,Date sqlDate,String centreId){
         while(true){
             System.out.println("Choose from the Below Slots");
@@ -234,6 +262,10 @@ public class CustomerFlipfitClient {
         System.out.println(DASHED_LINE);
     }
 
+    /**
+     * Prints the View Bookings Sub-Menu
+     * @param userName Username of the  customer
+     */
     private void printbookingsSubMenu(String userName){
         System.out.println("Bookings : ");
         List<Booking> allBookingList= customerService.getCustomerBookings(userName);
@@ -264,6 +296,10 @@ public class CustomerFlipfitClient {
         util.tableWithLines(table, table);
     }
 
+    /**
+     * Prints the Cancel Booking Sub-Menu
+     * @param userName Username of the customer
+     */
     private void cancelBookingSubMenu(String userName){
         printbookingsSubMenu(userName);
         System.out.println(YELLOW_COLOR+"Select the Booking you want to cancel: "+RESET_COLOR);
@@ -272,6 +308,10 @@ public class CustomerFlipfitClient {
         System.out.println(GREEN_COLOR + "Booking Cancellation Successful\n" + RESET_COLOR);
     }
 
+    /**
+     * Prints the profile of the Customer
+     * @param customer Customer object
+     */
     public void printCustomerProfile(Customer customer){
         System.out.println(GREEN_COLOR +"------------------------------------------------------------------------" + RESET_COLOR);
         System.out.println(YELLOW_COLOR + "USER ID: "+ RESET_COLOR + customer.getUserID());
@@ -281,10 +321,20 @@ public class CustomerFlipfitClient {
         System.out.println(YELLOW_COLOR + "CARD DETAILS: "+ RESET_COLOR + customer.getCardDetails());
         System.out.println(GREEN_COLOR +"------------------------------------------------------------------------" + RESET_COLOR);
     }
+
+    /**
+     * Updates the customer password
+     * @param customerId Id of customer
+     * @param newPassword new Password of customer
+     */
     public void updatePassword(String customerId,String newPassword){
         customerService.updatePassword(customerId,newPassword);
     }
 
+    /**
+     * Edits customer profile
+     * @param customer Customer object
+     */
     public void editCustomerProfile(Customer customer){
         Validators validate = new Validators();
         System.out.println(YELLOW_COLOR+"WELCOME TO EDIT PROFILE");
@@ -367,7 +417,10 @@ public class CustomerFlipfitClient {
 
     }
 
-
+    /**
+     * Prints the Main Menu of Customer
+     * @param userName username of the customer
+     */
     public void customerClientMainPage(String userName) {
 //        LocalDateTime currentTime = LocalDateTime.now();
         LocalDate currentDate = LocalDate.now();
@@ -423,11 +476,20 @@ public class CustomerFlipfitClient {
         }
     }
 
+    /**
+     * Validates customer credentials for Login
+     * @param userName username of the customer
+     * @param password password of the  customer
+     * @return
+     */
     public boolean validateCredentials(String userName,String password){
         if (customerService.isUserValid(userName, password)) return true;
         else return false;
     }
 
+    /**
+     * Prints Gym Centers sorted by cities
+     */
     public void displayCentersSortedByCities(){
         List<GymCentre> sortedByCities = customerService.getCentersSortedByCities();
         util.printGymCentres(sortedByCities);

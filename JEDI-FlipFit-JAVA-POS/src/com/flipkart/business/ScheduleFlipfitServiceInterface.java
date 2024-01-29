@@ -26,7 +26,7 @@ public interface ScheduleFlipfitServiceInterface {
     /**
      * Retrieves a schedule based on the provided slot ID and date.
      *
-     * @param slotId The ID of the slot
+     * @param SlotId The ID of the slot
      * @param date   The date for which the schedule is retrieved
      * @return Schedule object representing the details of the schedule
      */
