@@ -2,7 +2,7 @@ package com.flipkart.client;
 import com.flipkart.bean.Role;
 
 
-
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static com.flipkart.constants.Constants.*;
@@ -19,6 +19,7 @@ public class FlipfitApplication {
 
 
     public static void mainPage(){
+
         System.out.println(BOLD_TEXT+CYAN_COLOR+"Enter your choice (1, 2, 3, 4, 5, 6): \n"+RESET_COLOR);
         System.out.println(BLUE_COLOR+"1. Login\n2. Customer Registration\n3. Gym Owner Registration \n4. Update Password for Customer\n5. Update Password fot Gym Owner\n6. Exit"+RESET_COLOR);
         int choice = 1;
@@ -51,7 +52,7 @@ public class FlipfitApplication {
 
 
 
-        } catch (Exception e) {
+        } catch (InputMismatchException e) {
             System.out.println(RED_COLOR+"Invalid input, please enter a numerical value."+RESET_COLOR);
             scanner.nextLine(); // Clear the buffer
         }
@@ -98,7 +99,7 @@ public class FlipfitApplication {
                 System.out.println(INVALID_CHOICE_ERROR);
             }
             }
-            catch (Exception e) {
+            catch (InputMismatchException e) {
                 login();
                 System.out.println(RED_COLOR+"Invalid input, please enter a numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer

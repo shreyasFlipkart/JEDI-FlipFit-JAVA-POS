@@ -16,8 +16,6 @@ public class AdminFlipfitImplService implements AdminFlipfitServiceInterface {
     private List<GymCentre> pendinGymCentreList = new ArrayList<>();
 
     public void approveGymCenter(String gymCentreId,int isApproved){
-        //takes GymCenter Object as input and return boolean
-//        System.out.println("Approved/Rejected Gym Center: ");
         adminDAO.validateGymCentre(gymCentreId,isApproved);
     }
 

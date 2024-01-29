@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static com.flipkart.client.FlipfitApplication.scanner;
@@ -355,7 +356,7 @@ public class CustomerFlipfitClient {
                 System.out.println(RED_COLOR+"Couldn't edit customer details");
             }
             editCustomerProfile(customer);
-        }catch (Exception e) {
+        }catch (InputMismatchException e) {
             System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
             scanner.nextLine(); // Clear the buffer
             editCustomerProfile(customer);
@@ -408,7 +409,7 @@ public class CustomerFlipfitClient {
                         break;
                 }
             }
-            catch (Exception e) {
+            catch (InputMismatchException e) {
                 System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }

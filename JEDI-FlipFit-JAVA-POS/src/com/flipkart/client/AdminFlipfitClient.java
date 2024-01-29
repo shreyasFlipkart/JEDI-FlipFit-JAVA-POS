@@ -13,6 +13,7 @@ import com.flipkart.utils.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static com.flipkart.client.FlipfitApplication.scanner;
@@ -135,7 +136,7 @@ public class AdminFlipfitClient {
                         System.out.println(INVALID_CHOICE_ERROR);
                         break;
                 }
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }

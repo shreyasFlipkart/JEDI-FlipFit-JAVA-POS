@@ -14,6 +14,7 @@ import java.time.LocalTime;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static com.flipkart.client.FlipfitApplication.mainPage;
@@ -200,7 +201,7 @@ public class GymOwnerFlipfitClient {
                                         break;
                                 }
                             }
-                            catch (Exception e) {
+                            catch (InputMismatchException e) {
                                 isValidGymCentre = false;
                                 System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                                 scanner.nextLine(); // Clear the buffer
@@ -217,7 +218,7 @@ public class GymOwnerFlipfitClient {
                                 capacity = scanner.nextInt();
                                 isValidCapacity = true;
                             }
-                            catch (Exception e) {
+                            catch (InputMismatchException e) {
                                 System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                                 scanner.nextLine(); // Clear the buffer
                             }
@@ -230,7 +231,7 @@ public class GymOwnerFlipfitClient {
                                 price = scanner.nextInt();
                                 isValidPrice = true;
                             }
-                            catch (Exception e) {
+                            catch (InputMismatchException e) {
                                 System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                                 scanner.nextLine(); // Clear the buffer
                             }
@@ -346,7 +347,7 @@ public class GymOwnerFlipfitClient {
                         break;
                 }
             }
-            catch (Exception e) {
+            catch (InputMismatchException e) {
                 System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }
@@ -418,7 +419,7 @@ public class GymOwnerFlipfitClient {
                 }
                 editGymOwnerProfile(gymOwner.getUserName());
             }
-            catch (Exception e) {
+            catch (InputMismatchException e) {
                 System.out.println(RED_COLOR+"Invalid input, please enter a valid numerical value."+RESET_COLOR);
                 scanner.nextLine(); // Clear the buffer
             }
