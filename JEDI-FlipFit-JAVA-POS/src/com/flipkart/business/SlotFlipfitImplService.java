@@ -26,10 +26,10 @@ public class SlotFlipfitImplService implements SlotFlipfitServiceInterface {
 
     public void addSlotsForGym(String gymCentreId, List<Slot> slotList){
         System.out.println(GREEN_COLOR+"Adding all slots to gym: " +RESET_COLOR+ gymCentreId);
-        for(Slot slot : slotList) {
+        slotList.forEach(slot -> {
             slot.setCentreID(gymCentreId);
             slotDAO.addSlot(slot);
-        }
+        });
     }
 
     public boolean isSlotValid(String slotID,String centreId){

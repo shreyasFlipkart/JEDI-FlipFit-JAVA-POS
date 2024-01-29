@@ -221,13 +221,14 @@ public class CustomerFlipfitClient {
         System.out.printf(YELLOW_COLOR + "%8s\t", "SLOT-TIME");
         System.out.printf("%-8s\t\n", "SCHEDULE_ID" + RESET_COLOR);
         System.out.println(DASHED_LINE);
-        for(UserPlan userPlan: allUserPlan) {
+        allUserPlan.forEach(userPlan -> {
             System.out.printf("%-8s\t", userPlan.getCentreID());
             System.out.printf("%-8s\t", userPlan.getSlotId());
             System.out.printf("%-8s\t", userPlan.getDate());
             System.out.printf("%-8s\t", userPlan.getTime());
             System.out.printf("%-8s\t\n", userPlan.getScheduleID());
-        }
+        });
+
         System.out.println(DASHED_LINE);
     }
 

@@ -31,21 +31,19 @@ public class PaymentFlipfitImplService implements PaymentFlipfitServiceInterface
 
     public void initiateRefund(String bookingId){
         System.out.println(YELLOW_COLOR+"\nInitiating refund..."+RESET_COLOR);
-        for(Payment payment: payments){
-            if(payment.getBookingId().equals(bookingId) && !refunds.contains(bookingId)){
-                System.out.println(GREEN_COLOR+"Refund successfull for bookingId:"+RESET_COLOR + bookingId + "\n");
-                refunds.add(bookingId);
-            }
-        }
+        payments.stream()
+                .filter(payment -> payment.getBookingId().equals(bookingId) && !refunds.contains(bookingId))
+                .findFirst()
+                .ifPresent(payment -> {
+                    System.out.println(GREEN_COLOR + "Refund successful for bookingId:" + RESET_COLOR + bookingId + "\n");
+                    refunds.add(bookingId);
+                });
 //        return true;
     }
 
     public boolean verifyPayment(String paymentId){
-        for(Payment payment: payments){
-            if(payment.getPaymentId().equals(paymentId)){
-                return true;
-            }
-        }
-        return false;
+        return payments.stream()
+                .anyMatch(payment -> payment.getPaymentId().equals(paymentId));
+
     }
 }
