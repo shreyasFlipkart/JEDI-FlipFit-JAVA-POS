@@ -28,6 +28,12 @@ public class AdminFlipfitClient {
     private static GymOwnerFlipfitServiceInterface gymOwnerService = new GymOwnerFlipfitImplService();
     private static GymCentreFlipfitServiceInterface gymCenterService = new GymCentreFlipfitImplService();
 
+    /**
+     *  Method to verify admin login details
+     * @param userName username of the admin
+     * @param password password of the admin
+     * @return boolean
+     */
     public boolean isUserValid(String userName, String password) {
         if (userName.equals(admin.getUserName()) && password.equals(admin.getPassword())) {
             return true;
@@ -35,6 +41,12 @@ public class AdminFlipfitClient {
         return false;
     }
 
+    /**
+     * Method to authenticate admin using userName and password
+     * @param userName
+     * @param password
+     * @return boolean
+     */
     public boolean adminLogin(String userName, String password) {
         if (isUserValid(userName, password)) {
             System.out.println(Admin_login_success);
@@ -47,6 +59,9 @@ public class AdminFlipfitClient {
         return true;
     }
 
+    /**
+     * Method to approve or reject approval request from the gym owners
+     */
     private void handleGymOwnerApprovalRequests(){
         // print the list with indexes from 1
         System.out.println("Admin Approval for a Gym Owner ----------");
@@ -66,6 +81,10 @@ public class AdminFlipfitClient {
 
         adminService.approveGymOwner(requestGymOwnerId,choice);
     }
+
+    /**
+     * Method to approve or reject approval request of gym centers from the gym owners
+     */
     private void handleGymCenterApprovalRequests(){
         // print the list with indexes from 1
         System.out.println("Press 0 to EXIT_MESSAGE or Choose the Id of the Gym Centre To Modify:");
@@ -101,6 +120,9 @@ public class AdminFlipfitClient {
         adminService.approveGymCenter(requestGymCenterId,choice);
     }
 
+    /**
+     * Method to display the menu details of the admin
+     */
     public void adminClientMenu(){
 //        LocalDateTime currentTime = LocalDateTime.now();
         LocalDate currentDate = LocalDate.now();
