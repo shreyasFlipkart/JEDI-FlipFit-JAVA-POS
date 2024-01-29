@@ -6,7 +6,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static com.flipkart.constants.Constants.*;
-
+/**
+ * The FlipfitApplication class represents the main application for Flipfit, a fitness management system.
+ * It provides functionalities for user authentication, registration, and password updates.
+ */
 public class FlipfitApplication {
 
     public static int userId = 0;
@@ -17,7 +20,10 @@ public class FlipfitApplication {
 
 
 
-
+    /**
+     * The FlipfitApplication class represents the main application for Flipfit, a fitness management system.
+     * It provides functionalities for user authentication, registration, and password updates.
+     */
     public static void mainPage(){
 
         System.out.println(BOLD_TEXT+CYAN_COLOR+"Enter your choice (1, 2, 3, 4, 5, 6): \n"+RESET_COLOR);
@@ -60,7 +66,10 @@ public class FlipfitApplication {
 
         mainPage();
     }
-
+    /**
+     * Handles user login by prompting for role selection and credentials.
+     * It calls the appropriate client method based on the selected role.
+     */
     private static void login(){
         Scanner scanner = new Scanner(System.in);
         try {
@@ -108,7 +117,12 @@ public class FlipfitApplication {
 
 
     }
-
+    /**
+     * Handles user registration based on the provided role.
+     * It calls the appropriate client method for registration.
+     *
+     * @param role The role (2 for Customer, 3 for Gym Owner) for which registration is performed.
+     */
     private static void registration(int role){
 
         try {
@@ -128,6 +142,12 @@ public class FlipfitApplication {
         }
 
     }
+    /**
+     * Handles password update for users based on the provided role.
+     * It prompts for credentials, validates them, and updates the password.
+     *
+     * @param role The role (2 for Customer, 3 for Gym Owner) for which the password is updated.
+     */
     private static void updatePassword(int role){
 
         Scanner scanner=new Scanner(System.in);
@@ -172,7 +192,12 @@ public class FlipfitApplication {
         System.out.println( GREEN_COLOR + "Password updated!\n" + RESET_COLOR);
 
     }
-
+    /**
+     * The main method of the FlipfitApplication class.
+     * It displays a welcome message and calls the mainPage() method to start the application.
+     *
+     * @param args The command line arguments (unused).
+     */
     public static void main(String[] args) {
         System.out.println(WELCOME_MESSAGE);
         mainPage();
