@@ -93,15 +93,29 @@ public class CustomerFlipfitClient {
     }
 
     private void printSlots(List<Slot> slots){
-        System.out.println(DASHED_LINE);
-        System.out.printf(YELLOW_COLOR + "%-8s\t", "SLOT-ID");
-        System.out.printf("%-8s\t\n", "SLOT-TIME" + RESET_COLOR);
-        System.out.println(DASHED_LINE);
-        for(Slot slot: slots) {
-            System.out.printf("%-8s\t", slot.getSlotId());
-            System.out.printf("%-8s\t\n", slot.getTime());
+        String[][] table = new String[slots.size()+1][2];
+//        String[][] table_dup = new String[gymCentres.size()+1][6];
+        String[] cols = { "SLOT-ID", "SLOT-TIME" };
+        for(int i =0;i<2;i++){
+            table[0][i] = cols[i];
+//            table_dup[0][i] = cols[i];
         }
-        System.out.println(DASHED_LINE);
+        for(int i=1;i<slots.size()+1;i++) {
+            table[i][0] = slots.get(i - 1).getSlotId();
+            table[i][1] = String.valueOf(slots.get(i - 1).getTime());
+        }
+
+        util.tableWithLines(table, table);
+
+//        System.out.println(DASHED_LINE);
+//        System.out.printf(YELLOW_COLOR + "%-8s\t", "SLOT-ID");
+//        System.out.printf("%-8s\t\n", "SLOT-TIME" + RESET_COLOR);
+//        System.out.println(DASHED_LINE);
+//        for(Slot slot: slots) {
+//            System.out.printf("%-8s\t", slot.getSlotId());
+//            System.out.printf("%-8s\t\n", slot.getTime());
+//        }
+//        System.out.println(DASHED_LINE);
     }
 
     private void bookSlotSubMenu(String userName){
@@ -173,6 +187,7 @@ public class CustomerFlipfitClient {
         } catch (ParseException e) {
             throw new DataEntryException();
         }
+        System.out.println(sqlDate);
         return sqlDate;
     }
 
