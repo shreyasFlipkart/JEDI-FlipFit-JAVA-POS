@@ -89,13 +89,13 @@ public class util {
             table_dup[i][2] = gymOwnerList.get(i - 1).getEmail();
             table_dup[i][3] = String.valueOf(gymOwnerList.get(i - 1).getPanNumber());
             if(gymOwnerList.get(i - 1).getIsApproved() == 1){
-                table_dup[i][4] =  GREEN_COLOR+"Approved"+RESET_COLOR;
+                table_dup[i][4] =  "Approved";
             }
             else if(gymOwnerList.get(i - 1).getIsApproved() == 0){
-                table_dup[i][4] = RED_COLOR+"Rejected"+RESET_COLOR;
+                table_dup[i][4] = "Rejected";
             }
             else {
-                table_dup[i][4] = YELLOW_COLOR+"Pending"+RESET_COLOR;
+                table_dup[i][4] = "Pending";
             }
         }
         tableWithLines(table, table_dup);
@@ -132,13 +132,13 @@ public class util {
             table_dup[i][3] = String.valueOf(gymCentreList.get(i - 1).getCapacity());
             table_dup[i][4] = String.valueOf(gymCentreList.get(i - 1).getPrice());
             if(gymCentreList.get(i - 1).getIsApproved() == 1){
-                table_dup[i][5] = GREEN_COLOR+"Approved"+RESET_COLOR;
+                table_dup[i][5] = "Approved";
             }
             else if(gymCentreList.get(i - 1).getIsApproved() == 0){
-                table_dup[i][5] = RED_COLOR+"Rejected"+RESET_COLOR;
+                table_dup[i][5] = "Rejected";
             }
             else{
-                table_dup[i][5] = YELLOW_COLOR+"Pending"+RESET_COLOR;
+                table_dup[i][5] = "Pending";
             }
         }
 

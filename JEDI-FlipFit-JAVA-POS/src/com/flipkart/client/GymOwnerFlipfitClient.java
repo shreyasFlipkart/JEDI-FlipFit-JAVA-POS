@@ -72,6 +72,17 @@ public class GymOwnerFlipfitClient {
         System.out.println("Enter your Password");
         String password = scanner.next();
 
+        System.out.println("Re enter your password for confirmation");
+        String confirmPassword = scanner.next();
+
+        while(!password.equals(confirmPassword)){
+            System.out.println(RED_COLOR + "Passwords doesn't match, please make sure the password matches in both the fields" + RESET_COLOR);
+            System.out.println("Enter your Password");
+            password = scanner.next();
+            System.out.println("Re enter your password for confirmation");
+            confirmPassword = scanner.next();
+        }
+
         while(true){
             System.out.println("Enter your Email");
             email = scanner.next();
