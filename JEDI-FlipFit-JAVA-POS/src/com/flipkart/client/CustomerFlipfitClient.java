@@ -14,7 +14,9 @@ import com.flipkart.validator.Validators;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -367,10 +369,12 @@ public class CustomerFlipfitClient {
 
 
     public void customerClientMainPage(String userName) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = currentTime.format(myFormat);
-        System.out.println(YELLOW_COLOR+"WELCOME "+userName+" !!\nWhat do you want to do\nLogin TIME: "+currentTime+RESET_COLOR);
+//        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = currentTime.format(myFormat);
+        System.out.println(YELLOW_COLOR+"WELCOME "+userName+" AS CUSTOMER!!\nWhat do you want to do\nLogin TIME: "+currentDate + " " + currentDate.getDayOfWeek() + " " + formattedTime+RESET_COLOR);
         int choice = 1;
 
 

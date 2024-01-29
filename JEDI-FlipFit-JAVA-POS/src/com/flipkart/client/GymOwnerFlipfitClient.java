@@ -9,6 +9,7 @@ import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.utils.util;
 import com.flipkart.validator.Validators;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -86,11 +87,13 @@ public class GymOwnerFlipfitClient {
     }
 
     public void gymOwnerClientMainPage(String gymOwnerId) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = currentTime.format(myFormat);
+//        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = currentTime.format(myFormat);
         Validators validate = new Validators();
-        System.out.println(YELLOW_COLOR+"WELCOME "+gymOwnerId+" !!\nWhat you what to do\nLogin TIME: "+currentTime+RESET_COLOR);
+        System.out.println(YELLOW_COLOR+"WELCOME "+gymOwnerId+" AS GYMOWNER!!\nWhat you what to do\nLogin TIME: "+currentDate + " " + currentDate.getDayOfWeek() + " " + formattedTime+RESET_COLOR);
 
         boolean isContinue = true;
         int choice  = 1;
