@@ -1,5 +1,13 @@
 package com.flipkart.client;
-
+/**
+ * The GymOwnerFlipfitClient class provides methods for interacting with the Gym Owner's functionalities
+ * in the Flipfit application.
+ * It includes methods for gym owner login, registration, main page navigation, and profile editing.
+ * Additionally, it allows gym owners to perform actions related to gym centres and slots.
+ *
+ * @version 1.0
+ * @author
+ */
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Slot;
@@ -29,6 +37,14 @@ public class GymOwnerFlipfitClient {
     private GymOwnerFlipfitServiceInterface gymOwnerService = GymOwnerFlipfitImplService.getInstance();
     private SlotFlipfitServiceInterface slotService = new SlotFlipfitImplService();
     private GymCentreFlipfitServiceInterface gymCentreService = new GymCentreFlipfitImplService();
+    /**
+     * Attempts to log in a gym owner with the provided credentials.
+     * If successful, it navigates to the main page for gym owners.
+     *
+     * @param userName The username of the gym owner.
+     * @param password The password of the gym owner.
+     * @return True if the login is successful, false otherwise.
+     */
 
     public boolean gymOwnerLogin(String userName, String password) {
         if (gymOwnerService.loginGymOwner(userName,password)) {
@@ -40,6 +56,10 @@ public class GymOwnerFlipfitClient {
         }
         return true;
     }
+    /**
+     * Registers a new gym owner by taking input for username, password, email, PAN number, and card number.
+     * Validates input for email, PAN, and card number before registering the gym owner.
+     */
 
     public void register() {
         Validators validate = new Validators();
@@ -81,11 +101,26 @@ public class GymOwnerFlipfitClient {
 //        gymOwnerClientMainPage(userName);
 //        mainPage();
     }
-
+    /**
+     * Registers a gym owner with the provided details.
+     * This method is used for manual registration and bypasses user input validation.
+     *
+     * @param userid The user ID of the gym owner.
+     * @param userName The username of the gym owner.
+     * @param password The password of the gym owner.
+     * @param email The email of the gym owner.
+     * @param panNumber The PAN number of the gym owner.
+     * @param cardNumber The card number of the gym owner.
+     */
     public void registerGymOwnerManually(String userid, String userName, String password, String email, String panNumber, String cardNumber){
         gymOwnerService.registerGymOwner(userid,userName,password,email,panNumber,cardNumber);
     }
-
+    /**
+     * Navigates to the main page for gym owners, providing options to perform various actions.
+     * Actions include viewing and editing profiles, managing gym centres, and handling slots.
+     *
+     * @param gymOwnerId The user ID of the logged-in gym owner.
+     */
     public void gymOwnerClientMainPage(String gymOwnerId) {
 //        LocalDateTime currentTime = LocalDateTime.now();
         LocalDate currentDate = LocalDate.now();
@@ -362,7 +397,11 @@ public class GymOwnerFlipfitClient {
 
         }
     }
-
+    /**
+     * Edits the profile of the logged-in gym owner, allowing changes to username, email, or card details.
+     *
+     * @param gymOwnerId The user ID of the gym owner whose profile is being edited.
+     */
     public void editGymOwnerProfile(String gymOwnerId){
         Validators validate = new Validators();
 
@@ -432,12 +471,23 @@ public class GymOwnerFlipfitClient {
 
 
     }
-
+    /**
+     * Validates the provided credentials by checking the gym owner's login status.
+     *
+     * @param userName The username of the gym owner.
+     * @param password The password of the gym owner.
+     * @return True if the credentials are valid, false otherwise.
+     */
     public boolean validateCredentials(String userName,String password){
         if (gymOwnerService.loginGymOwner(userName, password)) return true;
         else return false;
     }
-
+    /**
+     * Updates the password for the gym owner with the provided user ID.
+     *
+     * @param customerId The user ID of the gym owner.
+     * @param newPassword The new password to be set.
+     */
     public void updatePassword(String customerId,String newPassword){
         gymOwnerService.updatePassword(customerId,newPassword);
     }
