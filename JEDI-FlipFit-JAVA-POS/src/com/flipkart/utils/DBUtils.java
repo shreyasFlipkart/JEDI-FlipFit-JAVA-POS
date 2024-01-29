@@ -1,36 +1,42 @@
 package com.flipkart.utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
+
 import static com.flipkart.constants.Constants.*;
 
 public class DBUtils {
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/FlipFit";
-    static final String USER = "root";
-    static final String PASS = "Abcd1234";
-    private static Connection singleInstance = null;
-
-    static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            throw new ExceptionInInitializerError(RED_COLOR+"Could not find JDBC driver. Make sure you have the MySQL Connector/J JAR in your classpath."+RESET_COLOR);
-        }
-    }
-
-    public static Connection connect() throws SQLException {
-        if (singleInstance == null || singleInstance.isClosed()) {
-            //System.out.println("Creating a new connection to DB....");
+    public static Connection connect() {
+        Connection connection = null;
+        if (connection != null)
+            return connection;
+        else {
             try {
-                Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-                //System.out.println("Database Connected");
-                singleInstance = connection;
-                return connection;
+
+                Properties prop = new Properties();
+                InputStream inputStream = new FileInputStream(new java.io.File(".").getCanonicalPath() + "/src/config.properties");
+                prop.load(inputStream);
+                String driver = prop.getProperty("driver");
+                String url = prop.getProperty("url");
+                String user = prop.getProperty("user");
+                String password = prop.getProperty("password");
+                Class.forName(driver);
+                connection = DriverManager.getConnection(url, user, password);
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             } catch (SQLException e) {
-                throw new RuntimeException(RED_COLOR+"Error establishing the database connection"+RESET_COLOR, e);
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } else {
-            return singleInstance;
+            return connection;
         }
     }
 }
