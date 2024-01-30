@@ -8,6 +8,8 @@ import com.flipkart.business.SlotFlipfitImplService;
 import com.flipkart.business.SlotFlipfitServiceInterface;
 import com.flipkart.utils.addSlotDTO;
 import com.flipkart.utils.util;
+import com.flipkart.validator.Validators;
+import com.flipkart.bean.editProfile;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,7 +17,11 @@ import javax.ws.rs.core.Response;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import com.flipkart.validator.Validators;
 import java.util.List;
+
+import static com.flipkart.constants.Constants.GREEN_COLOR;
+import static com.flipkart.constants.Constants.RED_COLOR;
 
 @Path("/gym-owner")
 @Produces(MediaType.APPLICATION_JSON)
@@ -26,7 +32,7 @@ public class GymOwnerController {
     SlotFlipfitServiceInterface slotService = new SlotFlipfitImplService();
 
     @GET
-    @Path("view-all")
+    @Path("/view-all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCentresByOwnerId() {
         return Response.ok(gymOwnerService.viewAllGymOwners()).build();
@@ -91,6 +97,15 @@ public class GymOwnerController {
         return Response.ok(gymCentreService.getGymCentreById(gymCentreId)).build();
     }
 
+    @Path("/view-gym-owner-profile")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGymOwnerProfile(@QueryParam("gymOwnerId") String gymOwnerId) {
+        GymOwner owner = gymOwnerService.viewGymOwnerProfile(gymOwnerId);
+        System.out.println(owner);
+        return Response.ok(owner).build();
+    }
+
 
     @Path("/get-available-slots")
     @GET
@@ -118,17 +133,73 @@ public class GymOwnerController {
         return Response.ok(gymCentreService.getCentresByCity(cityName)).build();
     }
 
-    @Path("/add-slots")
-    @POST
+    @Path("/edit-profile/username")
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addSlotsToGym(List<addSlotDTO> slotList){
-        try {
-            String centreID = slotList.get(0).getCentreID();
-            slotService.addSlotListForGym(centreID, slotList);
-        }catch (IllegalArgumentException exp){
-            System.out.println("illegal arg");
-            return Response.notModified().build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUserName(editProfile userUpdateRequest){
+
+        GymOwner gymOwner = gymOwnerService.viewGymOwnerProfile(userUpdateRequest.getUserId());
+        boolean status = gymOwnerService.editProfile(gymOwner.getUserID(), userUpdateRequest.getValueToUpdate(), gymOwner.getEmail(), gymOwner.getCardDetails());
+
+        if(status){
+            return Response.ok("Successfully updated").build();
+        }else{
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Failed to update username")
+                    .build();
         }
-        return Response.ok("Added Slots").build();
     }
+
+    @Path("/edit-profile/email")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateEmail(editProfile userUpdateRequest){
+
+        GymOwner gymOwner = gymOwnerService.viewGymOwnerProfile(userUpdateRequest.getUserId());
+        Validators validate = new Validators();
+        if (!validate.isEmailValid(userUpdateRequest.getValueToUpdate())){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Enter valid email")
+                    .build();
+        }
+        boolean status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), userUpdateRequest.getValueToUpdate(), gymOwner.getCardDetails());
+
+        if(status){
+            return Response.ok("Successfully updated email address").build();
+        }else{
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Failed to update email")
+                    .build();
+        }
+    }
+
+    @Path("/edit-profile/card-number")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCardNumber(editProfile userUpdateRequest){
+
+        GymOwner gymOwner = gymOwnerService.viewGymOwnerProfile(userUpdateRequest.getUserId());
+        Validators validate = new Validators();
+        if (!validate.isCardValid(userUpdateRequest.getValueToUpdate())){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Enter valid card number")
+                    .build();
+        }
+        boolean status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), gymOwner.getEmail(), userUpdateRequest.getValueToUpdate());
+
+        if(status){
+            return Response.ok("Successfully updated card number").build();
+        }else{
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Failed to update card number")
+                    .build();
+        }
+    }
+
+
+
+
 }
