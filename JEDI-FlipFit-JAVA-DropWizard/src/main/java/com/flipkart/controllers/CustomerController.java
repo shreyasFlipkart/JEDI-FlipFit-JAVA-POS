@@ -44,7 +44,7 @@ public class CustomerController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCustomerProfile(@QueryParam("userName") String userName){
         Customer customerProfile = CustomerFlipfitImplService.viewMyProfile(userName);
-        System.out.println("Rahul-Customer"+customerProfile);
+        //System.out.println("Rahul-Customer"+customerProfile);
         try{
             return Response.ok(customerProfile).build();
         }catch (Exception exception){

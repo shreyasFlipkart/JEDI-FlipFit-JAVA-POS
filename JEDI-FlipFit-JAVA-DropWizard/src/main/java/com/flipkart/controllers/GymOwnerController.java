@@ -23,9 +23,7 @@ public class GymOwnerController {
 
     GymOwnerFlipfitImplService gymOwnerService = new GymOwnerFlipfitImplService();
     GymCentreFlipfitImplService gymCentreService  = new GymCentreFlipfitImplService();
-
     SlotFlipfitServiceInterface slotService = new SlotFlipfitImplService();
-
 
     @GET
     @Path("view-all")
