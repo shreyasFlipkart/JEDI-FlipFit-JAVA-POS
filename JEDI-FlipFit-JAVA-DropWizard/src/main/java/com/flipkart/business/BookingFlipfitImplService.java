@@ -1,0 +1,65 @@
+package com.flipkart.business;
+
+import com.flipkart.bean.Booking;
+import com.flipkart.bean.Slot;
+import com.flipkart.bean.UserPlan;
+import com.flipkart.dao.BookingDAO;
+import com.flipkart.exceptions.BookingFailedException;
+
+import java.util.Date;
+import java.util.List;
+
+import static com.flipkart.constants.Constants.RED_COLOR;
+import static com.flipkart.constants.Constants.RESET_COLOR;
+
+public class BookingFlipfitImplService implements BookingFlipfitServiceInterface {
+
+    private final BookingDAO bookingDAO = new BookingDAO();
+    private final ScheduleFlipfitImplService scheduleService  = new ScheduleFlipfitImplService();
+
+    private final SlotFlipfitImplService slotService = new SlotFlipfitImplService();
+
+    public boolean checkBookingOverlap(String customerId, Date date, String slotId){
+        //return whether the customer has already booked a slot at same timing
+        Slot slot = slotService.getSlotByID(slotId);
+        return bookingDAO.checkBookingOverlap(customerId,date,slot.getTime());
+    }
+    public String addBooking(String userID, String scheduleID) {
+        try {
+            boolean isAvailable = scheduleService.modifySchedule(scheduleID,-1);
+            if(!isAvailable){
+                System.out.println(RED_COLOR+"No seats available for the booking"+RESET_COLOR);
+                return "";
+            }
+            return bookingDAO.addBooking(userID, scheduleID);
+        } catch (BookingFailedException e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
+    }
+
+    public List<Booking> getBookingByCustomerId(String customerId){
+        try {
+            return bookingDAO.getBookingByCustomerId(customerId);
+        } catch (BookingFailedException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+
+    }
+
+    public List<UserPlan> getCustomerPlan(String customerId){
+        return bookingDAO.getCustomerPlan(customerId);
+    }
+
+    public void cancelBooking(String bookingID) {
+        try {
+            Booking booking  = bookingDAO.getBookingByBookingId(bookingID);
+            bookingDAO.cancelBookingById(bookingID);
+            scheduleService.modifySchedule(booking.getScheduleID(),1);
+        } catch (BookingFailedException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+}
