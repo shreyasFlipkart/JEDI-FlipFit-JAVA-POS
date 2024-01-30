@@ -210,7 +210,7 @@ public class GymCentre {
     /**
      * Gets the price associated with the gym center.
      *
-     * @return The price.
+     *
      */
     public void setPrice(int price) {
         this.price = price;
