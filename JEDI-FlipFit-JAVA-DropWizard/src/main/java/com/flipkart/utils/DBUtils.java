@@ -18,7 +18,7 @@ public class DBUtils {
             try {
 
                 Properties prop = new Properties();
-                InputStream inputStream = new FileInputStream(new java.io.File(".").getCanonicalPath() + "/src/config.properties");
+                InputStream inputStream = new FileInputStream(new java.io.File(".").getCanonicalPath() + "/src/main/java/com/flipkart/config.properties");
                 prop.load(inputStream);
                 String driver = prop.getProperty("driver");
                 String url = prop.getProperty("url");
