@@ -122,7 +122,7 @@ public class CustomerController {
     public Response getCustomerBookings(@QueryParam("customerId") String customerId){
         try {
             CustomerFlipfitServiceInterface CustomerFlipfitImplService = new CustomerFlipfitImplService();
-            return Response.ok(CustomerFlipfitImplService.getCustomerPlan(customerId)).build();
+            return Response.ok(CustomerFlipfitImplService.getCustomerBookings(customerId)).build();
         }catch (Exception exception){
             return Response.status(400).entity("Something Went Wrong!").build();
         }
