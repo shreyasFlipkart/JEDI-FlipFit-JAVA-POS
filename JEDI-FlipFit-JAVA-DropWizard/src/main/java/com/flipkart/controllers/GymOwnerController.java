@@ -6,7 +6,6 @@ import com.flipkart.business.GymCentreFlipfitImplService;
 import com.flipkart.business.GymOwnerFlipfitImplService;
 import com.flipkart.business.SlotFlipfitImplService;
 import com.flipkart.business.SlotFlipfitServiceInterface;
-import com.flipkart.utils.addSlotDTO;
 import com.flipkart.utils.util;
 import com.flipkart.validator.Validators;
 import com.flipkart.bean.editProfile;
@@ -17,11 +16,6 @@ import javax.ws.rs.core.Response;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import com.flipkart.validator.Validators;
-import java.util.List;
-
-import static com.flipkart.constants.Constants.GREEN_COLOR;
-import static com.flipkart.constants.Constants.RED_COLOR;
 
 @Path("/gym-owner")
 @Produces(MediaType.APPLICATION_JSON)

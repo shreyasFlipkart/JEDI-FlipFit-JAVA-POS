@@ -1,4 +1,4 @@
-package com.flipkart.utils;
+package com.flipkart.bean;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

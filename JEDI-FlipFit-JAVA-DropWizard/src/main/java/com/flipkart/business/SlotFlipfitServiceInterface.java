@@ -4,7 +4,7 @@ package com.flipkart.business; /**
  * getting a list of all slots, adding slots for a gym center, and validating slots.
  */
 import com.flipkart.bean.Slot;
-import com.flipkart.utils.addSlotDTO;
+import com.flipkart.bean.addSlotDTO;
 
 import java.util.List;
 public interface SlotFlipfitServiceInterface {

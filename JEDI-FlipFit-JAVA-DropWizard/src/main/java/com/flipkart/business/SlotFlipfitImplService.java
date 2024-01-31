@@ -2,7 +2,7 @@ package com.flipkart.business;
 
 import com.flipkart.bean.Slot;
 import com.flipkart.dao.SlotDAO;
-import com.flipkart.utils.addSlotDTO;
+import com.flipkart.bean.addSlotDTO;
 
 import java.util.List;
 

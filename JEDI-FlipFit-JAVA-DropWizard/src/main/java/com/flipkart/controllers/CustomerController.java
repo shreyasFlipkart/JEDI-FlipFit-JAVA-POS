@@ -5,7 +5,7 @@ import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.Slot;
 import com.flipkart.business.CustomerFlipfitImplService;
 import com.flipkart.business.CustomerFlipfitServiceInterface;
-import com.flipkart.utils.InputSlot;
+import com.flipkart.bean.InputSlot;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
