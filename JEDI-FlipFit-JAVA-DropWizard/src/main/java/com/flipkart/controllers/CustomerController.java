@@ -54,8 +54,8 @@ public class CustomerController {
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response customerRegister(@QueryParam("userId") String userId,@QueryParam("userName") String userName,@QueryParam("email") String email,@QueryParam("password") String password,@QueryParam("customerPhone") String customerPhone,@QueryParam("cardDetails") String cardDetails){
-        Customer customer=new Customer(userId,userName,email,password,customerPhone,cardDetails);
+    public Response customerRegister(@QueryParam("userName") String userName,@QueryParam("email") String email,@QueryParam("password") String password,@QueryParam("customerPhone") String customerPhone,@QueryParam("cardDetails") String cardDetails){
+//        Customer customer=new Customer(userId,userName,email,password,customerPhone,cardDetails);
         Customer customerProfile = CustomerFlipfitImplService.registerCustomer(userName,password,email,customerPhone,cardDetails);
         if(customerProfile == null){
             return Response.notModified().build();
