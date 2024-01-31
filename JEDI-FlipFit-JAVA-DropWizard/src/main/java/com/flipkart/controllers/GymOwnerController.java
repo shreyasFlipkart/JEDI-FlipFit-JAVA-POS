@@ -189,7 +189,6 @@ public class GymOwnerController {
                     .build();
         }
         boolean status = gymOwnerService.editProfile(gymOwner.getUserID(), gymOwner.getUserName(), gymOwner.getEmail(), userUpdateRequest.getValueToUpdate());
-
         if(status){
             return Response.ok("Successfully updated card number").build();
         }else{
