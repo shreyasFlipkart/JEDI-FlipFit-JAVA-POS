@@ -19,7 +19,6 @@ public class FlipfitApplication {
     private static GymOwnerFlipfitClient gymOwnerFlipfitClient = new GymOwnerFlipfitClient();
 
 
-
     /**
      * The FlipfitApplication class represents the main application for Flipfit, a fitness management system.
      * It provides functionalities for user authentication, registration, and password updates.
