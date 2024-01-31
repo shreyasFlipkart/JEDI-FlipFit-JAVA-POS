@@ -1,17 +1,18 @@
-import com.flipkart.utils.DBConnection;
 
+package com.flipkart.utils;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import static com.flipkart.constants.Constants.*;
 
 public class DBInitializer {
 
     public static void main(String[] args) {
-        try (Connection connection = DBConnection.connect()) {
+        try (Connection connection = DBUtils.connect()) {
             createTables(connection);
-            System.out.println("Database tables created successfully!");
+            System.out.println(GREEN_COLOR+"Database tables created successfully!"+RESET_COLOR);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -32,7 +33,7 @@ public class DBInitializer {
                     "name VARCHAR(255) NOT NULL," +
                     "password VARCHAR(255) NOT NULL," +
                     "email VARCHAR(255) NOT NULL," +
-                    "phone VARCHAR(20) NOT NULL," +
+                    "panNumber VARCHAR(20) NOT NULL," +
                     "cardDetails VARCHAR(16) NOT NULL," +
                     "isApproved INT NOT NULL)");
         }

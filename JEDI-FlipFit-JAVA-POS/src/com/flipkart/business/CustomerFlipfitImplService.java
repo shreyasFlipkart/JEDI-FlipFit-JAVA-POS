@@ -8,7 +8,7 @@ import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.Slot;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.UserInvalidException;
-import com.flipkart.utils.UserPlan;
+import com.flipkart.bean.UserPlan;
 
 import java.sql.Date;
 import java.util.List;
@@ -41,9 +41,9 @@ public class CustomerFlipfitImplService implements CustomerFlipfitServiceInterfa
         return gymCentreService.getAvailableSlotsByCentreAndDate(centreID,date);
     }
 
-    public List<Booking> getCustomerBookings(String customerId){
+    public List<Booking> getCustomerBookings(String customerName){
         //takes userId and returns List<Bookings>
-        return bookingService.getBookingByCustomerId(customerId);
+        return bookingService.getBookingByCustomerId(viewMyProfile(customerName).getUserID());
     }
 
     public List<UserPlan> getCustomerPlan(String customerId){
@@ -63,7 +63,8 @@ public class CustomerFlipfitImplService implements CustomerFlipfitServiceInterfa
             System.out.println(RED_COLOR + "There exists a conflicting booking, First cancel it!!!!" + RESET_COLOR);
             return false;
         }
-        String bookingId = bookingService.addBooking(userName, scheduleId);
+        String bookingId = bookingService.addBooking(viewMyProfile(userName).getUserID(), scheduleId);
+        if(bookingId.isEmpty())return false;
         paymentService.makePayment(userName, centreId, bookingId);
         return true;
     }

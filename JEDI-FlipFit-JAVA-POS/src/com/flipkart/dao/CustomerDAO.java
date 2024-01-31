@@ -3,16 +3,16 @@ package com.flipkart.dao;
 import com.flipkart.bean.Customer;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.UserInvalidException;
-import com.flipkart.utils.DBConnection;
+import com.flipkart.utils.DBUtils;
+import com.flipkart.utils.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.flipkart.constants.SQLConstants.*;
+import static com.flipkart.constants.Constants.*;
 
 public class CustomerDAO implements CustomerInterfaceDAO {
     private static CustomerDAO instance;
@@ -26,9 +26,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
     public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) throws RegistrationFailedException {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(ADD_NEW_CUSTOMER);
-            stmt.setString(1,userName);
+            stmt.setString(1, util.generateNewId());
             stmt.setString(2, userName);
             stmt.setString(3, password);
             stmt.setString(4, email);
@@ -39,16 +39,16 @@ public class CustomerDAO implements CustomerInterfaceDAO {
             stmt.close();
 
         } catch (SQLException exp) {
-            exp.printStackTrace();
-            throw new RegistrationFailedException("Failed to register the user. Try again.");
+            System.out.println(exp.getMessage());
+            throw new RegistrationFailedException(RED_COLOR+"Failed to register the user. Try again."+RESET_COLOR);
         } catch (Exception e) {
-            System.out.println("Oops! An error occurred. Try again later.");
+            System.out.println(RED_COLOR+"Oops! An error occurred. Try again later."+RESET_COLOR);
         }
     }
 
     public boolean isUserValid(String userName, String password) throws UserInvalidException {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(CUSTOMER_LOGIN_QUERY);
             stmt.setString(1, userName);
             stmt.setString(2, password);
@@ -59,9 +59,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
             }
             stmt.close();
         } catch (SQLException exp) {
-            throw new UserInvalidException("User is Invalid. Try again.");
+            throw new UserInvalidException(RED_COLOR+"User is Invalid. Try again."+RESET_COLOR);
         } catch (Exception exp) {
-            System.out.println("Oops! An error occurred. Try again later.");
+            System.out.println(RED_COLOR+"Oops! An error occurred. Try again later."+RESET_COLOR);
         }
         return false;
     }
@@ -69,7 +69,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
     public Customer getCustomerById(String userName) {
         Customer customer = new Customer();
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(GET_CUSTOMER_BY_ID);
             stmt.setString(1, userName);
             ResultSet rs = stmt.executeQuery();
@@ -83,9 +83,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
             stmt.close();
         } catch (SQLException exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         } catch (Exception exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         }
 
         return customer;
@@ -93,7 +93,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
     public boolean editCustomer(String customerId, String username, String email, String phoneNumber, String cardNumber) {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(EDIT_CUSTOMER_QUERY);
             stmt.setString(1, username);
             stmt.setString(2, email);
@@ -106,9 +106,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
             return rowsAffected > 0;
         } catch (SQLException exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         } catch (Exception exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         }
 
         return false;
@@ -116,7 +116,7 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
     public boolean updatePassword(String customerName, String newPassword) {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBUtils.connect();
             PreparedStatement stmt = conn.prepareStatement(UPDATE_CUSTOMER_PASSWORD_QUERY);
             stmt.setString(1, newPassword);
             stmt.setString(2, customerName);
@@ -126,9 +126,9 @@ public class CustomerDAO implements CustomerInterfaceDAO {
 
             return rowsAffected > 0;
         } catch (SQLException exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         } catch (Exception exp) {
-            exp.printStackTrace();
+            System.out.println(exp.getMessage());
         }
 
         return false;

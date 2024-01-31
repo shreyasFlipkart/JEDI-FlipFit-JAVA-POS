@@ -7,6 +7,7 @@ import com.flipkart.bean.GymOwner;
 
 import java.util.ArrayList;
 import java.util.List;
+import static com.flipkart.constants.Constants.*;
 
 public class AdminFlipfitImplService implements AdminFlipfitServiceInterface {
 
@@ -15,8 +16,6 @@ public class AdminFlipfitImplService implements AdminFlipfitServiceInterface {
     private List<GymCentre> pendinGymCentreList = new ArrayList<>();
 
     public void approveGymCenter(String gymCentreId,int isApproved){
-        //takes GymCenter Object as input and return boolean
-//        System.out.println("Approved/Rejected Gym Center: ");
         adminDAO.validateGymCentre(gymCentreId,isApproved);
     }
 
@@ -34,7 +33,7 @@ public class AdminFlipfitImplService implements AdminFlipfitServiceInterface {
 
     public List<GymOwner> viewPendingGymOwners(){
         //views all pending requests
-        System.out.println("Viewing pending Gym Owner Approvals: ");
+        System.out.println(YELLOW_COLOR+"Viewing pending Gym Owner Approvals: "+RESET_COLOR);
         pendinGymOwnerList = adminDAO.getPendingGymOwners();
         return pendinGymOwnerList;
     }

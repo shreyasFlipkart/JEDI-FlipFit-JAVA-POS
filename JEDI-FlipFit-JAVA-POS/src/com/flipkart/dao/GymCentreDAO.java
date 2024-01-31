@@ -1,7 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.GymCentre;
-import com.flipkart.utils.DBConnection;
+import com.flipkart.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,26 +12,27 @@ import java.util.Comparator;
 import java.util.List;
 
 import static com.flipkart.constants.SQLConstants.*;
+import static com.flipkart.constants.Constants.*;
 
 public class GymCentreDAO implements GymCentreInterfaceDAO {
 
     public List<GymCentre> getGymCentreList() {
         List<GymCentre> allGymCentres = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_GYM_CENTRES)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 allGymCentres.add(mapResultSetToGymCentre(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return allGymCentres;
     }
 
     public List<GymCentre> getAllCentresByOwmerId(String ownerId) {
         List<GymCentre> ownerGymCentres = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_GYM_CENTRES_BY_OWNER_ID)) {
             stmt.setString(1, ownerId);
             ResultSet rs = stmt.executeQuery();
@@ -39,13 +40,13 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 ownerGymCentres.add(mapResultSetToGymCentre(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return ownerGymCentres;
     }
 
     public GymCentre getGymCentreByCentreId(String gymCentreId) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_GYM_CENTRE_BY_ID)) {
             stmt.setString(1, gymCentreId);
             ResultSet rs = stmt.executeQuery();
@@ -53,13 +54,13 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 return mapResultSetToGymCentre(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
 
     public void addGymCentre(GymCentre centre) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(ADD_GYM_CENTRE)) {
             stmt.setString(1, centre.getGymCentreID());
             stmt.setString(2, centre.getOwnerID());
@@ -71,59 +72,61 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
             stmt.setInt(8, centre.getIsApproved());
 
             stmt.executeUpdate();
-            System.out.println("Your Gym Center has been added, Send an admin approval request by pressing 5 to get your gym registered");
+            System.out.println(GREEN_COLOR+"Your Gym Center has been added, Send an admin approval request by pressing 5 to get your gym registered"+RESET_COLOR);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
     public List<GymCentre> getPendingGymCentreList() {
         List<GymCentre> pendingList = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_PENDING_GYM_CENTRES_QUERY)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 pendingList.add(mapResultSetToGymCentre(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return pendingList;
     }
 
     public void validateGymCentre(String gymCentreId, int isApproved) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_APPROVE_GYM_CENTRE_BY_ID_QUERY)) {
             stmt.setInt(1, isApproved);
             stmt.setString(2, gymCentreId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
     public void sendCentreApprovalRequest(String gymCentreId) {
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEND_GYM_CENTRE_APPROVAL_REQ_QUERY)) {
             stmt.setString(1, gymCentreId);
             stmt.executeUpdate();
-            System.out.println("Sending gym centre approval request for ID: " + gymCentreId);
+            System.out.println(GREEN_COLOR+"Sending gym centre approval request for ID: "+RESET_COLOR + gymCentreId);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
     public List<GymCentre> getGymCentreListByCity(String city) {
         List<GymCentre> allCentreByCity = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_GYM_CENTRES_BY_CITY)) {
             stmt.setString(1, city);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                allCentreByCity.add(mapResultSetToGymCentre(rs));
+                if (rs.getInt("isApproved") == 1) {
+                    allCentreByCity.add(mapResultSetToGymCentre(rs));
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return allCentreByCity;
     }
@@ -148,7 +151,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
 
     public List<GymCentre> getCentersSortedByCities() {
         List<GymCentre> allCentreByCity = new ArrayList<>();
-        try (Connection conn = DBConnection.connect();
+        try (Connection conn = DBUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(FETCH_ALL_GYM_CENTRES)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -157,7 +160,7 @@ public class GymCentreDAO implements GymCentreInterfaceDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         allCentreByCity.sort(Comparator.comparing(GymCentre::getCity));
         return allCentreByCity;

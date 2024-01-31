@@ -3,6 +3,7 @@ package com.flipkart.business;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.flipkart.dao.ScheduleDAO;
 import com.flipkart.bean.Schedule;
@@ -23,16 +24,18 @@ public class ScheduleFlipfitImplService implements ScheduleFlipfitServiceInterfa
         return schedule;
     }
 
-    public Schedule getScheduleByDateAndSlotId(String SlotId, Date date){
+    public Schedule getScheduleByDateAndSlotId(String slotId, Date date){
         //returns whether current schedule exists or not
         List<Schedule> scheduleList = scheduleDAO.getAllScheduleByDate(date);
-        for(Schedule schedule: scheduleList){
-            if(schedule.getSlotID().equals(SlotId))
-                return schedule;
-        }
+        Schedule foundSchedule = scheduleList.stream()
+                .filter(schedule -> schedule.getSlotID().equals(slotId))
+                .findFirst()
+                .orElse(null);
+
+        return foundSchedule;
+
 
         //Schedule doesn't exist, return null
-        return null;
     }
 
     public boolean modifySchedule(String scheduleId,int action){
@@ -44,12 +47,16 @@ public class ScheduleFlipfitImplService implements ScheduleFlipfitServiceInterfa
     public List<Schedule> checkAvailability(String centreID, Date date){
         List<Slot> allSlotsForGym = slotService.getAllSlotsByCentre(centreID);
         List<Schedule> allAvailableSchedules = new ArrayList<>();
-        for(Slot slot : allSlotsForGym){
-            String slotId = slot.getSlotId();
-            Schedule schedule = getOrCreateSchedule(slotId, date);
-            if(schedule.getAvailability() > 0)
-                allAvailableSchedules.add(schedule);
-        }
+        allAvailableSchedules.addAll(
+                allSlotsForGym.stream()
+                        .map(slot -> {
+                            String slotId = slot.getSlotId();
+                            return getOrCreateSchedule(slotId, date);
+                        })
+                        .filter(schedule -> schedule.getAvailability() > 0)
+                        .collect(Collectors.toList())
+        );
+
 
         return allAvailableSchedules;
     }
@@ -57,15 +64,13 @@ public class ScheduleFlipfitImplService implements ScheduleFlipfitServiceInterfa
     public List<Slot> getAllAvailableSlotsByDate(String centreID, Date date) {
         List<Slot> allSlotsOfThatCentre = slotService.getAllSlotsByCentre(centreID);
         List<Slot> response = slotService.getAllSlotsByCentre(centreID);
-        for(Slot slot: allSlotsOfThatCentre){
-            for(Schedule schedule: scheduleDAO.getAllScheduleByDate(date)){
-                if (slotService.getSlotByID(schedule.getSlotID()).getCentreID().equals(centreID)){
-                    if(schedule.getAvailability() <= 0){
-                        response.remove(slot);
-                    }
-                }
-            }
-        }
+        allSlotsOfThatCentre.removeIf(slot ->
+                scheduleDAO.getAllScheduleByDate(date).stream()
+                        .anyMatch(schedule ->
+                                slotService.getSlotByID(schedule.getSlotID())
+                                        .getCentreID().equals(centreID) && schedule.getAvailability() <= 0
+                        )
+        );
         return response;
     }
 
